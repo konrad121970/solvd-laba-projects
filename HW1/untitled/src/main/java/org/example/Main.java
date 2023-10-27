@@ -16,9 +16,17 @@ public class Main {
         }
     }
 
-//    public static void bubbleSort(int array[]){
-//
-//    }
+    public static void bubbleSort(int array[]){
+        for(int i = 0; i < array.length - 1; i++){ // Count already sorted numbers
+            for(int j = 0; j < array.length - i - 1; j++){ // Iterate over array
+                if(array[j] > array[j+1]){
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -31,7 +39,7 @@ public class Main {
 
         System.out.println();
         System.out.println("### AFTER SORTING ###");
-        selectionSort(array);
+        selectionSort(array); // bubbleSort(array)
         for (int item :array) {
             System.out.print(item + " ");
         }
