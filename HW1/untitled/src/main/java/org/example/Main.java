@@ -3,18 +3,22 @@ package org.example;
 public class Main {
 
     public static void selectionSort(int array[]){
-        for(int i = 0; i < array.length - 1; i++){
-            int minimal = i;
-            for(int j = i + 1; j < array.length; j++){
-                if(array[minimal] > array[j]){
-                    minimal = j;
+        for(int i = 0; i < array.length - 1; i++){ // Iterate over each element in the array
+            int minimal = i; // Set the minimal element to i
+            for(int j = i + 1; j < array.length; j++){ // Start iterating from the adjacent element
+                if(array[minimal] > array[j]){ // If element at index minimal is greater than element at index j
+                    minimal = j; // Assign j to minimal
                 }
             }
-            int temp = array[i];
-            array[i] = array[minimal];
-            array[minimal] = temp;
+            int temp = array[i]; // Save element at index i to temporary variable
+            array[i] = array[minimal]; // Replace with lower value
+            array[minimal] = temp; // Higher goes where the array[minimal] was
         }
     }
+
+//    public static void bubbleSort(int array[]){
+//
+//    }
 
     public static void main(String[] args) {
 
