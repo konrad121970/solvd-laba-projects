@@ -12,6 +12,8 @@ public class Customer {
         this.lastName = lastName;
         this.age = age;
         this.phoneNumber = phoneNumber;
+
+        customersCount++;
     }
 
     public static int getCustomersCount() {
