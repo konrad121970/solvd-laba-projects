@@ -31,6 +31,11 @@ public class Trip {
         this.date = date;
     }
 
+    private Double calculatePrice(Double distanceInKm){
+        return  distanceInKm * 2.00;
+    }
+
+
     public Driver getDriver() {
         return driver;
     }

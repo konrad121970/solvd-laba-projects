@@ -1,5 +1,6 @@
 package employees;
 
+import route.Location;
 import vehicles.Car;
 
 public class Driver {
@@ -10,6 +11,7 @@ public class Driver {
     private String phoneNumber;
     private Car car;
 
+
     public Driver(String firstName, String lastName, int age, String phoneNumber, Car car) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -18,6 +20,10 @@ public class Driver {
         this.car = car;
 
         driversCount++;
+    }
+
+    private void driveTo(Location startLocation, Location endLocation){
+        System.out.println("I am en route to " + endLocation + "!. I started my journey from " + startLocation + ".");
     }
 
     public static int getDriversCount() {

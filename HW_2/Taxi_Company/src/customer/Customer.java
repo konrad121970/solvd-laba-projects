@@ -6,14 +6,20 @@ public class Customer {
     private String lastName;
     private int age;
     private String phoneNumber;
+    private Double cash;
 
-    public Customer(String firstName, String lastName, int age, String phoneNumber) {
+    public Customer(String firstName, String lastName, int age, String phoneNumber, Double availableBalance) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.phoneNumber = phoneNumber;
+        this.cash = availableBalance;
 
         customersCount++;
+    }
+
+    public void spendCash(Double cash){
+        System.out.println("I have just spent " + cash + "USD!");
     }
 
     public static int getCustomersCount() {
@@ -51,4 +57,14 @@ public class Customer {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public Double getCash() {
+        return cash;
+    }
+
+    public void setCash(Double cash) {
+        this.cash = cash;
+    }
+
+
 }
