@@ -25,7 +25,9 @@ public class Driver {
     private void driveTo(Location startLocation, Location endLocation){
         System.out.println("I am en route to " + endLocation + "!. I started my journey from " + startLocation + ".");
     }
-
+    private void driveTo(Location startLocation, Location endLocation, String dateTime){
+        System.out.println("I am en route to " + endLocation + "!. I started my journey from " + startLocation + "at" + dateTime + "." );
+    }
     public static int getDriversCount() {
         return driversCount;
     }

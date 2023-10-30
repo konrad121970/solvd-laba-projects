@@ -22,6 +22,11 @@ public class Customer {
         System.out.println("I have just spent " + cash + "USD!");
     }
 
+    // Method Overloading
+    public void spendCash(Double cash, String message){
+        System.out.println("I have just spent " + cash + "USD!" + message);
+    }
+
     public static int getCustomersCount() {
         return customersCount;
     }

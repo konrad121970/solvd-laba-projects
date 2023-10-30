@@ -18,9 +18,11 @@ public class Trip {
     public Trip(Driver driver,
                 Customer customer,
                 Review review,
-                Payment payment, Location routeStart,
+                Payment payment,
+                Location routeStart,
                 Location routeEnd,
-                Double distanceInKm, LocalDate date) {
+                Double distanceInKm,
+                LocalDate date) {
         this.driver = driver;
         this.customer = customer;
         this.review = review;
