@@ -1,4 +1,4 @@
-package route;
+package model.route;
 
 public class Review {
     private Integer numberOfStars;

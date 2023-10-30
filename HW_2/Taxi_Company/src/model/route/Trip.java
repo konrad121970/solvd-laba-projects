@@ -1,7 +1,7 @@
-package route;
+package model.route;
 
-import customer.Customer;
-import employees.Driver;
+import model.customer.Customer;
+import model.employees.Driver;
 
 import java.time.LocalDate;
 
@@ -17,23 +17,19 @@ public class Trip {
 
     public Trip(Driver driver,
                 Customer customer,
-                Review review,
-                Payment payment,
                 Location routeStart,
                 Location routeEnd,
                 Double distanceInKm,
                 LocalDate date) {
         this.driver = driver;
         this.customer = customer;
-        this.review = review;
-        this.payment = payment;
         this.routeStart = routeStart;
         this.routeEnd = routeEnd;
         this.distanceInKm = distanceInKm;
         this.date = date;
     }
 
-    private Double calculatePrice(Double distanceInKm){
+    public Double calculatePrice(Double distanceInKm){
         return  distanceInKm * 2.00;
     }
 

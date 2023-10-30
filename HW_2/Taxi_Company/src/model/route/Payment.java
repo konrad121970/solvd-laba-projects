@@ -1,4 +1,4 @@
-package route;
+package model.route;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package vehicles;
+package model.vehicles;
 
 public class Engine {
     private String fuelType;

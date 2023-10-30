@@ -1,10 +1,14 @@
-package vehicles;
+package model.vehicles;
 
 public class Car {
+    private String make;
+    private String model;
     private Engine engine;
     private String registrationPlate;
 
-    public Car(Engine engine, String registrationPlate) {
+    public Car(String make, String model, Engine engine, String registrationPlate) {
+        this.make = make;
+        this.model = model;
         this.engine = engine;
         this.registrationPlate = registrationPlate;
     }

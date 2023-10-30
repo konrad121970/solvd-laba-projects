@@ -1,4 +1,4 @@
-package employees;
+package model.employees;
 
 public class Employees {
     private Driver[] drivers;

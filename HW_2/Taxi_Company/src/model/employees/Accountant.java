@@ -1,34 +1,27 @@
-package customer;
+package model.employees;
 
-public class Customer {
-    private static int customersCount;
+import java.math.BigDecimal;
+
+public class Accountant {
+    private static int accountantsCount;
     private String firstName;
     private String lastName;
     private int age;
     private String phoneNumber;
-    private Double cash;
+    private BigDecimal salary;
 
-    public Customer(String firstName, String lastName, int age, String phoneNumber, Double availableBalance) {
+    public Accountant(String firstName, String lastName, int age, String phoneNumber, BigDecimal salary) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.phoneNumber = phoneNumber;
-        this.cash = availableBalance;
+        this.salary = salary;
 
-        customersCount++;
+        accountantsCount++;
     }
 
-    public void spendCash(Double cash){
-        System.out.println("I have just spent " + cash + "USD!");
-    }
-
-    // Method Overloading
-    public void spendCash(Double cash, String message){
-        System.out.println("I have just spent " + cash + "USD!" + message);
-    }
-
-    public static int getCustomersCount() {
-        return customersCount;
+    public static int getAccountantsCount() {
+        return accountantsCount;
     }
 
     public String getFirstName() {
@@ -63,13 +56,11 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public Double getCash() {
-        return cash;
+    public BigDecimal getSalary() {
+        return salary;
     }
 
-    public void setCash(Double cash) {
-        this.cash = cash;
+    public void setSalary(BigDecimal salary) {
+        this.salary = salary;
     }
-
-
 }

@@ -1,4 +1,4 @@
-package route;
+package model.route;
 
 public class Location {
     private String city;
