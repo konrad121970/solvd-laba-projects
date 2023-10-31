@@ -1,7 +1,6 @@
-package model.employees;
+package com.solvd.laba.hw2.employees;
 
-import model.route.Location;
-import model.vehicles.Car;
+import com.solvd.laba.hw2.vehicles.Car;
 
 import java.math.BigDecimal;
 

@@ -1,17 +1,16 @@
-import model.TaxiCompany;
-import model.customer.Customer;
-import model.employees.Accountant;
-import model.employees.Driver;
-import model.employees.Employees;
-import model.route.Location;
-import model.route.Payment;
-import model.route.Review;
-import model.route.Trip;
-import model.vehicles.Car;
-import model.vehicles.Engine;
+package com.solvd.laba.hw2;
+
+import com.solvd.laba.hw2.customer.Customer;
+import com.solvd.laba.hw2.employees.Accountant;
+import com.solvd.laba.hw2.employees.Driver;
+import com.solvd.laba.hw2.route.Location;
+import com.solvd.laba.hw2.route.Payment;
+import com.solvd.laba.hw2.route.Review;
+import com.solvd.laba.hw2.route.Trip;
+import com.solvd.laba.hw2.vehicles.Car;
+import com.solvd.laba.hw2.vehicles.Engine;
 
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 
 public class Main {
@@ -32,12 +31,10 @@ public class Main {
         Accountant accountant2 = new Accountant("Elias", "Bismark", 19, "123123123", new BigDecimal(4000));
         Accountant[] accountants = new Accountant[]{accountant1, accountant2};
 
-        Employees employees = new Employees(drivers, accountants);
-
         // Create and initialize customers array
-        Customer customer1 = new Customer("Andrzej", "Kowalski", 23, "123123123", 100.50);
-        Customer customer2 = new Customer("Paolo", "Nowak", 26, "111222333", 50.25);
-        Customer customer3 = new Customer("Herbert", "Shmidt", 40, "333222111", 220.0);
+        Customer customer1 = new Customer("Andrzej", "Kowalski", "123123123", 100.50);
+        Customer customer2 = new Customer("Paolo", "Nowak", "111222333", 50.25);
+        Customer customer3 = new Customer("Herbert", "Shmidt", "333222111", 220.0);
         Customer[] customers = new Customer[]{customer1, customer2, customer3};
 
         Location location1 = new Location("New York", "Blue St");
@@ -63,9 +60,9 @@ public class Main {
         Payment payment2 = new Payment(trip2.getDate(), price2);
         Payment payment3 = new Payment(trip3.getDate(), price3);
 
-        trip1.getCustomer().spendCash(price1);
-        trip2.getCustomer().spendCash(price2);
-        trip3.getCustomer().spendCash(price3, "It was an expensive ride!"); // Method overloading
+        trip1.getCustomer().pay(price1);
+        trip2.getCustomer().pay(price2);
+        trip3.getCustomer().pay(price3, "It was an expensive ride!"); // Method overloading
         System.out.println();
 
         Review review1 = new Review(5, "It was an amazing ride!");
@@ -79,17 +76,12 @@ public class Main {
         trip3.setPayment(payment3);
         trip3.setReview(review3);
 
-        TaxiCompany taxiCompany = new TaxiCompany(customers, employees, trips, cars);
+        TaxiCompany taxiCompany = new TaxiCompany(customers, drivers, accountants, trips, cars);
         System.out.println("List of customers: ");
         taxiCompany.printCustomerNames();
 
         System.out.println("\nStatic variable of customerCount: " + Customer.getCustomersCount());
         System.out.println("Static variable of driversCount: " + Driver.getDriversCount());
         System.out.println("Static variable of accountantsCount: " + Accountant.getAccountantsCount());
-
-
-
-
-
     }
 }

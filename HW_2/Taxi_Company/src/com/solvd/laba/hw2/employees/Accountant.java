@@ -1,4 +1,4 @@
-package model.employees;
+package com.solvd.laba.hw2.employees;
 
 import java.math.BigDecimal;
 

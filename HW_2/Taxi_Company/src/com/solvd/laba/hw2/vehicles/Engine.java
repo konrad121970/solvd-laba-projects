@@ -1,4 +1,4 @@
-package model.vehicles;
+package com.solvd.laba.hw2.vehicles;
 
 public class Engine {
     private String fuelType;

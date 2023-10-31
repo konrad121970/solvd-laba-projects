@@ -1,7 +1,7 @@
-package model.route;
+package com.solvd.laba.hw2.route;
 
-import model.customer.Customer;
-import model.employees.Driver;
+import com.solvd.laba.hw2.customer.Customer;
+import com.solvd.laba.hw2.employees.Driver;
 
 import java.time.LocalDate;
 

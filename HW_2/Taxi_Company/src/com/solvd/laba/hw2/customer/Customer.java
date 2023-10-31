@@ -1,30 +1,30 @@
-package model.customer;
+package com.solvd.laba.hw2.customer;
 
 public class Customer {
     private static int customersCount;
     private String firstName;
     private String lastName;
-    private int age;
     private String phoneNumber;
-    private Double cash;
+    private Double availableBalance;
 
-    public Customer(String firstName, String lastName, int age, String phoneNumber, Double availableBalance) {
+    public Customer(String firstName, String lastName, String phoneNumber, Double availableBalance) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
         this.phoneNumber = phoneNumber;
-        this.cash = availableBalance;
+        this.availableBalance = availableBalance;
 
         customersCount++;
     }
 
-    public void spendCash(Double cash){
+    public void pay(Double cash){
         System.out.println("I have just spent " + cash + "USD!");
+        this.availableBalance -= cash;
     }
 
     // Method Overloading
-    public void spendCash(Double cash, String message){
-        System.out.println("I have just spent " + cash + "USD!" + message);
+    public void pay(Double cash, String message){
+        System.out.println("I have just spent " + cash + "USD!" + " " + message);
+        this.availableBalance -= cash;
     }
 
     public static int getCustomersCount() {
@@ -47,14 +47,6 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -63,12 +55,12 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public Double getCash() {
-        return cash;
+    public Double getAvailableBalance() {
+        return availableBalance;
     }
 
-    public void setCash(Double cash) {
-        this.cash = cash;
+    public void getAvailableBalance(Double cash) {
+        this.availableBalance = availableBalance;
     }
 
 

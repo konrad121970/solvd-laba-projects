@@ -1,4 +1,4 @@
-package model.route;
+package com.solvd.laba.hw2.route;
 
 public class Location {
     private String city;

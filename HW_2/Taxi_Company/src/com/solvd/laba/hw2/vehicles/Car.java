@@ -1,8 +1,8 @@
-package model.vehicles;
+package com.solvd.laba.hw2.vehicles;
 
 public class Car {
-    private String make;
-    private String model;
+    private final String make;
+    private final String model;
     private Engine engine;
     private String registrationPlate;
 

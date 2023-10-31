@@ -1,19 +1,22 @@
-package model;
+package com.solvd.laba.hw2;
 
-import model.customer.Customer;
-import model.employees.Employees;
-import model.route.Trip;
-import model.vehicles.Car;
+import com.solvd.laba.hw2.customer.Customer;
+import com.solvd.laba.hw2.employees.Accountant;
+import com.solvd.laba.hw2.employees.Driver;
+import com.solvd.laba.hw2.route.Trip;
+import com.solvd.laba.hw2.vehicles.Car;
 
 public class TaxiCompany {
     private Customer[] customers;
-    private Employees employees;
+    private Driver[] drivers;
+    private Accountant[] accountants;
     private Trip[] trips;
     private Car[] cars;
 
-    public TaxiCompany(Customer[] customers, Employees employees, Trip[] trips, Car[] cars) {
+    public TaxiCompany(Customer[] customers, Driver[] drivers, Accountant[] accountants, Trip[] trips, Car[] cars) {
         this.customers = customers;
-        this.employees = employees;
+        this.drivers = drivers;
+        this.accountants = accountants;
         this.trips = trips;
         this.cars = cars;
     }
@@ -34,14 +37,6 @@ public class TaxiCompany {
         this.customers = customers;
     }
 
-    public Employees getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(Employees employees) {
-        this.employees = employees;
-    }
-
     public Trip[] getTrips() {
         return trips;
     }
@@ -56,5 +51,21 @@ public class TaxiCompany {
 
     public void setCars(Car[] cars) {
         this.cars = cars;
+    }
+
+    public Driver[] getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(Driver[] drivers) {
+        this.drivers = drivers;
+    }
+
+    public Accountant[] getAccountants() {
+        return accountants;
+    }
+
+    public void setAccountants(Accountant[] accountants) {
+        this.accountants = accountants;
     }
 }
