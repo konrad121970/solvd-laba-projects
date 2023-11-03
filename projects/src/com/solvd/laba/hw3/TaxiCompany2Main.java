@@ -14,10 +14,12 @@ import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class TaxiCompany2Main {
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
         TaxiCompany taxiCompany = TaxiCompanyFactory.create();
 
         Customer[] customers = taxiCompany.getCustomers();
@@ -55,6 +57,113 @@ public class TaxiCompany2Main {
         tr1.setReview(new Review(5, "It was an amazing ride!"));
 
         System.out.println(customers[0].getSpentMoney());
+
+        while (true) {
+            System.out.println("Taxi Company Menu:");
+            System.out.println("1. Assign Vehicle to Company");
+            System.out.println("2. Create a Transport Order");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter vehicle details:");
+                    System.out.print("Make: ");
+                    String make = scanner.next();
+                    System.out.print("Model: ");
+                    String model = scanner.next();
+                    System.out.print("Plate Number: ");
+                    scanner.nextLine();
+                    String registrationPlate = scanner.nextLine();
+                    System.out.print("Number of seats: ");
+                    int numberOfSeats = scanner.nextInt();
+                    System.out.print("Fare per kilometer: ");
+                    double farePerKilometer = scanner.nextDouble();
+
+                    TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats, farePerKilometer);
+                    taxiCompany.addVehicle(newTaxi);
+                    System.out.println("New taxi assigned to the company.");
+
+                    System.out.println();
+                    taxiCompany.printVehicles();
+                    System.out.println();
+
+                    break;
+
+                case 2:
+                    System.out.println("Create a Transport Order:");
+                    System.out.print("City: ");
+                    scanner.nextLine();
+                    String city = scanner.nextLine();
+                    System.out.println(city);
+
+                    System.out.print("Pickup Location: ");
+                    String pickupLocation = scanner.nextLine();
+                    System.out.print("Drop-off Location: ");
+                    String dropOffLocation = scanner.nextLine();
+
+                    Location pickup = new Location(city, pickupLocation);
+                    Location dropOff = new Location(city, dropOffLocation);
+
+                    System.out.print("Customer Name: ");
+                    String customerName = scanner.nextLine();
+                    System.out.print("Customer Last Name: ");
+                    String customerLastName = scanner.nextLine();
+                    System.out.print("Customer Phone Number: ");
+                    String customerPhoneNumber = scanner.next();
+                    Customer customer = new Customer(customerName, customerLastName, customerPhoneNumber);
+                    taxiCompany.addCustomer(customer);
+
+                    System.out.println("Select a driver from the list:");
+                    for (int i = 0; i < taxiCompany.getDrivers().length; i++) {
+                        System.out.println(i + ". " + taxiCompany.getDrivers()[i].getFirstName());
+                    }
+                    int driverChoice = scanner.nextInt();
+
+                    if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().length) {
+                        Driver selectedDriver = taxiCompany.getDrivers()[driverChoice];
+                        System.out.print("Order Date (yyyy-MM-dd): ");
+                        String orderDateStr = scanner.next();
+                        LocalDate orderDate = LocalDate.parse(orderDateStr);
+
+                        TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver, orderDate);
+                        selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
+
+                        System.out.print("Enter the distance in kilometers(X,XX or X.XX format): ");
+                        double distanceInKm = scanner.nextDouble();
+                        transportOrder.setDistanceInKm(distanceInKm);
+
+                        transportOrder.calculatePrice();
+                        System.out.println("Order price: " + transportOrder.getPrice());
+
+                        System.out.print("Payment amount: ");
+                        double paymentAmount = scanner.nextDouble();
+                        transportOrder.getCustomer().pay(paymentAmount);
+
+                        System.out.print("Review (rating from 1 to 5 stars): ");
+                        int rating = scanner.nextInt();
+                        System.out.print("Review (comment): ");
+                        String comment = scanner.next();
+                        transportOrder.setReview(new Review(rating, comment));
+                        scanner.nextLine();
+                        break;
+                    } else {
+                        System.out.println("Invalid driver choice.");
+                    }
+
+                case 3:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+                    break;
+            }
+        }
 
 
 /*        Trip trip1 = new Trip(driver1, customer1, location1, location2, 10.5, LocalDate.of(2023, 10, 30));

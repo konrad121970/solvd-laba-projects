@@ -101,7 +101,7 @@ public class TaxiCompany {
 
     public void printVehicles() {
         for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle.getMake());
+            System.out.println(vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
         }
     }
 
