@@ -1,5 +1,7 @@
 package com.solvd.laba.hw3.model.route;
 
+import java.util.Objects;
+
 public class Location {
     private String city;
     private String streetName;
@@ -27,16 +29,24 @@ public class Location {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(city, streetName);
     }
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Location otherLocation = (Location) obj;
+        return Objects.equals(city, otherLocation.city) &&
+                Objects.equals(streetName, otherLocation.streetName);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Location [city = '" + city + "', streetName = '" + streetName + "']";
     }
 }

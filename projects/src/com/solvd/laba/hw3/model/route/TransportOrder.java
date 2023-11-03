@@ -2,7 +2,6 @@ package com.solvd.laba.hw3.model.route;
 
 import com.solvd.laba.hw3.model.customer.Customer;
 import com.solvd.laba.hw3.model.employees.Driver;
-import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 
 import java.time.LocalDate;
 
@@ -15,18 +14,19 @@ public class TransportOrder {
     private LocalDate date;
     private Payment payment;
     private Review review;
+    private Double price;
 
-    public TransportOrder(Location routeStart, Location routeEnd, Customer customer, Driver driver, Double distanceInKm, LocalDate date) {
+    public TransportOrder(Location routeStart, Location routeEnd, Customer customer, Driver driver, LocalDate date) {
         this.routeStart = routeStart;
         this.routeEnd = routeEnd;
         this.customer = customer;
         this.driver = driver;
-        this.distanceInKm = distanceInKm;
         this.date = date;
     }
 
-    public Double calculatePrice(Double distanceInKm, TaxiVehicle taxiVehicle) {
-        return distanceInKm * taxiVehicle.getFarePerKilometer();
+    public Double calculatePrice() {
+        this.price = distanceInKm * this.driver.getVehicle().getFarePerKilometer();
+        return price;
     }
 
 
@@ -84,6 +84,14 @@ public class TransportOrder {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public Review getReview() {

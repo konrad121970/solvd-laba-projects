@@ -1,14 +1,14 @@
 package com.solvd.laba.hw3.model.employees;
 
-import com.solvd.laba.hw3.model.vehicles.Vehicle;
+import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 
 public class Driver extends Employee {
     private static int driversCount;
-    private Vehicle vehicle;
+    private TaxiVehicle taxiVehicle;
 
-    public Driver(String firstName, String lastName, Integer age, String phoneNumber, Vehicle vehicle, Integer salary) {
+    public Driver(String firstName, String lastName, Integer age, String phoneNumber, TaxiVehicle taxiVehicle, Integer salary) {
         super(firstName, lastName, phoneNumber, age, salary);
-        this.vehicle = vehicle;
+        this.taxiVehicle = taxiVehicle;
 
         driversCount++;
     }
@@ -27,12 +27,12 @@ public class Driver extends Employee {
         System.out.println("I am en route to " + endLocation + "!. I started my journey from " + startLocation + " at " + dateTime + ".");
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public TaxiVehicle getVehicle() {
+        return taxiVehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setVehicle(TaxiVehicle vehicle) {
+        this.taxiVehicle = vehicle;
     }
 
     @Override
