@@ -29,6 +29,8 @@ public class TaxiCompany2Main {
 
 
 
+
+
 /*        Trip trip1 = new Trip(driver1, customer1, location1, location2, 10.5, LocalDate.of(2023, 10, 30));
         Trip trip2 = new Trip(driver2, customer2, location3, location4, 20.0, LocalDate.of(2023, 10, 29));
         Trip trip3 = new Trip(driver1, customer3, location1, location4, 30.5, LocalDate.of(2023, 10, 31));
