@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.model.route;
 
-import com.solvd.laba.hw3.model.customer.Customer;
-import com.solvd.laba.hw3.model.employees.Driver;
+import com.solvd.laba.hw3.model.people.customer.Customer;
+import com.solvd.laba.hw3.model.people.employees.Driver;
 
 import java.time.LocalDate;
 
@@ -10,23 +10,14 @@ public class TransportOrder {
     private Location routeEnd;
     private Customer customer;
     private Driver driver;
-    private Double distanceInKm;
-    private LocalDate date;
     private Payment payment;
     private Review review;
-    private Double price;
 
-    public TransportOrder(Location routeStart, Location routeEnd, Customer customer, Driver driver, LocalDate date) {
+    public TransportOrder(Location routeStart, Location routeEnd, Customer customer, Driver driver) {
         this.routeStart = routeStart;
         this.routeEnd = routeEnd;
         this.customer = customer;
         this.driver = driver;
-        this.date = date;
-    }
-
-    public Double calculatePrice() {
-        this.price = distanceInKm * this.driver.getVehicle().getFarePerKilometer();
-        return price;
     }
 
 
@@ -62,21 +53,6 @@ public class TransportOrder {
         this.driver = driver;
     }
 
-    public Double getDistanceInKm() {
-        return distanceInKm;
-    }
-
-    public void setDistanceInKm(Double distanceInKm) {
-        this.distanceInKm = distanceInKm;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
     public Payment getPayment() {
         return payment;
@@ -86,13 +62,6 @@ public class TransportOrder {
         this.payment = payment;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
 
     public Review getReview() {
         return review;
