@@ -1,4 +1,4 @@
-package com.solvd.laba.hw3.model.customer;
+package com.solvd.laba.hw3.model.people;
 
 public abstract class Person {
     protected String firstName;

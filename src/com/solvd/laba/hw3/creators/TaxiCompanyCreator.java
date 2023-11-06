@@ -1,13 +1,13 @@
-package com.solvd.laba.hw3.factories;
+package com.solvd.laba.hw3.creators;
 
 import com.solvd.laba.hw3.model.TaxiCompany;
-import com.solvd.laba.hw3.model.customer.Customer;
-import com.solvd.laba.hw3.model.employees.Accountant;
-import com.solvd.laba.hw3.model.employees.Driver;
+import com.solvd.laba.hw3.model.people.customer.Customer;
+import com.solvd.laba.hw3.model.people.employees.Accountant;
+import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 
-public class TaxiCompanyFactory {
+public class TaxiCompanyCreator {
     public static TaxiCompany create() {
         TaxiVehicle[] vehicles = createVehicles();
         Driver[] drivers = createDrivers(vehicles);

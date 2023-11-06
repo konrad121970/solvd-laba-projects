@@ -1,8 +1,8 @@
 package com.solvd.laba.hw3.model;
 
-import com.solvd.laba.hw3.model.customer.Customer;
-import com.solvd.laba.hw3.model.employees.Accountant;
-import com.solvd.laba.hw3.model.employees.Driver;
+import com.solvd.laba.hw3.model.people.customer.Customer;
+import com.solvd.laba.hw3.model.people.employees.Accountant;
+import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
 

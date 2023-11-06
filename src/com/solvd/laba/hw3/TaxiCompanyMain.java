@@ -1,11 +1,11 @@
 package com.solvd.laba.hw3;
 
-import com.solvd.laba.hw3.factories.TaxiCompanyFactory;
+import com.solvd.laba.hw3.creators.TaxiCompanyCreator;
 import com.solvd.laba.hw3.model.TaxiCompany;
-import com.solvd.laba.hw3.model.customer.Customer;
-import com.solvd.laba.hw3.model.employees.Accountant;
-import com.solvd.laba.hw3.model.employees.Driver;
-import com.solvd.laba.hw3.model.employees.Employee;
+import com.solvd.laba.hw3.model.people.Employee;
+import com.solvd.laba.hw3.model.people.customer.Customer;
+import com.solvd.laba.hw3.model.people.employees.Accountant;
+import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Payment;
 import com.solvd.laba.hw3.model.route.Review;
@@ -16,11 +16,11 @@ import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class TaxiCompany2Main {
+public class TaxiCompanyMain {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        TaxiCompany taxiCompany = TaxiCompanyFactory.create();
+        TaxiCompany taxiCompany = TaxiCompanyCreator.create();
 
         Customer[] customers = taxiCompany.getCustomers();
         Driver[] drivers = taxiCompany.getDrivers();
@@ -48,12 +48,11 @@ public class TaxiCompany2Main {
         Location loc3 = new Location("New York", "Red St");
         Location loc4 = new Location("New York", "Green St");
 
-        TransportOrder tr1 = new TransportOrder(loc1, loc2, customers[0], drivers[0], LocalDate.of(2023, 11, 3));
+        TransportOrder tr1 = new TransportOrder(loc1, loc2, customers[0], drivers[0]);
         drivers[0].driveFromTo(loc1.getStreetName(), loc2.getStreetName());
-        tr1.setDistanceInKm(10.0);
-        tr1.calculatePrice();
-        tr1.getCustomer().pay(tr1.getPrice());
-        tr1.setPayment(new Payment(LocalDate.of(2023, 11, 3), tr1.getPrice()));
+        drivers[0].getVehicle().calculatePrice(10.00);
+        tr1.getCustomer().pay(drivers[0].getVehicle().calculatePrice(10.00));
+        tr1.setPayment(new Payment(LocalDate.of(2023, 11, 3), drivers[0].getVehicle().calculatePrice(10.00)));
         tr1.setReview(new Review(5, "It was an amazing ride!\n"));
 
         System.out.println("\nCustomer[0] spent money value: " + customers[0].getSpentMoney() + "\n");
@@ -125,19 +124,18 @@ public class TaxiCompany2Main {
 
                     if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().length) {
                         Driver selectedDriver = taxiCompany.getDrivers()[driverChoice];
-                        System.out.print("Order Date (yyyy-MM-dd): ");
+                        System.out.print("Ride Date (yyyy-MM-dd): ");
                         String orderDateStr = scanner.next();
                         LocalDate orderDate = LocalDate.parse(orderDateStr);
 
-                        TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver, orderDate);
+                        TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
                         selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
 
                         System.out.print("Enter the distance in kilometers(X,XX or X.XX format): ");
                         double distanceInKm = scanner.nextDouble();
-                        transportOrder.setDistanceInKm(distanceInKm);
 
-                        transportOrder.calculatePrice();
-                        System.out.println("Order price: " + transportOrder.getPrice());
+                        selectedDriver.getVehicle().calculatePrice(distanceInKm);
+                        System.out.println("Order price: " + selectedDriver.getVehicle().getFareCost());
 
                         System.out.print("Payment amount: ");
                         double paymentAmount = scanner.nextDouble();

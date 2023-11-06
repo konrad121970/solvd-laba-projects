@@ -1,10 +1,12 @@
-package com.solvd.laba.hw3.model.employees;
+package com.solvd.laba.hw3.model.people.employees;
 
+import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 
 public class Driver extends Employee {
     private static int driversCount;
     private TaxiVehicle taxiVehicle;
+
 
     public Driver(String firstName, String lastName, Integer age, String phoneNumber, TaxiVehicle taxiVehicle, Integer salary) {
         super(firstName, lastName, phoneNumber, age, salary);
@@ -26,6 +28,7 @@ public class Driver extends Employee {
     public void driveFromTo(String startLocation, String endLocation, String dateTime) {
         System.out.println("I am en route to " + endLocation + "!. I started my journey from " + startLocation + " at " + dateTime + ".");
     }
+
 
     public TaxiVehicle getVehicle() {
         return taxiVehicle;

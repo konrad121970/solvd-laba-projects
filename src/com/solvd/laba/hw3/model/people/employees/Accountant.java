@@ -1,4 +1,6 @@
-package com.solvd.laba.hw3.model.employees;
+package com.solvd.laba.hw3.model.people.employees;
+
+import com.solvd.laba.hw3.model.people.Employee;
 
 public class Accountant extends Employee {
     private static int accountantsCount;

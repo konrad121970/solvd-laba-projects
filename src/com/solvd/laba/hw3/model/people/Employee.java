@@ -1,6 +1,4 @@
-package com.solvd.laba.hw3.model.employees;
-
-import com.solvd.laba.hw3.model.customer.Person;
+package com.solvd.laba.hw3.model.people;
 
 public abstract class Employee extends Person {
     protected Integer salary;

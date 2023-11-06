@@ -1,4 +1,6 @@
-package com.solvd.laba.hw3.model.customer;
+package com.solvd.laba.hw3.model.people.customer;
+
+import com.solvd.laba.hw3.model.people.Person;
 
 public class Customer extends Person {
     private static int customersCount;
