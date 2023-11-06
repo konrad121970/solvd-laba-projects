@@ -3,6 +3,7 @@ package com.solvd.laba.hw3.model.vehicles;
 import com.solvd.laba.hw3.model.interfaces.Maintainable;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Vehicle implements Maintainable {
     protected String make;
@@ -68,13 +69,16 @@ public class Vehicle implements Maintainable {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return numberOfSeats == vehicle.numberOfSeats && Objects.equals(make, vehicle.make) && Objects.equals(model, vehicle.model) && Objects.equals(registrationPlate, vehicle.registrationPlate) && Objects.equals(nextMaintenance, vehicle.nextMaintenance) && Objects.equals(lastMaintenance, vehicle.lastMaintenance);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return Objects.hash(make, model, registrationPlate, numberOfSeats, nextMaintenance, lastMaintenance);
     }
 
     @Override

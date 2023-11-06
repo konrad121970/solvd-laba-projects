@@ -1,5 +1,7 @@
 package com.solvd.laba.hw3.model.vehicles;
 
+import java.util.Objects;
+
 public class TaxiVehicle extends Vehicle {
     private double farePerKilometer;
     private double fareCost;
@@ -31,13 +33,17 @@ public class TaxiVehicle extends Vehicle {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        TaxiVehicle that = (TaxiVehicle) o;
+        return Double.compare(farePerKilometer, that.farePerKilometer) == 0 && Double.compare(fareCost, that.fareCost) == 0;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), farePerKilometer, fareCost);
     }
 
     @Override

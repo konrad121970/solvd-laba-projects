@@ -1,5 +1,7 @@
 package com.solvd.laba.hw3.model.people;
 
+import java.util.Objects;
+
 public abstract class Employee extends Person {
     protected Integer salary;
     protected Integer age;
@@ -29,13 +31,17 @@ public abstract class Employee extends Person {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Employee employee = (Employee) o;
+        return Objects.equals(salary, employee.salary) && Objects.equals(age, employee.age);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), salary, age);
     }
 
     @Override

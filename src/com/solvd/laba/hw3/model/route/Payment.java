@@ -3,6 +3,7 @@ package com.solvd.laba.hw3.model.route;
 import com.solvd.laba.hw3.model.interfaces.Payable;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Payment implements Payable {
     private LocalDate date;
@@ -39,18 +40,25 @@ public class Payment implements Payable {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
     public String toString() {
-        return super.toString();
+        return "Payment{" +
+                "date=" + date +
+                ", amount=" + amount +
+                ", isPaid=" + isPaid +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Payment payment = (Payment) o;
+        return isPaid == payment.isPaid && Objects.equals(date, payment.date) && Objects.equals(amount, payment.amount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, amount, isPaid);
     }
 
     @Override

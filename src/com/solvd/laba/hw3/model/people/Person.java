@@ -2,6 +2,8 @@ package com.solvd.laba.hw3.model.people;
 
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 
+import java.util.Objects;
+
 public abstract class Person implements Displayable {
     protected String firstName;
     protected String lastName;
@@ -38,13 +40,16 @@ public abstract class Person implements Displayable {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(phoneNumber, person.phoneNumber);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, phoneNumber);
     }
 
     @Override
