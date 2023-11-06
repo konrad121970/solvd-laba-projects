@@ -2,7 +2,7 @@ package com.solvd.laba.hw3.model.route;
 
 import java.util.Objects;
 
-public class Location {
+public final class Location {
     private String city;
     private String streetName;
 

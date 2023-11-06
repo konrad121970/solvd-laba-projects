@@ -1,9 +1,10 @@
 package com.solvd.laba.hw3.model.people.employees;
 
+import com.solvd.laba.hw3.model.interfaces.Tranportable;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 
-public class Driver extends Employee {
+public final class Driver extends Employee implements Tranportable {
     private static int driversCount;
     private TaxiVehicle taxiVehicle;
 
@@ -39,11 +40,6 @@ public class Driver extends Employee {
     }
 
     @Override
-    public void displayInfo() {
-        System.out.println("Driver Info: Name: " + firstName + " Last Name: " + lastName);
-    }
-
-    @Override
     public void giveRaise() {
         this.salary += 100;
     }
@@ -64,11 +60,35 @@ public class Driver extends Employee {
             return false;
         }
         Driver otherDriver = (Driver) obj;
-        return super.equals(obj) && driversCount == otherDriver.driversCount;
+        return super.equals(obj) && driversCount == driversCount;
     }
 
     @Override
     public String toString() {
         return "Driver [name=" + firstName + ", lastName=" + lastName + "]";
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Driver's name: " + this.firstName + "surname " + this.lastName);
+    }
+
+    @Override
+    public void showDetails() {
+        System.out.println("Details for Driver: \nName: " + this.firstName +
+                "\nLast Name: " + this.lastName +
+                "\nAge: " + this.age +
+                "\nSalary: " + this.salary +
+                "\nAssigned vehicle brand:" + this.getVehicle().getMake());
+    }
+
+    @Override
+    public void move(String source, String destination) {
+        System.out.println("I am en route to " + source + "!. I started my journey from " + destination + ".");
+    }
+
+    @Override
+    public Double getTimeOfArrival(Double distanceToGo) {
+        return distanceToGo % 2;
     }
 }

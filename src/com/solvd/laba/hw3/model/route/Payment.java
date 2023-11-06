@@ -1,14 +1,25 @@
 package com.solvd.laba.hw3.model.route;
 
+import com.solvd.laba.hw3.model.interfaces.Payable;
+
 import java.time.LocalDate;
 
-public class Payment {
+public class Payment implements Payable {
     private LocalDate date;
     private Double amount;
+    private boolean isPaid;
 
     public Payment(LocalDate date, Double amount) {
         this.date = date;
         this.amount = amount;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 
     public LocalDate getDate() {
@@ -40,5 +51,15 @@ public class Payment {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    @Override
+    public Double showPaymentAmount() {
+        return this.amount;
+    }
+
+    @Override
+    public boolean isPaymentDone() {
+        return this.isPaid;
     }
 }

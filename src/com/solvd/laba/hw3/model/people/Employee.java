@@ -12,7 +12,7 @@ public abstract class Employee extends Person {
 
     public abstract void giveRaise();
 
-    public Integer getSalary() {
+    public final Integer getSalary() {
         return salary;
     }
 
@@ -20,7 +20,7 @@ public abstract class Employee extends Person {
         this.salary = salary;
     }
 
-    public Integer getAge() {
+    public final Integer getAge() {
         return age;
     }
 

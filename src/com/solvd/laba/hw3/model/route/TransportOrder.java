@@ -3,12 +3,12 @@ package com.solvd.laba.hw3.model.route;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 
-import java.time.LocalDate;
+import java.util.Objects;
 
-public class TransportOrder {
+public final class TransportOrder {
+    private final Customer customer;
     private Location routeStart;
     private Location routeEnd;
-    private Customer customer;
     private Driver driver;
     private Payment payment;
     private Review review;
@@ -20,6 +20,13 @@ public class TransportOrder {
         this.driver = driver;
     }
 
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
 
     public Location getRouteStart() {
         return routeStart;
@@ -41,10 +48,6 @@ public class TransportOrder {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public Driver getDriver() {
         return driver;
     }
@@ -62,27 +65,29 @@ public class TransportOrder {
         this.payment = payment;
     }
 
-
-    public Review getReview() {
-        return review;
-    }
-
-    public void setReview(Review review) {
-        this.review = review;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TransportOrder that = (TransportOrder) o;
+        return Objects.equals(routeStart, that.routeStart) && Objects.equals(routeEnd, that.routeEnd) && Objects.equals(customer, that.customer) && Objects.equals(driver, that.driver) && Objects.equals(payment, that.payment) && Objects.equals(review, that.review);
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+        return Objects.hash(routeStart, routeEnd, customer, driver, payment, review);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "TransportOrder{" +
+                "routeStart=" + routeStart +
+                ", routeEnd=" + routeEnd +
+                ", customer=" + customer +
+                ", driver=" + driver +
+                ", payment=" + payment +
+                ", review=" + review +
+                '}';
     }
+
 }

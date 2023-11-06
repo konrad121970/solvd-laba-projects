@@ -8,6 +8,10 @@ import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 
 public class TaxiCompanyCreator {
+    static {
+        System.out.println("TaxiCompanyCreator class initialized.");
+    }
+
     public static TaxiCompany create() {
         TaxiVehicle[] vehicles = createVehicles();
         Driver[] drivers = createDrivers(vehicles);

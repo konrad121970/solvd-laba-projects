@@ -2,7 +2,7 @@ package com.solvd.laba.hw3.model.people.employees;
 
 import com.solvd.laba.hw3.model.people.Employee;
 
-public class Accountant extends Employee {
+public final class Accountant extends Employee {
     private static int accountantsCount;
 
     public Accountant(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) {
@@ -17,11 +17,6 @@ public class Accountant extends Employee {
     @Override
     public void giveRaise() {
         this.salary += 200;
-    }
-
-    @Override
-    public void displayInfo() {
-        System.out.println("Accountant Info: Name: " + firstName + " Last Name: " + lastName);
     }
 
     @Override
@@ -40,11 +35,24 @@ public class Accountant extends Employee {
             return false;
         }
         Accountant otherAccountant = (Accountant) obj;
-        return super.equals(obj) && accountantsCount == otherAccountant.accountantsCount;
+        return super.equals(obj) && accountantsCount == accountantsCount;
     }
 
     @Override
     public String toString() {
         return "Accountant [name=" + firstName + ", lastName=" + lastName + "]";
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Accountant's name: " + this.firstName + "surname " + this.lastName);
+    }
+
+    @Override
+    public void showDetails() {
+        System.out.println("Details for Accountant: \nName: " + this.firstName +
+                "\nLast Name: " + this.lastName +
+                "\nAge: " + this.age +
+                "\nSalary: " + this.salary);
     }
 }

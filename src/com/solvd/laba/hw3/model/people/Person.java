@@ -1,6 +1,8 @@
 package com.solvd.laba.hw3.model.people;
 
-public abstract class Person {
+import com.solvd.laba.hw3.model.interfaces.Displayable;
+
+public abstract class Person implements Displayable {
     protected String firstName;
     protected String lastName;
     protected String phoneNumber;
@@ -11,7 +13,7 @@ public abstract class Person {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getFirstName() {
+    public final String getFirstName() {
         return firstName;
     }
 
@@ -19,7 +21,7 @@ public abstract class Person {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public final String getLastName() {
         return lastName;
     }
 
@@ -27,15 +29,13 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
-    public String getPhoneNumber() {
+    public final String getPhoneNumber() {
         return phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    public abstract void displayInfo();
 
     @Override
     public int hashCode() {

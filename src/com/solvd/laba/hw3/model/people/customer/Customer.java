@@ -1,8 +1,9 @@
 package com.solvd.laba.hw3.model.people.customer;
 
+import com.solvd.laba.hw3.model.interfaces.Tranportable;
 import com.solvd.laba.hw3.model.people.Person;
 
-public class Customer extends Person {
+public final class Customer extends Person implements Tranportable {
     private static int customersCount;
     private Double spentMoney = 0.0;
 
@@ -35,10 +36,6 @@ public class Customer extends Person {
         this.spentMoney = spentMoney;
     }
 
-    @Override
-    public void displayInfo() {
-        System.out.println("Customer Info: Name" + firstName + " Last name: " + lastName);
-    }
 
     @Override
     public int hashCode() {
@@ -56,11 +53,33 @@ public class Customer extends Person {
             return false;
         }
         Customer otherCustomer = (Customer) obj;
-        return super.equals(obj) && customersCount == otherCustomer.customersCount;
+        return super.equals(obj) && customersCount == customersCount;
     }
 
     @Override
     public String toString() {
         return "Customer [firstName=" + firstName + ", lastName=" + lastName + "]";
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Customer's name: " + this.firstName + "surname " + this.lastName);
+    }
+
+    @Override
+    public void showDetails() {
+        System.out.println("Details for Customer: \nName: " + this.firstName +
+                "\nLast Name: " + this.lastName +
+                "\nSpent money: " + this.spentMoney);
+    }
+
+    @Override
+    public void move(String source, String destination) {
+        System.out.println("I am taking a ride in a Taxi from " + source + " to " + destination + "!");
+    }
+
+    @Override
+    public Double getTimeOfArrival(Double distanceToGo) {
+        return distanceToGo % 2;
     }
 }

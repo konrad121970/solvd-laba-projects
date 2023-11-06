@@ -1,20 +1,28 @@
 package com.solvd.laba.hw3.model.route;
 
-public class Review {
-    private Integer numberOfStars;
+
+import com.solvd.laba.hw3.model.interfaces.Reviewable;
+
+import java.util.Objects;
+
+public class Review implements Reviewable {
+    private Integer starRating;
     private String content;
 
-    public Review(Integer numberOfStars, String content) {
-        this.numberOfStars = numberOfStars;
+    public Review() {
+    }
+
+    public Review(Integer starRating, String content) {
+        this.starRating = starRating;
         this.content = content;
     }
 
-    public Integer getNumberOfStars() {
-        return numberOfStars;
+    public Integer getStarRating() {
+        return starRating;
     }
 
-    public void setNumberOfStars(Integer numberOfStars) {
-        this.numberOfStars = numberOfStars;
+    public void setStarRating(Integer starRating) {
+        this.starRating = starRating;
     }
 
     public String getContent() {
@@ -26,17 +34,36 @@ public class Review {
     }
 
     @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
     public String toString() {
-        return super.toString();
+        return "Review{" +
+                "numberOfStars=" + starRating +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Review review = (Review) o;
+        return Objects.equals(starRating, review.starRating) && Objects.equals(content, review.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(starRating, content);
+    }
+
+    @Override
+    public void writeReview(Integer starRating, String content) {
+        this.starRating = starRating;
+        this.content = content;
+    }
+
+    @Override
+    public String getReview() {
+        return "Star rating: " + this.starRating + "out of 5. Content of review:\n" + this.content;
     }
 }
+
+
