@@ -3,12 +3,13 @@ package com.solvd.laba.hw3;
 import com.solvd.laba.hw3.creators.TaxiCompanyCreator;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.interfaces.Tranportable;
+import com.solvd.laba.hw3.model.payment.Payment;
 import com.solvd.laba.hw3.model.people.Employee;
+import com.solvd.laba.hw3.model.people.Person;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.Location;
-import com.solvd.laba.hw3.model.route.Payment;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
@@ -51,6 +52,8 @@ public class TaxiCompanyMain {
         Location loc4 = new Location("New York", "Green St");
 
         TransportOrder tr1 = new TransportOrder(loc1, loc2, customers[0], drivers[0]);
+        System.out.println(customers[0]);
+
         drivers[0].move(loc1.getStreetName(), loc2.getStreetName());
         drivers[0].getVehicle().calculatePrice(10.00);
         tr1.getCustomer().pay(drivers[0].getVehicle().calculatePrice(10.00));
@@ -63,7 +66,12 @@ public class TaxiCompanyMain {
 
         // Liskov's Substitution Principle
         changePosition(drivers[0], "Start", "End");
-        changePosition(customers[0], "Start", "Emd");
+        changePosition(customers[0], "Start", "End");
+
+        printPersonData(customers[0]);
+        printPersonData(drivers[0]);
+        printPersonData(accountants[0]);
+
 
         while (true) {
             System.out.println("Taxi Company Menu:");
@@ -174,6 +182,10 @@ public class TaxiCompanyMain {
 
     public static void changePosition(Tranportable tranportable, String startLocation, String destination) {
         tranportable.move(startLocation, destination);
+    }
+
+    public static void printPersonData(Person person) {
+        person.toString();
     }
 
 

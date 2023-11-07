@@ -1,8 +1,10 @@
 package com.solvd.laba.hw3.model.route;
 
+import com.solvd.laba.hw3.model.interfaces.Displayable;
+
 import java.util.Objects;
 
-public final class Location {
+public final class Location implements Displayable {
     private String city;
     private String streetName;
 
@@ -48,5 +50,16 @@ public final class Location {
     @Override
     public String toString() {
         return "Location [city = '" + city + "', streetName = '" + streetName + "']";
+    }
+
+    // TODO:
+    @Override
+    public void display() {
+
+    }
+
+    @Override
+    public void showDetails() {
+
     }
 }

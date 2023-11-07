@@ -1,5 +1,6 @@
 package com.solvd.laba.hw3.model;
 
+import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
@@ -8,7 +9,7 @@ import com.solvd.laba.hw3.model.vehicles.Vehicle;
 
 import java.util.Arrays;
 
-public class TaxiCompany {
+public class TaxiCompany implements Displayable {
     private TransportOrder[] transportOrders;
     private Customer[] customers;
     private Driver[] drivers;
@@ -34,9 +35,7 @@ public class TaxiCompany {
     public void addVehicle(Vehicle vehicle) {
         Vehicle[] newVehicle = new Vehicle[vehicles.length + 1];
 
-        for (int i = 0; i < vehicles.length; i++) {
-            newVehicle[i] = vehicles[i];
-        }
+        System.arraycopy(vehicles, 0, newVehicle, 0, vehicles.length);
         newVehicle[vehicles.length] = vehicle;
         this.vehicles = newVehicle;
     }
@@ -44,9 +43,7 @@ public class TaxiCompany {
     public void addDriver(Driver driver) {
         Driver[] newDrivers = new Driver[drivers.length + 1];
 
-        for (int i = 0; i < drivers.length; i++) {
-            newDrivers[i] = drivers[i];
-        }
+        System.arraycopy(drivers, 0, newDrivers, 0, drivers.length);
         newDrivers[vehicles.length] = driver;
         this.drivers = newDrivers;
     }
@@ -54,9 +51,7 @@ public class TaxiCompany {
     public void addCustomer(Customer customer) {
         Customer[] newCustomers = new Customer[customers.length + 1];
 
-        for (int i = 0; i < customers.length; i++) {
-            newCustomers[i] = customers[i];
-        }
+        System.arraycopy(customers, 0, newCustomers, 0, customers.length);
         newCustomers[vehicles.length] = customer;
         this.customers = newCustomers;
     }
@@ -133,5 +128,16 @@ public class TaxiCompany {
                 ", accountants=" + Arrays.toString(accountants) +
                 ", vehicles=" + Arrays.toString(vehicles) +
                 '}';
+    }
+
+    // TODO: implement these methods
+    @Override
+    public void display() {
+
+    }
+
+    @Override
+    public void showDetails() {
+
     }
 }

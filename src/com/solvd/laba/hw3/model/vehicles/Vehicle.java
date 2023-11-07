@@ -1,11 +1,12 @@
 package com.solvd.laba.hw3.model.vehicles;
 
+import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.interfaces.Maintainable;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Vehicle implements Maintainable {
+public class Vehicle implements Maintainable, Displayable {
     protected String make;
     protected String model;
     protected String registrationPlate;
@@ -94,5 +95,16 @@ public class Vehicle implements Maintainable {
     @Override
     public void doMaintenance() {
         this.lastMaintenance = LocalDate.now();
+    }
+
+    // TODO:
+    @Override
+    public void display() {
+
+    }
+
+    @Override
+    public void showDetails() {
+
     }
 }

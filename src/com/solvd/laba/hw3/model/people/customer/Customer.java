@@ -5,11 +5,11 @@ import com.solvd.laba.hw3.model.people.Person;
 
 public final class Customer extends Person implements Tranportable {
     private static int customersCount;
-    private Double spentMoney = 0.0;
+    private Double spentMoney;
 
     public Customer(String firstName, String lastName, String phoneNumber) {
         super(firstName, lastName, phoneNumber);
-
+        this.spentMoney = 10.0;
         customersCount++;
     }
 

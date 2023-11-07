@@ -1,11 +1,12 @@
 package com.solvd.laba.hw3.model.route;
 
 
+import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.interfaces.Reviewable;
 
 import java.util.Objects;
 
-public class Review implements Reviewable {
+public class Review implements Reviewable, Displayable {
     private Integer starRating;
     private String content;
 
@@ -63,6 +64,18 @@ public class Review implements Reviewable {
     @Override
     public String getReview() {
         return "Star rating: " + this.starRating + "out of 5. Content of review:\n" + this.content;
+    }
+
+
+    // TODO:
+    @Override
+    public void display() {
+
+    }
+
+    @Override
+    public void showDetails() {
+
     }
 }
 

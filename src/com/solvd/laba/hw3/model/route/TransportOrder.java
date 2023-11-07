@@ -1,11 +1,13 @@
 package com.solvd.laba.hw3.model.route;
 
+import com.solvd.laba.hw3.model.interfaces.Displayable;
+import com.solvd.laba.hw3.model.payment.Payment;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 
 import java.util.Objects;
 
-public final class TransportOrder {
+public final class TransportOrder implements Displayable {
     private final Customer customer;
     private Location routeStart;
     private Location routeEnd;
@@ -90,4 +92,14 @@ public final class TransportOrder {
                 '}';
     }
 
+    // TODO:
+    @Override
+    public void display() {
+
+    }
+
+    @Override
+    public void showDetails() {
+
+    }
 }
