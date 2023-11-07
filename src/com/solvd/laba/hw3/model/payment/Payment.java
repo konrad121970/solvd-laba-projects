@@ -6,10 +6,11 @@ import com.solvd.laba.hw3.model.interfaces.Payable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Payment implements Payable, Displayable {
+public abstract class Payment implements Payable, Displayable {
     private LocalDate date;
     private Double amount;
     private boolean isPaid;
+    private String currency;
 
     public Payment(LocalDate date, Double amount) {
         this.date = date;
