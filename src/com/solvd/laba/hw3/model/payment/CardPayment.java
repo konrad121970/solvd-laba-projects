@@ -3,7 +3,7 @@ package com.solvd.laba.hw3.model.payment;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class CardPayment extends Payment {
+public final class CardPayment extends Payment {
     private String cardNumber;
     private String cardType;
 
@@ -51,6 +51,6 @@ public class CardPayment extends Payment {
 
     @Override
     public void processPayment() {
-        
+
     }
 }

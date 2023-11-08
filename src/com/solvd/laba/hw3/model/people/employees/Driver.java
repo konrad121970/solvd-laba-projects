@@ -1,12 +1,12 @@
 package com.solvd.laba.hw3.model.people.employees;
 
-import com.solvd.laba.hw3.model.interfaces.Tranportable;
+import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class Driver extends Employee implements Tranportable {
+public final class Driver extends Employee implements Transportable {
     private static final Logger LOGGER = LogManager.getLogger(Driver.class);
     private static int driversCount;
     private TaxiVehicle taxiVehicle;

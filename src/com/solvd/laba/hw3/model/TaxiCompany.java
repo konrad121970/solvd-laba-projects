@@ -1,5 +1,6 @@
 package com.solvd.laba.hw3.model;
 
+import com.solvd.laba.hw3.model.exceptions.DuplicateRegistrationPlateException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
@@ -35,9 +36,10 @@ public class TaxiCompany implements Displayable {
         }
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        Vehicle[] newVehicle = new Vehicle[vehicles.length + 1];
+    public void addVehicle(Vehicle vehicle) throws DuplicateRegistrationPlateException {
+        isRegistrationPlateDuplicatePresent(vehicle);
 
+        Vehicle[] newVehicle = new Vehicle[vehicles.length + 1];
         System.arraycopy(vehicles, 0, newVehicle, 0, vehicles.length);
         newVehicle[vehicles.length] = vehicle;
         this.vehicles = newVehicle;
@@ -57,6 +59,14 @@ public class TaxiCompany implements Displayable {
         System.arraycopy(customers, 0, newCustomers, 0, customers.length);
         newCustomers[vehicles.length] = customer;
         this.customers = newCustomers;
+    }
+
+    public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
+        for (int i = 0; i < vehicles.length; i++) {
+            if (vehicles[i].getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {
+                throw new DuplicateRegistrationPlateException("There is another car with the same registration plate assigned!");
+            }
+        }
     }
 
     public TransportOrder[] getTransportOrders() {
@@ -100,10 +110,12 @@ public class TaxiCompany implements Displayable {
     }
 
     public void printVehicles() {
+        LOGGER.info("List of company vehicles:");
         for (Vehicle vehicle : vehicles) {
             LOGGER.info(vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
         }
     }
+
 
     public void printCustomers() {
     }

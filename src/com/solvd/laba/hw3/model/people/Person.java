@@ -1,5 +1,6 @@
 package com.solvd.laba.hw3.model.people;
 
+import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 
 import java.util.Objects;
@@ -11,6 +12,9 @@ public abstract class Person implements Displayable {
     protected String phoneNumber;
 
     public Person(String firstName, String lastName, String phoneNumber) {
+        if (firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()) {
+            throw new InvalidPersonDataException("Invalid " + this.getClass().getSimpleName() + " data: First name and last name must not be empty.");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

@@ -1,5 +1,7 @@
 package com.solvd.laba.hw3.model.vehicles;
 
+import com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException;
+import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.interfaces.Maintainable;
 
@@ -14,7 +16,10 @@ public class Vehicle implements Maintainable, Displayable {
     private LocalDate nextMaintenance;
     private LocalDate lastMaintenance;
 
-    public Vehicle(String make, String model, int numberOfSeats, String registrationPlate) {
+    public Vehicle(String make, String model, int numberOfSeats, String registrationPlate) throws InvalidNumberOfSeatsException {
+        if (numberOfSeats < 1 || numberOfSeats > 300) {
+            throw new InvalidNumberOfSeatsException("Number of seats should be a number between 1 and 300!");
+        }
         this.make = make;
         this.model = model;
         this.numberOfSeats = numberOfSeats;
@@ -89,6 +94,10 @@ public class Vehicle implements Maintainable, Displayable {
 
     @Override
     public void scheduleMaintenance(LocalDate date) {
+        LocalDate now = LocalDate.now();
+        if (date.isBefore(now)) {
+            throw new InvalidNextMaintenanceDateException("Invalid maintenance schedule date: Cannot schedule maintenance in the past.");
+        }
         this.nextMaintenance = date;
     }
 
@@ -96,6 +105,7 @@ public class Vehicle implements Maintainable, Displayable {
     public void doMaintenance() {
         this.lastMaintenance = LocalDate.now();
     }
+
 
     // TODO:
     @Override

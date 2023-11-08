@@ -1,11 +1,11 @@
 package com.solvd.laba.hw3.model.people.customer;
 
-import com.solvd.laba.hw3.model.interfaces.Tranportable;
+import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public final class Customer extends Person implements Tranportable {
+public final class Customer extends Person implements Transportable {
     private static final Logger LOGGER = LogManager.getLogger(Customer.class);
     private static int customersCount;
     private Double spentMoney;

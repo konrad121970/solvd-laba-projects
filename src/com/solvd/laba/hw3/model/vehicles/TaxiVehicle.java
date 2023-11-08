@@ -11,6 +11,11 @@ public class TaxiVehicle extends Vehicle {
         this.farePerKilometer = farePerKilometer;
     }
 
+    public TaxiVehicle(String make, String model, String registrationPlate, int numberOfSeats) {
+        super(make, model, numberOfSeats, registrationPlate);
+    }
+
+
     public double getFareCost() {
         return fareCost;
     }
@@ -23,7 +28,7 @@ public class TaxiVehicle extends Vehicle {
         return farePerKilometer;
     }
 
-    public void setFarePerKilometer(double farePerKilometer) {
+    public void setFarePerKilometer(Double farePerKilometer) {
         this.farePerKilometer = farePerKilometer;
     }
 

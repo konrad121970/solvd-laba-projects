@@ -2,7 +2,10 @@ package com.solvd.laba.hw3;
 
 import com.solvd.laba.hw3.creators.TaxiCompanyCreator;
 import com.solvd.laba.hw3.model.TaxiCompany;
-import com.solvd.laba.hw3.model.interfaces.Tranportable;
+import com.solvd.laba.hw3.model.exceptions.DuplicateRegistrationPlateException;
+import com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException;
+import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.payment.CashPayment;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.people.Person;
@@ -22,21 +25,23 @@ import java.util.Scanner;
 
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
-
+    static Scanner scanner = new Scanner(System.in);
+    static TaxiCompany taxiCompany = TaxiCompanyCreator.create();
+    static Customer[] customers = taxiCompany.getCustomers();
+    static Driver[] drivers = taxiCompany.getDrivers();
+    static Accountant[] accountants = taxiCompany.getAccountants();
 
     public static void main(String[] args) {
-
         LOGGER.info("Main application has just been started!");
-
-        Scanner scanner = new Scanner(System.in);
-        TaxiCompany taxiCompany = TaxiCompanyCreator.create();
-
-        Customer[] customers = taxiCompany.getCustomers();
-        Driver[] drivers = taxiCompany.getDrivers();
-        Accountant[] accountants = taxiCompany.getAccountants();
 
         Vehicle vehicle = new Vehicle("JEEP", "Grand Cherokee", 5, "BI 1987A"); // Parent class
         TaxiVehicle taxiVehicle = new TaxiVehicle("Volkswagen", "Polo", "BZA 12345", 4, 2.5); // Child class
+
+        try {
+            taxiVehicle.scheduleMaintenance(LocalDate.of(2022, 11, 8));
+        } catch (InvalidNextMaintenanceDateException ex) {
+            LOGGER.error(ex.getMessage(), ex); // Exception for wrong next maintenance date
+        }
 
         Employee newDriver = new Driver("Andrzej", "Kowalski", 50, "123123123", taxiVehicle, 4000);
         Employee newAccountant = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
@@ -54,8 +59,6 @@ public class TaxiCompanyMain {
 
         Location loc1 = new Location("New York", "Blue St");
         Location loc2 = new Location("New York", "Yellow St");
-        Location loc3 = new Location("New York", "Red St");
-        Location loc4 = new Location("New York", "Green St");
 
         TransportOrder tr1 = new TransportOrder(loc1, loc2, customers[0], drivers[0]);
         LOGGER.info(customers[0]);
@@ -70,10 +73,10 @@ public class TaxiCompanyMain {
 
 
         // Liskov's Substitution Principle
-        changePosition(drivers[0], "Start", "End");
+        changePosition(drivers[0], "Start", "End"); // Using interface as parameter
         changePosition(customers[0], "Start", "End");
 
-        printPersonData(customers[0]);
+        printPersonData(customers[0]); // Using abstract class as parameter
         printPersonData(drivers[0]);
         printPersonData(accountants[0]);
 
@@ -94,20 +97,28 @@ public class TaxiCompanyMain {
                     String make = scanner.next();
                     LOGGER.info("Model: ");
                     String model = scanner.next();
+                    LOGGER.info("Number of seats: ");
+                    int numberOfSeats = scanner.nextInt();
                     LOGGER.info("Plate Number: ");
                     scanner.nextLine();
                     String registrationPlate = scanner.nextLine();
-                    LOGGER.info("Number of seats: ");
-                    int numberOfSeats = scanner.nextInt();
-                    LOGGER.info("Fare per kilometer: ");
-                    double farePerKilometer = scanner.nextDouble();
 
-                    TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats, farePerKilometer);
-                    taxiCompany.addVehicle(newTaxi);
-                    LOGGER.info("New taxi assigned to the company.");
-
+                    try {
+                        TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats);
+                        taxiCompany.addVehicle(newTaxi);
+                        LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
+                        double farePerKilometer = scanner.nextDouble();
+                        newTaxi.setFarePerKilometer(farePerKilometer);
+                        LOGGER.info("New taxi assigned to the company.");
+                    } catch (InvalidNumberOfSeatsException ex) {
+                        LOGGER.error(ex.getMessage(), ex.getStackTrace());
+                        LOGGER.error("Exiting menu option");
+                    } catch (DuplicateRegistrationPlateException ex) {
+                        LOGGER.error(ex.getMessage(), ex.getStackTrace());
+                        LOGGER.error("Exiting menu option");
+                        break;
+                    }
                     taxiCompany.printVehicles();
-
                     break;
 
                 case 2:
@@ -183,8 +194,8 @@ public class TaxiCompanyMain {
         }
     }
 
-    public static void changePosition(Tranportable tranportable, String startLocation, String destination) {
-        tranportable.move(startLocation, destination);
+    public static void changePosition(Transportable transportable, String startLocation, String destination) {
+        transportable.move(startLocation, destination);
     }
 
     public static void printPersonData(Person person) {

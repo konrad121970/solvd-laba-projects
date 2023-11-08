@@ -10,7 +10,8 @@ public final class Accountant extends Employee {
 
     private static int accountantsCount;
 
-    public Accountant(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) {
+    public Accountant(String firstName, String lastName, String phoneNumber,
+                      Integer age, Integer salary) {
         super(firstName, lastName, phoneNumber, age, salary);
         accountantsCount++;
     }
