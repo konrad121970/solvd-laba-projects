@@ -11,7 +11,7 @@ public abstract class Person implements Displayable {
     protected String lastName;
     protected String phoneNumber;
 
-    public Person(String firstName, String lastName, String phoneNumber) {
+    public Person(String firstName, String lastName, String phoneNumber) throws InvalidPersonDataException {
         if (firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()) {
             throw new InvalidPersonDataException("Invalid " + this.getClass().getSimpleName() + " data: First name and last name must not be empty.");
         }

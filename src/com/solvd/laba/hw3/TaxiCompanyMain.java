@@ -34,8 +34,18 @@ public class TaxiCompanyMain {
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
 
-        Vehicle vehicle = new Vehicle("JEEP", "Grand Cherokee", 5, "BI 1987A"); // Parent class
-        TaxiVehicle taxiVehicle = new TaxiVehicle("Volkswagen", "Polo", "BZA 12345", 4, 2.5); // Child class
+        Vehicle vehicle = null; // Parent class
+        try {
+            vehicle = new Vehicle("JEEP", "Grand Cherokee", 5, "BI 1987A");
+        } catch (InvalidNumberOfSeatsException ex) {
+            LOGGER.error(ex.getMessage());
+        }
+        TaxiVehicle taxiVehicle = null; // Child class
+        try {
+            taxiVehicle = new TaxiVehicle("Volkswagen", "Polo", "BZA 12345", 4, 2.5);
+        } catch (InvalidNumberOfSeatsException e) {
+            LOGGER.error(e.getMessage());
+        }
 
         try {
             taxiVehicle.scheduleMaintenance(LocalDate.of(2022, 11, 8));
@@ -111,10 +121,10 @@ public class TaxiCompanyMain {
                         newTaxi.setFarePerKilometer(farePerKilometer);
                         LOGGER.info("New taxi assigned to the company.");
                     } catch (InvalidNumberOfSeatsException ex) {
-                        LOGGER.error(ex.getMessage(), ex.getStackTrace());
+                        LOGGER.error(ex.getMessage());
                         LOGGER.error("Exiting menu option");
                     } catch (DuplicateRegistrationPlateException ex) {
-                        LOGGER.error(ex.getMessage(), ex.getStackTrace());
+                        LOGGER.error(ex.getMessage());
                         LOGGER.error("Exiting menu option");
                         break;
                     }

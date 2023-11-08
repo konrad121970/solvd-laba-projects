@@ -1,17 +1,19 @@
 package com.solvd.laba.hw3.model.vehicles;
 
+import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
+
 import java.util.Objects;
 
 public class TaxiVehicle extends Vehicle {
     private double farePerKilometer;
     private double fareCost;
 
-    public TaxiVehicle(String make, String model, String registrationPlate, int numberOfSeats, double farePerKilometer) {
+    public TaxiVehicle(String make, String model, String registrationPlate, int numberOfSeats, double farePerKilometer) throws InvalidNumberOfSeatsException {
         super(make, model, numberOfSeats, registrationPlate);
         this.farePerKilometer = farePerKilometer;
     }
 
-    public TaxiVehicle(String make, String model, String registrationPlate, int numberOfSeats) {
+    public TaxiVehicle(String make, String model, String registrationPlate, int numberOfSeats) throws InvalidNumberOfSeatsException {
         super(make, model, numberOfSeats, registrationPlate);
     }
 
