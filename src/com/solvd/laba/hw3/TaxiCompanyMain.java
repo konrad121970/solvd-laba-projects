@@ -21,8 +21,8 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class TaxiCompanyMain {
-
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
+
 
     public static void main(String[] args) {
 
