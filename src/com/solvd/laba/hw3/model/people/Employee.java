@@ -1,7 +1,6 @@
 package com.solvd.laba.hw3.model.people;
 
 import com.solvd.laba.hw3.model.exceptions.InvalidEmployeeDataException;
-import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 
 import java.util.Objects;
 
@@ -9,7 +8,7 @@ public abstract class Employee extends Person {
     protected Integer salary;
     protected Integer age;
 
-    public Employee(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) throws InvalidEmployeeDataException, InvalidPersonDataException {
+    public Employee(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) {
         super(firstName, lastName, phoneNumber);
         if (age <= 0 || salary <= 0) {
             throw new InvalidEmployeeDataException("Invalid employee data: Age and salary must be greater than 0.");

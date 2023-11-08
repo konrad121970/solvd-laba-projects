@@ -2,9 +2,7 @@ package com.solvd.laba.hw3;
 
 import com.solvd.laba.hw3.creators.TaxiCompanyCreator;
 import com.solvd.laba.hw3.model.TaxiCompany;
-import com.solvd.laba.hw3.model.exceptions.DuplicateRegistrationPlateException;
-import com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException;
-import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.model.exceptions.*;
 import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.payment.CashPayment;
 import com.solvd.laba.hw3.model.people.Employee;
@@ -25,7 +23,6 @@ import java.util.Scanner;
 
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
-    static Scanner scanner = new Scanner(System.in);
     static TaxiCompany taxiCompany = TaxiCompanyCreator.create();
     static Customer[] customers = taxiCompany.getCustomers();
     static Driver[] drivers = taxiCompany.getDrivers();
@@ -53,7 +50,14 @@ public class TaxiCompanyMain {
             LOGGER.error(ex.getMessage(), ex); // Exception for wrong next maintenance date
         }
 
-        Employee newDriver = new Driver("Andrzej", "Kowalski", 50, "123123123", taxiVehicle, 4000);
+        Employee newDriver = null;
+        try {
+            newDriver = new Driver("Andrzej", "Kowalski", 50, "123123123", taxiVehicle, 4000);
+        } catch (InvalidPersonDataException e) {
+            LOGGER.error(e.getMessage());
+        } catch (InvalidEmployeeDataException e) {
+            LOGGER.error(e.getMessage());
+        }
         Employee newAccountant = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
 
         newDriver.showDetails();        // Using interfaces
@@ -98,108 +102,113 @@ public class TaxiCompanyMain {
             LOGGER.info("3. Exit");
             LOGGER.info("Enter your choice: ");
 
-            int choice = scanner.nextInt();
+            // Try with resources
+            try (Scanner scanner = new Scanner(System.in)) {
+                int choice = scanner.nextInt();
 
-            switch (choice) {
-                case 1:
-                    LOGGER.info("Enter vehicle details:");
-                    LOGGER.info("Make: ");
-                    String make = scanner.next();
-                    LOGGER.info("Model: ");
-                    String model = scanner.next();
-                    LOGGER.info("Number of seats: ");
-                    int numberOfSeats = scanner.nextInt();
-                    LOGGER.info("Plate Number: ");
-                    scanner.nextLine();
-                    String registrationPlate = scanner.nextLine();
-
-                    try {
-                        TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats);
-                        taxiCompany.addVehicle(newTaxi);
-                        LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
-                        double farePerKilometer = scanner.nextDouble();
-                        newTaxi.setFarePerKilometer(farePerKilometer);
-                        LOGGER.info("New taxi assigned to the company.");
-                    } catch (InvalidNumberOfSeatsException ex) {
-                        LOGGER.error(ex.getMessage());
-                        LOGGER.error("Exiting menu option");
-                    } catch (DuplicateRegistrationPlateException ex) {
-                        LOGGER.error(ex.getMessage());
-                        LOGGER.error("Exiting menu option");
-                        break;
-                    }
-                    taxiCompany.printVehicles();
-                    break;
-
-                case 2:
-                    LOGGER.info("Create a Transport Order:");
-                    LOGGER.info("City: ");
-                    scanner.nextLine();
-                    String city = scanner.nextLine();
-
-                    LOGGER.info("Pickup Location: ");
-                    String pickupLocation = scanner.nextLine();
-                    LOGGER.info("Drop-off Location: ");
-                    String dropOffLocation = scanner.nextLine();
-
-                    Location pickup = new Location(city, pickupLocation);
-                    Location dropOff = new Location(city, dropOffLocation);
-
-                    LOGGER.info("Customer Name: ");
-                    String customerName = scanner.nextLine();
-                    LOGGER.info("Customer Last Name: ");
-                    String customerLastName = scanner.nextLine();
-                    LOGGER.info("Customer Phone Number: ");
-                    String customerPhoneNumber = scanner.next();
-                    Customer customer = new Customer(customerName, customerLastName, customerPhoneNumber);
-                    taxiCompany.addCustomer(customer);
-
-                    LOGGER.info("Select a driver from the list:");
-                    for (int i = 0; i < taxiCompany.getDrivers().length; i++) {
-                        LOGGER.info(i + ". " + taxiCompany.getDrivers()[i].getFirstName());
-                    }
-                    int driverChoice = scanner.nextInt();
-
-                    if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().length) {
-                        Driver selectedDriver = taxiCompany.getDrivers()[driverChoice];
-                        LOGGER.info("Ride Date (yyyy-MM-dd): ");
-                        String orderDateStr = scanner.next();
-                        LocalDate orderDate = LocalDate.parse(orderDateStr);
-
-                        LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
-                        Double distance = scanner.nextDouble();
-
-                        TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
-                        selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
-
-                        selectedDriver.getVehicle().calculatePrice(distance);
-                        LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
-
-                        LOGGER.info("Payment amount: ");
-                        double paymentAmount = scanner.nextDouble();
-                        transportOrder.getCustomer().pay(paymentAmount);
-                        transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
-
-                        LOGGER.info("Review (rating from 1 to 5 stars): ");
-                        int rating = scanner.nextInt();
-                        LOGGER.info("Review (comment): ");
-                        String content = scanner.next();
-                        transportOrder.setReview(new Review(rating, content));
+                switch (choice) {
+                    case 1:
+                        LOGGER.info("Enter vehicle details:");
+                        LOGGER.info("Make: ");
+                        String make = scanner.next();
+                        LOGGER.info("Model: ");
+                        String model = scanner.next();
+                        LOGGER.info("Number of seats: ");
+                        int numberOfSeats = scanner.nextInt();
+                        LOGGER.info("Plate Number: ");
                         scanner.nextLine();
+                        String registrationPlate = scanner.nextLine();
+
+                        try {
+                            TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats);
+                            taxiCompany.addVehicle(newTaxi);
+                            LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
+                            double farePerKilometer = scanner.nextDouble();
+                            newTaxi.setFarePerKilometer(farePerKilometer);
+                            LOGGER.info("New taxi assigned to the company.");
+                        } catch (InvalidNumberOfSeatsException ex) {
+                            LOGGER.error(ex.getMessage());
+                            LOGGER.error("Exiting menu option");
+                        } catch (DuplicateRegistrationPlateException ex) {
+                            LOGGER.error(ex.getMessage());
+                            LOGGER.error("Exiting menu option");
+                            break;
+                        }
+                        taxiCompany.printVehicles();
                         break;
-                    } else {
-                        LOGGER.info("Invalid driver choice.");
-                    }
 
-                case 3:
-                    LOGGER.info("Exiting...");
-                    scanner.close();
-                    System.exit(0);
-                    break;
+                    case 2:
+                        LOGGER.info("Create a Transport Order:");
+                        LOGGER.info("City: ");
+                        scanner.nextLine();
+                        String city = scanner.nextLine();
 
-                default:
-                    LOGGER.info("Invalid choice. Please enter a valid option.");
-                    break;
+                        LOGGER.info("Pickup Location: ");
+                        String pickupLocation = scanner.nextLine();
+                        LOGGER.info("Drop-off Location: ");
+                        String dropOffLocation = scanner.nextLine();
+
+                        Location pickup = new Location(city, pickupLocation);
+                        Location dropOff = new Location(city, dropOffLocation);
+
+                        LOGGER.info("Customer Name: ");
+                        String customerName = scanner.nextLine();
+                        LOGGER.info("Customer Last Name: ");
+                        String customerLastName = scanner.nextLine();
+                        LOGGER.info("Customer Phone Number: ");
+                        String customerPhoneNumber = scanner.next();
+                        Customer customer = new Customer(customerName, customerLastName, customerPhoneNumber);
+                        taxiCompany.addCustomer(customer);
+
+                        LOGGER.info("Select a driver from the list:");
+                        for (int i = 0; i < taxiCompany.getDrivers().length; i++) {
+                            LOGGER.info(i + ". " + taxiCompany.getDrivers()[i].getFirstName());
+                        }
+                        int driverChoice = scanner.nextInt();
+
+                        if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().length) {
+                            Driver selectedDriver = taxiCompany.getDrivers()[driverChoice];
+                            LOGGER.info("Ride Date (yyyy-MM-dd): ");
+                            String orderDateStr = scanner.next();
+                            LocalDate orderDate = LocalDate.parse(orderDateStr);
+
+                            LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
+                            Double distance = scanner.nextDouble();
+
+                            TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
+                            selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
+
+                            selectedDriver.getVehicle().calculatePrice(distance);
+                            LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
+
+                            LOGGER.info("Payment amount: ");
+                            double paymentAmount = scanner.nextDouble();
+                            transportOrder.getCustomer().pay(paymentAmount);
+                            transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
+
+                            LOGGER.info("Review (rating from 1 to 5 stars): ");
+                            int rating = scanner.nextInt();
+                            LOGGER.info("Review (comment): ");
+                            String content = scanner.next();
+                            transportOrder.setReview(new Review(rating, content));
+                            scanner.nextLine();
+                            break;
+                        } else {
+                            LOGGER.info("Invalid driver choice.");
+                        }
+
+                    case 3:
+                        LOGGER.info("Exiting...");
+                        scanner.close();
+                        System.exit(0);
+                        break;
+
+                    default:
+                        LOGGER.info("Invalid choice. Please enter a valid option.");
+                        break;
+                }
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
             }
         }
     }

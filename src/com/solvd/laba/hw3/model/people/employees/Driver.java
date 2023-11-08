@@ -1,5 +1,7 @@
 package com.solvd.laba.hw3.model.people.employees;
 
+import com.solvd.laba.hw3.model.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
@@ -12,7 +14,7 @@ public final class Driver extends Employee implements Transportable {
     private TaxiVehicle taxiVehicle;
 
 
-    public Driver(String firstName, String lastName, Integer age, String phoneNumber, TaxiVehicle taxiVehicle, Integer salary) {
+    public Driver(String firstName, String lastName, Integer age, String phoneNumber, TaxiVehicle taxiVehicle, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
         super(firstName, lastName, phoneNumber, age, salary);
         this.taxiVehicle = taxiVehicle;
 

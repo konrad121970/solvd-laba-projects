@@ -1,6 +1,6 @@
 package com.solvd.laba.hw3.model.exceptions;
 
-public class InvalidEmployeeDataException extends Exception {
+public class InvalidEmployeeDataException extends RuntimeException {
     public InvalidEmployeeDataException(String message) {
         super(message);
     }

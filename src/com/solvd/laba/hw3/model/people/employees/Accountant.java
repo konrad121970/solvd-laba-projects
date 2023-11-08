@@ -1,5 +1,7 @@
 package com.solvd.laba.hw3.model.people.employees;
 
+import com.solvd.laba.hw3.model.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.people.Employee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +13,7 @@ public final class Accountant extends Employee {
     private static int accountantsCount;
 
     public Accountant(String firstName, String lastName, String phoneNumber,
-                      Integer age, Integer salary) {
+                      Integer age, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
         super(firstName, lastName, phoneNumber, age, salary);
         accountantsCount++;
     }

@@ -1,6 +1,9 @@
 package com.solvd.laba.hw3.creators;
 
 import com.solvd.laba.hw3.model.TaxiCompany;
+import com.solvd.laba.hw3.model.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
@@ -31,16 +34,30 @@ public class TaxiCompanyCreator {
 
     private static TaxiVehicle[] createVehicles() {
 
-        return new TaxiVehicle[]{
-                new TaxiVehicle("Audi", "A4", "BHA 18XX", 4, 2.50),
-                new TaxiVehicle("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00)
-        };
+        try {
+            return new TaxiVehicle[]{
+                    new TaxiVehicle("Audi", "A4", "BHA 18XX", 4, 2.50),
+                    new TaxiVehicle("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00)
+            };
+        } catch (InvalidNumberOfSeatsException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        }
     }
 
     private static Driver[] createDrivers(TaxiVehicle[] vehicles) {
-        Driver driver1 = new Driver("Bartolomeo", "Diaz", 23, "123123123", vehicles[0], 3500);
-        Driver driver2 = new Driver("Leon", "Kaputt", 67, "123123123", vehicles[1], 4000);
-        return new Driver[]{driver1, driver2};
+        try {
+            return new Driver[]{
+                    new Driver("Bartolomeo", "Diaz", 23, "123123123", vehicles[0], 3500),
+                    new Driver("Leon", "Kaputt", 67, "123123123", vehicles[1], 4000)
+            };
+        } catch (InvalidPersonDataException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        } catch (InvalidEmployeeDataException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        }
     }
 
     private static Accountant[] createAccountants() {
@@ -51,10 +68,15 @@ public class TaxiCompanyCreator {
     }
 
     private static Customer[] createCustomers() {
-        return new Customer[]{
-                new Customer("Andrzej", "Kowalski", "123123123"),
-                new Customer("Paolo", "Nowak", "111222333"),
-                new Customer("Herbert", "Shmidt", "333222111")
-        };
+        try {
+            return new Customer[]{
+                    new Customer("Andrzej", "Kowalski", "123123123"),
+                    new Customer("Paolo", "Nowak", "111222333"),
+                    new Customer("Herbert", "Shmidt", "333222111")
+            };
+        } catch (InvalidPersonDataException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        }
     }
 }

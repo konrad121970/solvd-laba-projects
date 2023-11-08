@@ -1,5 +1,6 @@
 package com.solvd.laba.hw3.model.people.customer;
 
+import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Person;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +11,7 @@ public final class Customer extends Person implements Transportable {
     private static int customersCount;
     private Double spentMoney;
 
-    public Customer(String firstName, String lastName, String phoneNumber) {
+    public Customer(String firstName, String lastName, String phoneNumber) throws InvalidPersonDataException {
         super(firstName, lastName, phoneNumber);
         this.spentMoney = 10.0;
         customersCount++;
