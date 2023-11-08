@@ -3,7 +3,7 @@ package com.solvd.laba.hw3;
 import com.solvd.laba.hw3.creators.TaxiCompanyCreator;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.interfaces.Tranportable;
-import com.solvd.laba.hw3.model.payment.Payment;
+import com.solvd.laba.hw3.model.payment.CashPayment;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.people.Person;
 import com.solvd.laba.hw3.model.people.customer.Customer;
@@ -14,12 +14,19 @@ import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class TaxiCompanyMain {
+
+    private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
+
     public static void main(String[] args) {
+
+        LOGGER.info("Main application has just been started!");
 
         Scanner scanner = new Scanner(System.in);
         TaxiCompany taxiCompany = TaxiCompanyCreator.create();
@@ -57,7 +64,7 @@ public class TaxiCompanyMain {
         drivers[0].move(loc1.getStreetName(), loc2.getStreetName());
         drivers[0].getVehicle().calculatePrice(10.00);
         tr1.getCustomer().pay(drivers[0].getVehicle().calculatePrice(10.00));
-        tr1.setPayment(new Payment(LocalDate.of(2023, 11, 3), drivers[0].getVehicle().calculatePrice(10.00)));
+        tr1.setPayment(new CashPayment(LocalDate.of(2023, 11, 3), drivers[0].getVehicle().calculatePrice(10.00)));
         tr1.setReview(new Review(5, "It was an amazing ride!\n"));
 
         System.out.println("\nCustomer[0] spent money value: " + customers[0].getSpentMoney() + "\n");
@@ -154,7 +161,7 @@ public class TaxiCompanyMain {
                         System.out.print("Payment amount: ");
                         double paymentAmount = scanner.nextDouble();
                         transportOrder.getCustomer().pay(paymentAmount);
-                        transportOrder.setPayment(new Payment(orderDate, paymentAmount));
+                        transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
 
                         System.out.print("Review (rating from 1 to 5 stars): ");
                         int rating = scanner.nextInt();

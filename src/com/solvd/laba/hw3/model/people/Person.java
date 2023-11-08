@@ -1,10 +1,14 @@
 package com.solvd.laba.hw3.model.people;
 
 import com.solvd.laba.hw3.model.interfaces.Displayable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
 public abstract class Person implements Displayable {
+
+    private static final Logger LOGGER = LogManager.getLogger(Person.class);
     protected String firstName;
     protected String lastName;
     protected String phoneNumber;

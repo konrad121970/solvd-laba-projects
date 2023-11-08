@@ -1,12 +1,19 @@
 package com.solvd.laba.hw3.model.people.employees;
 
 import com.solvd.laba.hw3.model.people.Employee;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class Accountant extends Employee {
+
+    private static final Logger LOGGER = LogManager.getLogger(Accountant.class);
+
     private static int accountantsCount;
 
     public Accountant(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) {
         super(firstName, lastName, phoneNumber, age, salary);
+        LOGGER.info("Created new Accountant");
+
         accountantsCount++;
     }
 
