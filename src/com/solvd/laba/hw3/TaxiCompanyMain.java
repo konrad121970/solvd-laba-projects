@@ -45,7 +45,7 @@ public class TaxiCompanyMain {
         }
 
         try {
-            taxiVehicle.scheduleMaintenance(LocalDate.of(2022, 11, 8));
+            taxiVehicle.scheduleMaintenance(LocalDate.of(2022, 11, 8)); // Setting wrong maintenance date
         } catch (InvalidNextMaintenanceDateException ex) {
             LOGGER.error(ex.getMessage(), ex); // Exception for wrong next maintenance date
         }
@@ -58,7 +58,14 @@ public class TaxiCompanyMain {
         } catch (InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
-        Employee newAccountant = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
+        Employee newAccountant = null;
+        try {
+            newAccountant = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
+        } catch (InvalidPersonDataException e) {
+            LOGGER.error(e.getMessage());
+        } catch (InvalidEmployeeDataException e) {
+            LOGGER.error(e.getMessage());
+        }
 
         newDriver.showDetails();        // Using interfaces
         newAccountant.showDetails();

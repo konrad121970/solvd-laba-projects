@@ -14,13 +14,19 @@ import java.util.Arrays;
 
 public class TaxiCompany implements Displayable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
+    private final String name;
     private TransportOrder[] transportOrders;
     private Customer[] customers;
     private Driver[] drivers;
     private Accountant[] accountants;
     private Vehicle[] vehicles;
 
-    public TaxiCompany(TransportOrder[] transportOrders, Customer[] customers, Driver[] drivers, Accountant[] accountants, Vehicle[] vehicles) {
+    public TaxiCompany(String name) {
+        this.name = name;
+    }
+
+    public TaxiCompany(String name, TransportOrder[] transportOrders, Customer[] customers, Driver[] drivers, Accountant[] accountants, Vehicle[] vehicles) {
+        this.name = name;
         this.transportOrders = transportOrders;
         this.customers = customers;
         this.drivers = drivers;
@@ -118,9 +124,21 @@ public class TaxiCompany implements Displayable {
 
 
     public void printCustomers() {
+        LOGGER.info("List of company Customers:");
+        for (Customer customer : customers) {
+            LOGGER.info(customer.getFirstName() + " " + customer.getLastName() + " " + customer.getSpentMoney());
+        }
     }
 
     public void printEmployees() {
+        LOGGER.info("List of company Drivers:");
+        for (Customer customer : customers) {
+            LOGGER.info(customer.getFirstName() + " " + customer.getLastName() + " " + customer.getSpentMoney());
+        }
+        LOGGER.info("List of company Accountants:");
+        for (Accountant accountant : accountants) {
+            LOGGER.info(accountant.getFirstName() + " " + accountant.getLastName() + " " + accountant.getSalary());
+        }
     }
 
 
@@ -148,11 +166,17 @@ public class TaxiCompany implements Displayable {
     // TODO: implement these methods
     @Override
     public void display() {
-
+        LOGGER.info("Company name: " + this.name);
     }
 
     @Override
     public void showDetails() {
-
+        LOGGER.info("TaxiCompany{" +
+                "transportOrders=" + Arrays.toString(transportOrders) +
+                ", customers=" + Arrays.toString(customers) +
+                ", drivers=" + Arrays.toString(drivers) +
+                ", accountants=" + Arrays.toString(accountants) +
+                ", vehicles=" + Arrays.toString(vehicles) +
+                '}');
     }
 }

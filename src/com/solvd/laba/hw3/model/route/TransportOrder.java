@@ -4,10 +4,13 @@ import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.payment.Payment;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Driver;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
 public final class TransportOrder implements Displayable {
+    private static final Logger LOGGER = LogManager.getLogger(TransportOrder.class);
     private final Customer customer;
     private Location routeStart;
     private Location routeEnd;

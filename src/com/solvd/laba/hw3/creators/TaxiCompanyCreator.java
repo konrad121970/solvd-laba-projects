@@ -29,7 +29,7 @@ public class TaxiCompanyCreator {
 
         //[] locations = createLocations();
         TransportOrder[] transportOrders = new TransportOrder[]{};
-        return new TaxiCompany(transportOrders, customers, drivers, accountants, vehicles);
+        return new TaxiCompany("DzieduszkaTrans", transportOrders, customers, drivers, accountants, vehicles);
     }
 
     private static TaxiVehicle[] createVehicles() {
@@ -61,10 +61,18 @@ public class TaxiCompanyCreator {
     }
 
     private static Accountant[] createAccountants() {
-        return new Accountant[]{
-                new Accountant("Katharine", "Note", "123123123", 23, 2500),
-                new Accountant("Elias", "Bismark", "123123123", 19, 4000)
-        };
+        try {
+            return new Accountant[]{
+                    new Accountant("Katharine", "Note", "123123123", 23, 2500),
+                    new Accountant("Elias", "Bismark", "123123123", 19, 4000)
+            };
+        } catch (InvalidPersonDataException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        } catch (InvalidEmployeeDataException e) {
+            LOGGER.error(e.getMessage());
+            return null;
+        }
     }
 
     private static Customer[] createCustomers() {

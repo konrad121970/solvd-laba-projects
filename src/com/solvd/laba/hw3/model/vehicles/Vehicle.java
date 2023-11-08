@@ -4,11 +4,14 @@ import com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException;
 import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.interfaces.Maintainable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Vehicle implements Maintainable, Displayable {
+    private static final Logger LOGGER = LogManager.getLogger(Vehicle.class);
     protected String make;
     protected String model;
     protected String registrationPlate;
@@ -88,11 +91,6 @@ public class Vehicle implements Maintainable, Displayable {
     }
 
     @Override
-    public String toString() {
-        return "Vehicle [make=" + make + ", model=" + model + "]";
-    }
-
-    @Override
     public void scheduleMaintenance(LocalDate date) {
         LocalDate now = LocalDate.now();
         if (date.isBefore(now)) {
@@ -110,11 +108,32 @@ public class Vehicle implements Maintainable, Displayable {
     // TODO:
     @Override
     public void display() {
-
+        LOGGER.info("Vehicle [make=" + this.make + ", model=" + this.model + "]");
     }
 
     @Override
     public void showDetails() {
+        LOGGER.info("Vehicle{" +
+                "make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", registrationPlate='" + registrationPlate + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", nextMaintenance=" + nextMaintenance +
+                ", lastMaintenance=" + lastMaintenance +
+                '}');
+    }
 
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", registrationPlate='" + registrationPlate + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", nextMaintenance=" + nextMaintenance +
+                ", lastMaintenance=" + lastMaintenance +
+                '}';
     }
 }
+
+

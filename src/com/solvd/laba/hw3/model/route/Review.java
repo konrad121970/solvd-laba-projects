@@ -3,10 +3,13 @@ package com.solvd.laba.hw3.model.route;
 
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.interfaces.Reviewable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
 public class Review implements Reviewable, Displayable {
+    private static final Logger LOGGER = LogManager.getLogger(Review.class);
     private Integer starRating;
     private String content;
 
@@ -70,12 +73,12 @@ public class Review implements Reviewable, Displayable {
     // TODO:
     @Override
     public void display() {
-
+        LOGGER.info("Star rating:" + this.starRating);
     }
 
     @Override
     public void showDetails() {
-
+        LOGGER.info("Star rating: " + this.starRating + "out of 5. Content of review:\n" + this.content);
     }
 }
 

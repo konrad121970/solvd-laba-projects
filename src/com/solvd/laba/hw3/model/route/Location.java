@@ -1,10 +1,13 @@
 package com.solvd.laba.hw3.model.route;
 
 import com.solvd.laba.hw3.model.interfaces.Displayable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
 public final class Location implements Displayable {
+    private static final Logger LOGGER = LogManager.getLogger(Location.class);
     private String city;
     private String streetName;
 
@@ -55,11 +58,11 @@ public final class Location implements Displayable {
     // TODO:
     @Override
     public void display() {
-
+        LOGGER.info("Location [city = '" + city + "', streetName = '" + streetName + "']");
     }
 
     @Override
     public void showDetails() {
-
+        LOGGER.info("Location [city = '" + city + "', streetName = '" + streetName + "']");
     }
 }

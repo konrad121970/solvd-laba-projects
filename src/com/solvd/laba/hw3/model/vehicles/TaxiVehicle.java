@@ -1,10 +1,13 @@
 package com.solvd.laba.hw3.model.vehicles;
 
 import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
 public class TaxiVehicle extends Vehicle {
+    private static final Logger LOGGER = LogManager.getLogger(TaxiVehicle.class);
     private double farePerKilometer;
     private double fareCost;
 

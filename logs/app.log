@@ -795,3 +795,105 @@ Salary: 3500
 [INFO ] 2023-11-08 20:59:14.764 [main] TaxiCompanyMain - 2. Create a Transport Order
 [INFO ] 2023-11-08 20:59:14.764 [main] TaxiCompanyMain - 3. Exit
 [INFO ] 2023-11-08 20:59:14.764 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-08 21:28:58.775 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-08 21:28:58.779 [main] TaxiCompanyMain - Main application has just been started!
+[ERROR] 2023-11-08 21:28:58.793 [main] TaxiCompanyMain - Invalid maintenance schedule date: Cannot schedule maintenance in the past.
+com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException: Invalid maintenance schedule date: Cannot schedule maintenance in the past.
+	at com.solvd.laba.hw3.model.vehicles.Vehicle.scheduleMaintenance(Vehicle.java:99) ~[solvd-laba-projects/:?]
+	at com.solvd.laba.hw3.TaxiCompanyMain.main(TaxiCompanyMain.java:48) [solvd-laba-projects/:?]
+[INFO ] 2023-11-08 21:28:58.799 [main] Driver - Details for Driver: 
+Name: Andrzej
+Last Name: Kowalski
+Age: 50
+Salary: 4000
+Assigned vehicle brand:Volkswagen
+[INFO ] 2023-11-08 21:28:58.799 [main] Accountant - Details for Accountant: 
+Name: Robert
+Last Name: Roberto
+Age: 40
+Salary: 3500
+[INFO ] 2023-11-08 21:28:58.800 [main] TaxiCompanyUtility - Vehicle assigned to the company.
+[INFO ] 2023-11-08 21:28:58.801 [main] TaxiCompany - List of company vehicles:
+[INFO ] 2023-11-08 21:28:58.801 [main] TaxiCompany - Audi A4 BHA 18XX
+[INFO ] 2023-11-08 21:28:58.801 [main] TaxiCompany - Volkswagen Kubelwagen BI 1234
+[INFO ] 2023-11-08 21:28:58.801 [main] TaxiCompany - JEEP Grand Cherokee BI 1987A
+[INFO ] 2023-11-08 21:28:58.801 [main] TaxiCompanyUtility - Invalid vehicle assignment. Child classes not allowed.
+[INFO ] 2023-11-08 21:28:58.802 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-08 21:28:58.802 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-08 21:28:58.803 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-08 21:28:58.805 [main] TaxiCompanyMain - Customer[0] spent money value: 35.0
+
+[INFO ] 2023-11-08 21:28:58.805 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-08 21:28:58.805 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-08 21:28:58.805 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-08 21:28:58.805 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-08 21:28:58.805 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-08 21:28:58.806 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-08 21:40:48.896 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-08 21:40:48.901 [main] TaxiCompanyMain - Main application has just been started!
+[ERROR] 2023-11-08 21:40:48.934 [main] TaxiCompanyMain - Invalid maintenance schedule date: Cannot schedule maintenance in the past.
+com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException: Invalid maintenance schedule date: Cannot schedule maintenance in the past.
+	at com.solvd.laba.hw3.model.vehicles.Vehicle.scheduleMaintenance(Vehicle.java:99) ~[solvd-laba-projects/:?]
+	at com.solvd.laba.hw3.TaxiCompanyMain.main(TaxiCompanyMain.java:48) [solvd-laba-projects/:?]
+[INFO ] 2023-11-08 21:40:48.941 [main] Driver - Details for Driver: 
+Name: Andrzej
+Last Name: Kowalski
+Age: 50
+Salary: 4000
+Assigned vehicle brand:Volkswagen
+[INFO ] 2023-11-08 21:40:48.942 [main] Accountant - Details for Accountant: 
+Name: Robert
+Last Name: Roberto
+Age: 40
+Salary: 3500
+[INFO ] 2023-11-08 21:40:48.943 [main] TaxiCompanyUtility - Vehicle assigned to the company.
+[INFO ] 2023-11-08 21:40:48.943 [main] TaxiCompany - List of company vehicles:
+[INFO ] 2023-11-08 21:40:48.944 [main] TaxiCompany - Audi A4 BHA 18XX
+[INFO ] 2023-11-08 21:40:48.944 [main] TaxiCompany - Volkswagen Kubelwagen BI 1234
+[INFO ] 2023-11-08 21:40:48.944 [main] TaxiCompany - JEEP Grand Cherokee BI 1987A
+[INFO ] 2023-11-08 21:40:48.944 [main] TaxiCompanyUtility - Invalid vehicle assignment. Child classes not allowed.
+[INFO ] 2023-11-08 21:40:48.946 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-08 21:40:48.946 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-08 21:40:48.947 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-08 21:40:48.948 [main] TaxiCompanyMain - Customer[0] spent money value: 35.0
+
+[INFO ] 2023-11-08 21:40:48.949 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-08 21:40:48.949 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-08 21:40:48.949 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-08 21:40:48.949 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-08 21:40:48.949 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-08 21:40:48.949 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-08 22:15:43.183 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-08 22:15:43.189 [main] TaxiCompanyMain - Main application has just been started!
+[ERROR] 2023-11-08 22:15:43.208 [main] TaxiCompanyMain - Invalid maintenance schedule date: Cannot schedule maintenance in the past.
+com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException: Invalid maintenance schedule date: Cannot schedule maintenance in the past.
+	at com.solvd.laba.hw3.model.vehicles.Vehicle.scheduleMaintenance(Vehicle.java:97) ~[solvd-laba-projects/:?]
+	at com.solvd.laba.hw3.TaxiCompanyMain.main(TaxiCompanyMain.java:48) [solvd-laba-projects/:?]
+[INFO ] 2023-11-08 22:15:43.215 [main] Driver - Details for Driver: 
+Name: Andrzej
+Last Name: Kowalski
+Age: 50
+Salary: 4000
+Assigned vehicle brand:Volkswagen
+[INFO ] 2023-11-08 22:15:43.215 [main] Accountant - Details for Accountant: 
+Name: Robert
+Last Name: Roberto
+Age: 40
+Salary: 3500
+[INFO ] 2023-11-08 22:15:43.215 [main] TaxiCompanyUtility - Vehicle assigned to the company.
+[INFO ] 2023-11-08 22:15:43.216 [main] TaxiCompany - List of company vehicles:
+[INFO ] 2023-11-08 22:15:43.216 [main] TaxiCompany - Audi A4 BHA 18XX
+[INFO ] 2023-11-08 22:15:43.216 [main] TaxiCompany - Volkswagen Kubelwagen BI 1234
+[INFO ] 2023-11-08 22:15:43.216 [main] TaxiCompany - JEEP Grand Cherokee BI 1987A
+[INFO ] 2023-11-08 22:15:43.216 [main] TaxiCompanyUtility - Invalid vehicle assignment. Child classes not allowed.
+[INFO ] 2023-11-08 22:15:43.217 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-08 22:15:43.217 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-08 22:15:43.218 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-08 22:15:43.220 [main] TaxiCompanyMain - Customer[0] spent money value: 35.0
+
+[INFO ] 2023-11-08 22:15:43.220 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-08 22:15:43.220 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-08 22:15:43.220 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-08 22:15:43.220 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-08 22:15:43.221 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-08 22:15:43.221 [main] TaxiCompanyMain - Enter your choice: 
