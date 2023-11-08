@@ -2,8 +2,11 @@ package com.solvd.laba.hw3.model.people.customer;
 
 import com.solvd.laba.hw3.model.interfaces.Tranportable;
 import com.solvd.laba.hw3.model.people.Person;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class Customer extends Person implements Tranportable {
+    private static final Logger LOGGER = LogManager.getLogger(Customer.class);
     private static int customersCount;
     private Double spentMoney;
 
@@ -18,13 +21,13 @@ public final class Customer extends Person implements Tranportable {
     }
 
     public void pay(Double cash) {
-        System.out.println("I have just spent " + cash + "USD!");
+        LOGGER.info("Customer " + this.firstName + " " + "has just spent " + cash + " USD!");
         this.spentMoney += cash;
     }
 
     // Method Overloading
     public void pay(Double cash, String message) {
-        System.out.println("I have just spent " + cash + "USD!" + " " + message);
+        LOGGER.info("Customer " + this.firstName + " " + "has just spent " + cash + " USD!\n He also left a message: " + message);
         this.spentMoney += cash;
     }
 
@@ -63,19 +66,19 @@ public final class Customer extends Person implements Tranportable {
 
     @Override
     public void display() {
-        System.out.println("Customer's name: " + this.firstName + "surname " + this.lastName);
+        LOGGER.info("Customer's name: " + this.firstName + "surname " + this.lastName);
     }
 
     @Override
     public void showDetails() {
-        System.out.println("Details for Customer: \nName: " + this.firstName +
+        LOGGER.info("Details for Customer: \nName: " + this.firstName +
                 "\nLast Name: " + this.lastName +
                 "\nSpent money: " + this.spentMoney);
     }
 
     @Override
     public void move(String source, String destination) {
-        System.out.println("I am taking a ride in a Taxi from " + source + " to " + destination + "!");
+        LOGGER.debug("I am taking a ride in a Taxi from " + source + " to " + destination + "!");
     }
 
     @Override

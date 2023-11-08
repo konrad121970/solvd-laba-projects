@@ -6,10 +6,13 @@ import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 
 public class TaxiCompany implements Displayable {
+    private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
     private TransportOrder[] transportOrders;
     private Customer[] customers;
     private Driver[] drivers;
@@ -27,7 +30,7 @@ public class TaxiCompany implements Displayable {
     public void printCustomerNames() {
         int i = 1;
         for (Customer customer : customers) {
-            System.out.println("Customer " + i + ": " + customer.getFirstName() + " " + customer.getLastName());
+            LOGGER.info("Customer " + i + ": " + customer.getFirstName() + " " + customer.getLastName());
             i++;
         }
     }
@@ -98,7 +101,7 @@ public class TaxiCompany implements Displayable {
 
     public void printVehicles() {
         for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+            LOGGER.info(vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
         }
     }
 

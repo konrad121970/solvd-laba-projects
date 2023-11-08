@@ -1,8 +1,12 @@
 package com.solvd.laba.sortingAlgorithm;
 
-public class Main {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-    public static void selectionSort(Integer array[]) {
+public class Main {
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
+
+    public static void selectionSort(Integer[] array) {
         for (int i = 0; i < array.length - 1; i++) { // Iterate over each element in the array
             int minimal = i; // Set the minimal element to i
             for (int j = i + 1; j < array.length; j++) { // Start iterating from the adjacent element
@@ -16,7 +20,7 @@ public class Main {
         }
     }
 
-    public static void bubbleSort(Integer array[]) {
+    public static void bubbleSort(Integer[] array) {
         for (int i = 0; i < array.length - 1; i++) { // Count already sorted numbers
             for (int j = 0; j < array.length - i - 1; j++) { // Iterate over array
                 if (array[j] > array[j + 1]) {
@@ -31,25 +35,24 @@ public class Main {
     public static void main(String[] args) {
 
         if (args.length < 2) {
-            System.out.println("Please provide at least two parameters!");
+            LOGGER.info("Please provide at least two parameters!");
             return;
         }
 
-        Integer array[] = new Integer[args.length];
+        Integer[] array = new Integer[args.length];
         for (int i = 0; i < args.length; i++) {
             array[i] = Integer.parseInt(args[i]);
         }
 
-        System.out.println("### BEFORE SORTING ###");
+        LOGGER.info("### BEFORE SORTING ###");
         for (Integer item : array) {
-            System.out.print(item + " ");
+            LOGGER.info(item + " ");
         }
-
-        System.out.println();
-        System.out.println("### AFTER SORTING ###");
+        
+        LOGGER.info("### AFTER SORTING ###");
         selectionSort(array); // bubbleSort(array)
         for (Integer item : array) {
-            System.out.print(item + " ");
+            LOGGER.info(item + " ");
         }
 
     }

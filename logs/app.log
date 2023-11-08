@@ -1,0 +1,105 @@
+[INFO ] 2023-11-08 16:57:03.861 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-08 16:57:03.868 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:57:03.868 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:57:03.869 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:57:15.005 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-08 16:57:15.011 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:57:15.012 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:57:15.013 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:58:20.635 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-08 16:58:20.642 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:58:20.643 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 16:58:20.644 [main] Accountant - Created new Accountant
+[INFO ] 2023-11-08 17:25:38.703 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-08 17:25:38.709 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-08 17:25:38.711 [main] Driver - Details for Driver: 
+Name: Andrzej
+Last Name: Kowalski
+Age: 50
+Salary: 4000
+Assigned vehicle brand:Volkswagen
+[INFO ] 2023-11-08 17:25:38.711 [main] Accountant - Details for Accountant: 
+Name: Robert
+Last Name: Roberto
+Age: 40
+Salary: 3500
+[INFO ] 2023-11-08 17:25:38.712 [main] TaxiCompanyUtility - Vehicle assigned to the company.
+[INFO ] 2023-11-08 17:25:38.712 [main] TaxiCompany - Audi A4 BHA 18XX
+[INFO ] 2023-11-08 17:25:38.712 [main] TaxiCompany - Volkswagen Kubelwagen BI 1234
+[INFO ] 2023-11-08 17:25:38.712 [main] TaxiCompany - JEEP Grand Cherokee BI 1987A
+[INFO ] 2023-11-08 17:25:38.712 [main] TaxiCompanyUtility - Invalid vehicle assignment. Child classes not allowed.
+[INFO ] 2023-11-08 17:25:38.713 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-08 17:25:38.714 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-08 17:25:38.715 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-08 17:25:38.717 [main] TaxiCompanyMain - 
+Customer[0] spent money value: 35.0
+
+[INFO ] 2023-11-08 17:25:38.718 [main] TaxiCompanyMain - *********************************
+
+[INFO ] 2023-11-08 17:25:38.718 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-08 17:25:38.718 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-08 17:25:38.718 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-08 17:25:38.718 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-08 17:25:38.718 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-08 17:25:38.718 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-08 17:25:52.561 [main] TaxiCompanyMain - Enter vehicle details:
+[INFO ] 2023-11-08 17:25:52.561 [main] TaxiCompanyMain - Make: 
+[INFO ] 2023-11-08 17:26:24.588 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-08 17:26:24.594 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-08 17:26:24.595 [main] Driver - Details for Driver: 
+Name: Andrzej
+Last Name: Kowalski
+Age: 50
+Salary: 4000
+Assigned vehicle brand:Volkswagen
+[INFO ] 2023-11-08 17:26:24.595 [main] Accountant - Details for Accountant: 
+Name: Robert
+Last Name: Roberto
+Age: 40
+Salary: 3500
+[INFO ] 2023-11-08 17:26:24.596 [main] TaxiCompanyUtility - Vehicle assigned to the company.
+[INFO ] 2023-11-08 17:26:24.596 [main] TaxiCompany - Audi A4 BHA 18XX
+[INFO ] 2023-11-08 17:26:24.596 [main] TaxiCompany - Volkswagen Kubelwagen BI 1234
+[INFO ] 2023-11-08 17:26:24.596 [main] TaxiCompany - JEEP Grand Cherokee BI 1987A
+[INFO ] 2023-11-08 17:26:24.596 [main] TaxiCompanyUtility - Invalid vehicle assignment. Child classes not allowed.
+[INFO ] 2023-11-08 17:26:24.597 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-08 17:26:24.598 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-08 17:26:24.599 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-08 17:26:24.601 [main] TaxiCompanyMain - 
+Customer[0] spent money value: 35.0
+
+[INFO ] 2023-11-08 17:26:24.602 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-08 17:26:24.602 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-08 17:26:24.602 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-08 17:26:24.602 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-08 17:26:24.602 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-08 17:26:24.602 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-08 17:26:47.760 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-08 17:26:47.766 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-08 17:26:47.768 [main] Driver - Details for Driver: 
+Name: Andrzej
+Last Name: Kowalski
+Age: 50
+Salary: 4000
+Assigned vehicle brand:Volkswagen
+[INFO ] 2023-11-08 17:26:47.768 [main] Accountant - Details for Accountant: 
+Name: Robert
+Last Name: Roberto
+Age: 40
+Salary: 3500
+[INFO ] 2023-11-08 17:26:47.768 [main] TaxiCompanyUtility - Vehicle assigned to the company.
+[INFO ] 2023-11-08 17:26:47.769 [main] TaxiCompany - Audi A4 BHA 18XX
+[INFO ] 2023-11-08 17:26:47.769 [main] TaxiCompany - Volkswagen Kubelwagen BI 1234
+[INFO ] 2023-11-08 17:26:47.769 [main] TaxiCompany - JEEP Grand Cherokee BI 1987A
+[INFO ] 2023-11-08 17:26:47.769 [main] TaxiCompanyUtility - Invalid vehicle assignment. Child classes not allowed.
+[INFO ] 2023-11-08 17:26:47.770 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-08 17:26:47.770 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-08 17:26:47.770 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-08 17:26:47.773 [main] TaxiCompanyMain - Customer[0] spent money value: 35.0
+
+[INFO ] 2023-11-08 17:26:47.773 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-08 17:26:47.773 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-08 17:26:47.773 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-08 17:26:47.773 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-08 17:26:47.774 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-08 17:26:47.774 [main] TaxiCompanyMain - Enter your choice: 

@@ -3,8 +3,11 @@ package com.solvd.laba.hw3.model.people.employees;
 import com.solvd.laba.hw3.model.interfaces.Tranportable;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class Driver extends Employee implements Tranportable {
+    private static final Logger LOGGER = LogManager.getLogger(Driver.class);
     private static int driversCount;
     private TaxiVehicle taxiVehicle;
 
@@ -23,11 +26,11 @@ public final class Driver extends Employee implements Tranportable {
 
 
     public void driveFromTo(String startLocation, String endLocation) {
-        System.out.println("I am en route to " + endLocation + "!. I started my journey from " + startLocation + ".");
+        LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + ".");
     }
 
     public void driveFromTo(String startLocation, String endLocation, String dateTime) {
-        System.out.println("I am en route to " + endLocation + "!. I started my journey from " + startLocation + " at " + dateTime + ".");
+        LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + " at " + dateTime + ".");
     }
 
 
@@ -70,12 +73,12 @@ public final class Driver extends Employee implements Tranportable {
 
     @Override
     public void display() {
-        System.out.println("Driver's name: " + this.firstName + "surname " + this.lastName);
+        LOGGER.info("Driver's name: " + this.firstName + "surname " + this.lastName);
     }
 
     @Override
     public void showDetails() {
-        System.out.println("Details for Driver: \nName: " + this.firstName +
+        LOGGER.info("Details for Driver: \nName: " + this.firstName +
                 "\nLast Name: " + this.lastName +
                 "\nAge: " + this.age +
                 "\nSalary: " + this.salary +
@@ -84,7 +87,7 @@ public final class Driver extends Employee implements Tranportable {
 
     @Override
     public void move(String source, String destination) {
-        System.out.println("I am en route to " + source + "!. I started my journey from " + destination + ".");
+        LOGGER.info(this.firstName + ": I am en route to " + source + "!. I started my journey from " + destination + ".");
     }
 
     @Override

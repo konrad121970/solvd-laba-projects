@@ -6,10 +6,15 @@ import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TaxiCompanyCreator {
+
+    private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyCreator.class);
+
     static {
-        System.out.println("TaxiCompanyCreator class initialized.");
+        LOGGER.info("TaxiCompanyCreator class initialized.");
     }
 
     public static TaxiCompany create() {

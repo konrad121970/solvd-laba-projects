@@ -42,7 +42,6 @@ public class TaxiCompanyMain {
         Employee newAccountant = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
 
         newDriver.showDetails();        // Using interfaces
-        System.out.println();
         newAccountant.showDetails();
 
         // Utility class usage
@@ -59,7 +58,7 @@ public class TaxiCompanyMain {
         Location loc4 = new Location("New York", "Green St");
 
         TransportOrder tr1 = new TransportOrder(loc1, loc2, customers[0], drivers[0]);
-        System.out.println(customers[0]);
+        LOGGER.info(customers[0]);
 
         drivers[0].move(loc1.getStreetName(), loc2.getStreetName());
         drivers[0].getVehicle().calculatePrice(10.00);
@@ -67,9 +66,8 @@ public class TaxiCompanyMain {
         tr1.setPayment(new CashPayment(LocalDate.of(2023, 11, 3), drivers[0].getVehicle().calculatePrice(10.00)));
         tr1.setReview(new Review(5, "It was an amazing ride!\n"));
 
-        System.out.println("\nCustomer[0] spent money value: " + customers[0].getSpentMoney() + "\n");
+        LOGGER.info("Customer[0] spent money value: " + customers[0].getSpentMoney() + "\n");
 
-        System.out.println("*********************************\n");
 
         // Liskov's Substitution Principle
         changePosition(drivers[0], "Start", "End");
@@ -81,107 +79,105 @@ public class TaxiCompanyMain {
 
 
         while (true) {
-            System.out.println("Taxi Company Menu:");
-            System.out.println("1. Assign Vehicle to Company");
-            System.out.println("2. Create a Transport Order");
-            System.out.println("3. Exit");
-            System.out.print("Enter your choice: ");
+            LOGGER.info("Taxi Company Menu:");
+            LOGGER.info("1. Assign Vehicle to Company");
+            LOGGER.info("2. Create a Transport Order");
+            LOGGER.info("3. Exit");
+            LOGGER.info("Enter your choice: ");
 
             int choice = scanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter vehicle details:");
-                    System.out.print("Make: ");
+                    LOGGER.info("Enter vehicle details:");
+                    LOGGER.info("Make: ");
                     String make = scanner.next();
-                    System.out.print("Model: ");
+                    LOGGER.info("Model: ");
                     String model = scanner.next();
-                    System.out.print("Plate Number: ");
+                    LOGGER.info("Plate Number: ");
                     scanner.nextLine();
                     String registrationPlate = scanner.nextLine();
-                    System.out.print("Number of seats: ");
+                    LOGGER.info("Number of seats: ");
                     int numberOfSeats = scanner.nextInt();
-                    System.out.print("Fare per kilometer: ");
+                    LOGGER.info("Fare per kilometer: ");
                     double farePerKilometer = scanner.nextDouble();
 
                     TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats, farePerKilometer);
                     taxiCompany.addVehicle(newTaxi);
-                    System.out.println("New taxi assigned to the company.");
+                    LOGGER.info("New taxi assigned to the company.");
 
-                    System.out.println();
                     taxiCompany.printVehicles();
-                    System.out.println();
 
                     break;
 
                 case 2:
-                    System.out.println("Create a Transport Order:");
-                    System.out.print("City: ");
+                    LOGGER.info("Create a Transport Order:");
+                    LOGGER.info("City: ");
                     scanner.nextLine();
                     String city = scanner.nextLine();
 
-                    System.out.print("Pickup Location: ");
+                    LOGGER.info("Pickup Location: ");
                     String pickupLocation = scanner.nextLine();
-                    System.out.print("Drop-off Location: ");
+                    LOGGER.info("Drop-off Location: ");
                     String dropOffLocation = scanner.nextLine();
 
                     Location pickup = new Location(city, pickupLocation);
                     Location dropOff = new Location(city, dropOffLocation);
 
-                    System.out.print("Customer Name: ");
+                    LOGGER.info("Customer Name: ");
                     String customerName = scanner.nextLine();
-                    System.out.print("Customer Last Name: ");
+                    LOGGER.info("Customer Last Name: ");
                     String customerLastName = scanner.nextLine();
-                    System.out.print("Customer Phone Number: ");
+                    LOGGER.info("Customer Phone Number: ");
                     String customerPhoneNumber = scanner.next();
                     Customer customer = new Customer(customerName, customerLastName, customerPhoneNumber);
                     taxiCompany.addCustomer(customer);
 
-                    System.out.println("Select a driver from the list:");
+                    LOGGER.info("Select a driver from the list:");
                     for (int i = 0; i < taxiCompany.getDrivers().length; i++) {
-                        System.out.println(i + ". " + taxiCompany.getDrivers()[i].getFirstName());
+                        LOGGER.info(i + ". " + taxiCompany.getDrivers()[i].getFirstName());
                     }
                     int driverChoice = scanner.nextInt();
 
                     if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().length) {
                         Driver selectedDriver = taxiCompany.getDrivers()[driverChoice];
-                        System.out.print("Ride Date (yyyy-MM-dd): ");
+                        LOGGER.info("Ride Date (yyyy-MM-dd): ");
                         String orderDateStr = scanner.next();
                         LocalDate orderDate = LocalDate.parse(orderDateStr);
 
-                        System.out.print("Enter the distance in kilometers(X,XX or X.XX format): ");
+                        LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
                         Double distance = scanner.nextDouble();
 
                         TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
                         selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
 
                         selectedDriver.getVehicle().calculatePrice(distance);
-                        System.out.println("Order price: " + selectedDriver.getVehicle().getFareCost());
+                        LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
 
-                        System.out.print("Payment amount: ");
+                        LOGGER.info("Payment amount: ");
                         double paymentAmount = scanner.nextDouble();
                         transportOrder.getCustomer().pay(paymentAmount);
                         transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
 
-                        System.out.print("Review (rating from 1 to 5 stars): ");
+                        LOGGER.info("Review (rating from 1 to 5 stars): ");
                         int rating = scanner.nextInt();
-                        System.out.print("Review (comment): ");
+                        LOGGER.info("Review (comment): ");
                         String content = scanner.next();
                         transportOrder.setReview(new Review(rating, content));
                         scanner.nextLine();
                         break;
                     } else {
-                        System.out.println("Invalid driver choice.");
+                        LOGGER.info("Invalid driver choice.");
                     }
 
                 case 3:
-                    System.out.println("Exiting...");
+                    LOGGER.info("Exiting...");
                     scanner.close();
                     System.exit(0);
                     break;
 
                 default:
-                    System.out.println("Invalid choice. Please enter a valid option.");
+                    LOGGER.info("Invalid choice. Please enter a valid option.");
                     break;
             }
         }

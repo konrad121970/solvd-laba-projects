@@ -12,8 +12,6 @@ public final class Accountant extends Employee {
 
     public Accountant(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) {
         super(firstName, lastName, phoneNumber, age, salary);
-        LOGGER.info("Created new Accountant");
-
         accountantsCount++;
     }
 
@@ -52,12 +50,12 @@ public final class Accountant extends Employee {
 
     @Override
     public void display() {
-        System.out.println("Accountant's name: " + this.firstName + "surname " + this.lastName);
+        LOGGER.info("Accountant's name: " + this.firstName + "surname " + this.lastName);
     }
 
     @Override
     public void showDetails() {
-        System.out.println("Details for Accountant: \nName: " + this.firstName +
+        LOGGER.info("Details for Accountant: \nName: " + this.firstName +
                 "\nLast Name: " + this.lastName +
                 "\nAge: " + this.age +
                 "\nSalary: " + this.salary);
