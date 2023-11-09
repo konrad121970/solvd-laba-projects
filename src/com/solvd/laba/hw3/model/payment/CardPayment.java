@@ -1,9 +1,13 @@
 package com.solvd.laba.hw3.model.payment;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 public final class CardPayment extends Payment {
+    private static final Logger LOGGER = LogManager.getLogger(CardPayment.class);
     private String cardNumber;
     private String cardType;
 
@@ -51,6 +55,6 @@ public final class CardPayment extends Payment {
 
     @Override
     public void processPayment() {
-
+        LOGGER.info("Card Payment has been processed! CardNumber: " + this.cardNumber);
     }
 }
