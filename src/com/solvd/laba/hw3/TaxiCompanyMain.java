@@ -37,6 +37,7 @@ public class TaxiCompanyMain {
         } catch (InvalidNumberOfSeatsException ex) {
             LOGGER.error(ex.getMessage());
         }
+
         TaxiVehicle taxiVehicle = null; // Child class
         try {
             taxiVehicle = new TaxiVehicle("Volkswagen", "Polo", "BZA 12345", 4, 2.5);
@@ -53,17 +54,14 @@ public class TaxiCompanyMain {
         Employee newDriver = null;
         try {
             newDriver = new Driver("Andrzej", "Kowalski", 50, "123123123", taxiVehicle, 4000);
-        } catch (InvalidPersonDataException e) {
-            LOGGER.error(e.getMessage());
-        } catch (InvalidEmployeeDataException e) {
+        } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
+
         Employee newAccountant = null;
         try {
             newAccountant = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
-        } catch (InvalidPersonDataException e) {
-            LOGGER.error(e.getMessage());
-        } catch (InvalidEmployeeDataException e) {
+        } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
 
@@ -133,13 +131,9 @@ public class TaxiCompanyMain {
                             double farePerKilometer = scanner.nextDouble();
                             newTaxi.setFarePerKilometer(farePerKilometer);
                             LOGGER.info("New taxi assigned to the company.");
-                        } catch (InvalidNumberOfSeatsException ex) {
+                        } catch (InvalidNumberOfSeatsException | DuplicateRegistrationPlateException ex) {
                             LOGGER.error(ex.getMessage());
                             LOGGER.error("Exiting menu option");
-                        } catch (DuplicateRegistrationPlateException ex) {
-                            LOGGER.error(ex.getMessage());
-                            LOGGER.error("Exiting menu option");
-                            break;
                         }
                         taxiCompany.printVehicles();
                         break;
