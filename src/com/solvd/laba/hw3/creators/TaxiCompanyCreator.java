@@ -12,6 +12,10 @@ import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 public class TaxiCompanyCreator {
 
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyCreator.class);
@@ -21,36 +25,36 @@ public class TaxiCompanyCreator {
     }
 
     public static TaxiCompany create() {
-        TaxiVehicle[] vehicles = createVehicles();
-        Driver[] drivers = createDrivers(vehicles);
+        ArrayList<TaxiVehicle> vehicles = createVehicles();
+        ArrayList<Driver> drivers = createDrivers(vehicles);
 
-        Customer[] customers = createCustomers();
-        Accountant[] accountants = createAccountants();
+        ArrayList<Customer> customers = createCustomers();
+        Set<Accountant> accountants = createAccountants();
 
         //[] locations = createLocations();
-        TransportOrder[] transportOrders = new TransportOrder[]{};
+        ArrayList<TransportOrder> transportOrders = new ArrayList<>();
         return new TaxiCompany("DzieduszkaTrans", transportOrders, customers, drivers, accountants, vehicles);
     }
 
-    private static TaxiVehicle[] createVehicles() {
+    private static ArrayList<TaxiVehicle> createVehicles() {
 
         try {
-            return new TaxiVehicle[]{
-                    new TaxiVehicle("Audi", "A4", "BHA 18XX", 4, 2.50),
-                    new TaxiVehicle("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00)
-            };
+            ArrayList<TaxiVehicle> taxiVehicleArrayList = new ArrayList<>();
+            taxiVehicleArrayList.add(new TaxiVehicle("Audi", "A4", "BHA 18XX", 4, 2.50));
+            taxiVehicleArrayList.add(new TaxiVehicle("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00));
+            return taxiVehicleArrayList;
         } catch (InvalidNumberOfSeatsException e) {
             LOGGER.error(e.getMessage());
             return null;
         }
     }
 
-    private static Driver[] createDrivers(TaxiVehicle[] vehicles) {
+    private static ArrayList<Driver> createDrivers(ArrayList<TaxiVehicle> vehicles) {
         try {
-            return new Driver[]{
-                    new Driver("Bartolomeo", "Diaz", 23, "123123123", vehicles[0], 3500),
-                    new Driver("Leon", "Kaputt", 67, "123123123", vehicles[1], 4000)
-            };
+            ArrayList<Driver> driverArrayList = new ArrayList<>();
+            driverArrayList.add(new Driver("Bartolomeo", "Diaz", 23, "123123123", vehicles.get(0), 3500));
+            driverArrayList.add(new Driver("Leon", "Kaputt", 67, "123123123", vehicles.get(1), 4000));
+            return driverArrayList;
         } catch (InvalidPersonDataException e) {
             LOGGER.error(e.getMessage());
             return null;
@@ -60,12 +64,12 @@ public class TaxiCompanyCreator {
         }
     }
 
-    private static Accountant[] createAccountants() {
+    private static Set<Accountant> createAccountants() {
         try {
-            return new Accountant[]{
-                    new Accountant("Katharine", "Note", "123123123", 23, 2500),
-                    new Accountant("Elias", "Bismark", "123123123", 19, 4000)
-            };
+            Set<Accountant> accountantsSet = new HashSet<>();
+            accountantsSet.add(new Accountant("Katharine", "Note", "123123123", 23, 2500));
+            accountantsSet.add(new Accountant("Elias", "Bismark", "123123123", 19, 4000));
+            return accountantsSet;
         } catch (InvalidPersonDataException e) {
             LOGGER.error(e.getMessage());
             return null;
@@ -75,13 +79,14 @@ public class TaxiCompanyCreator {
         }
     }
 
-    private static Customer[] createCustomers() {
+
+    private static ArrayList<Customer> createCustomers() {
         try {
-            return new Customer[]{
-                    new Customer("Andrzej", "Kowalski", "123123123"),
-                    new Customer("Paolo", "Nowak", "111222333"),
-                    new Customer("Herbert", "Shmidt", "333222111")
-            };
+            ArrayList<Customer> customerArrayList = new ArrayList<>();
+            customerArrayList.add(new Customer("Andrzej", "Kowalski", "123123123"));
+            customerArrayList.add(new Customer("Paolo", "Nowak", "111222333"));
+            customerArrayList.add(new Customer("Herbert", "Shmidt", "333222111"));
+            return customerArrayList;
         } catch (InvalidPersonDataException e) {
             LOGGER.error(e.getMessage());
             return null;

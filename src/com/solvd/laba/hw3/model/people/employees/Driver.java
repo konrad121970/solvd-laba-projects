@@ -84,7 +84,9 @@ public final class Driver extends Employee implements Transportable {
                 "\nLast Name: " + this.lastName +
                 "\nAge: " + this.age +
                 "\nSalary: " + this.salary +
-                "\nAssigned vehicle brand:" + this.getVehicle().getMake());
+                "\nAssigned vehicle brand: ");
+        //this.getVehicle().getMake())
+
     }
 
     @Override

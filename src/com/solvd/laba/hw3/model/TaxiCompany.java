@@ -6,31 +6,84 @@ import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
+import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class TaxiCompany implements Displayable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
     private final String name;
-    private TransportOrder[] transportOrders;
-    private Customer[] customers;
-    private Driver[] drivers;
-    private Accountant[] accountants;
-    private Vehicle[] vehicles;
+    private final Map<Driver, Vehicle> driverVehicleMap = new HashMap<>();
+    private ArrayList<TransportOrder> transportOrders;
+    private ArrayList<Customer> customers;
+    private ArrayList<Driver> drivers;
+    private ArrayList<TaxiVehicle> vehicles;
+    private Set<Accountant> accountants;
 
     public TaxiCompany(String name) {
         this.name = name;
     }
 
-    public TaxiCompany(String name, TransportOrder[] transportOrders, Customer[] customers, Driver[] drivers, Accountant[] accountants, Vehicle[] vehicles) {
+    public TaxiCompany(String name, ArrayList<TransportOrder> transportOrders, ArrayList<Customer> customers, ArrayList<Driver> drivers, Set<Accountant> accountants, ArrayList<TaxiVehicle> vehicles) {
         this.name = name;
         this.transportOrders = transportOrders;
         this.customers = customers;
         this.drivers = drivers;
         this.accountants = accountants;
+        this.vehicles = vehicles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Map<Driver, Vehicle> getDriverVehicleMap() {
+        return driverVehicleMap;
+    }
+
+    public ArrayList<TransportOrder> getTransportOrders() {
+        return transportOrders;
+    }
+
+    public void setTransportOrders(ArrayList<TransportOrder> transportOrders) {
+        this.transportOrders = transportOrders;
+    }
+
+    public ArrayList<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(ArrayList<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public ArrayList<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(ArrayList<Driver> drivers) {
+        this.drivers = drivers;
+    }
+
+    public Set<Accountant> getAccountants() {
+        return accountants;
+    }
+
+    public void setAccountants(Set<Accountant> accountants) {
+        this.accountants = accountants;
+    }
+
+    public ArrayList<TaxiVehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(ArrayList<TaxiVehicle> vehicles) {
         this.vehicles = vehicles;
     }
 
@@ -42,78 +95,36 @@ public class TaxiCompany implements Displayable {
         }
     }
 
-    public void addVehicle(Vehicle vehicle) throws DuplicateRegistrationPlateException {
+    public void addVehicle(TaxiVehicle vehicle) throws DuplicateRegistrationPlateException {
         isRegistrationPlateDuplicatePresent(vehicle);
-
-        Vehicle[] newVehicle = new Vehicle[vehicles.length + 1];
-        System.arraycopy(vehicles, 0, newVehicle, 0, vehicles.length);
-        newVehicle[vehicles.length] = vehicle;
-        this.vehicles = newVehicle;
+        if (vehicles.isEmpty()) {
+            vehicles = new ArrayList<>();
+        }
+        vehicles.add(vehicle);
     }
 
     public void addDriver(Driver driver) {
-        Driver[] newDrivers = new Driver[drivers.length + 1];
-
-        System.arraycopy(drivers, 0, newDrivers, 0, drivers.length);
-        newDrivers[vehicles.length] = driver;
-        this.drivers = newDrivers;
+        if (drivers.isEmpty()) {
+            drivers = new ArrayList<>();
+        }
+        drivers.add(driver);
     }
 
     public void addCustomer(Customer customer) {
-        Customer[] newCustomers = new Customer[customers.length + 1];
-
-        System.arraycopy(customers, 0, newCustomers, 0, customers.length);
-        newCustomers[vehicles.length] = customer;
-        this.customers = newCustomers;
+        if (customers.isEmpty()) {
+            customers = new ArrayList<>();
+        }
+        customers.add(customer);
     }
 
     public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
-        for (int i = 0; i < vehicles.length; i++) {
-            if (vehicles[i].getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {
+        for (Vehicle v : vehicles) {
+            if (v.getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {
                 throw new DuplicateRegistrationPlateException("There is another car with the same registration plate assigned!");
             }
         }
     }
 
-    public TransportOrder[] getTransportOrders() {
-        return transportOrders;
-    }
-
-    public void setTransportOrders(TransportOrder[] transportOrders) {
-        this.transportOrders = transportOrders;
-    }
-
-    public Customer[] getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(Customer[] customers) {
-        this.customers = customers;
-    }
-
-    public Driver[] getDrivers() {
-        return drivers;
-    }
-
-    public void setDrivers(Driver[] drivers) {
-        this.drivers = drivers;
-    }
-
-    public Accountant[] getAccountants() {
-        return accountants;
-    }
-
-    public void setAccountants(Accountant[] accountants) {
-        this.accountants = accountants;
-    }
-
-    public Vehicle[] getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(Vehicle[] vehicles) {
-        this.vehicles = vehicles;
-    }
 
     public void printVehicles() {
         LOGGER.info("List of company vehicles:");
@@ -121,7 +132,6 @@ public class TaxiCompany implements Displayable {
             LOGGER.info(vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
         }
     }
-
 
     public void printCustomers() {
         LOGGER.info("List of company Customers:");
@@ -155,11 +165,13 @@ public class TaxiCompany implements Displayable {
     @Override
     public String toString() {
         return "TaxiCompany{" +
-                "transportOrders=" + Arrays.toString(transportOrders) +
-                ", customers=" + Arrays.toString(customers) +
-                ", drivers=" + Arrays.toString(drivers) +
-                ", accountants=" + Arrays.toString(accountants) +
-                ", vehicles=" + Arrays.toString(vehicles) +
+                "name='" + name + '\'' +
+                ", driverVehicleMap=" + driverVehicleMap +
+                ", transportOrders=" + transportOrders +
+                ", customers=" + customers +
+                ", drivers=" + drivers +
+                ", accountants=" + accountants +
+                ", vehicles=" + vehicles +
                 '}';
     }
 
@@ -172,11 +184,13 @@ public class TaxiCompany implements Displayable {
     @Override
     public void showDetails() {
         LOGGER.info("TaxiCompany{" +
-                "transportOrders=" + Arrays.toString(transportOrders) +
-                ", customers=" + Arrays.toString(customers) +
-                ", drivers=" + Arrays.toString(drivers) +
-                ", accountants=" + Arrays.toString(accountants) +
-                ", vehicles=" + Arrays.toString(vehicles) +
+                "name='" + name + '\'' +
+                ", driverVehicleMap=" + driverVehicleMap +
+                ", transportOrders=" + transportOrders +
+                ", customers=" + customers +
+                ", drivers=" + drivers +
+                ", accountants=" + accountants +
+                ", vehicles=" + vehicles +
                 '}');
     }
 }
