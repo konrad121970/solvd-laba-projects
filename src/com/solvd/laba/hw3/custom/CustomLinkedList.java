@@ -1,19 +1,31 @@
 package com.solvd.laba.hw3.custom;
 
-import java.util.AbstractList;
-import java.util.List;
-import java.util.RandomAccess;
+public class CustomLinkedList<T> {
+    private Node<T> head;
 
-public class CustomLinkedList<T> extends AbstractList<T>
-        implements List<T>, RandomAccess, Cloneable, java.io.Serializable {
-
-    @Override
-    public T get(int index) {
-        return null;
+    public CustomLinkedList() {
+        this.head = null;
     }
 
-    @Override
-    public int size() {
-        return 0;
+    public void add(T data) {
+        Node<T> newNode = new Node<>(data);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node<T> current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+    }
+
+    public void display() {
+        Node<T> current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
     }
 }
