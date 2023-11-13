@@ -2,8 +2,8 @@ package com.solvd.laba.hw3.model;
 
 import com.solvd.laba.hw3.model.exceptions.DuplicateRegistrationPlateException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
+import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.people.customer.Customer;
-import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
@@ -24,13 +24,13 @@ public class TaxiCompany implements Displayable {
     private ArrayList<Customer> customers;
     private ArrayList<Driver> drivers;
     private ArrayList<TaxiVehicle> vehicles;
-    private Set<Accountant> accountants;
+    private Set<Employee> accountants;
 
     public TaxiCompany(String name) {
         this.name = name;
     }
 
-    public TaxiCompany(String name, ArrayList<TransportOrder> transportOrders, ArrayList<Customer> customers, ArrayList<Driver> drivers, Set<Accountant> accountants, ArrayList<TaxiVehicle> vehicles) {
+    public TaxiCompany(String name, ArrayList<TransportOrder> transportOrders, ArrayList<Customer> customers, ArrayList<Driver> drivers, Set<Employee> accountants, ArrayList<TaxiVehicle> vehicles) {
         this.name = name;
         this.transportOrders = transportOrders;
         this.customers = customers;
@@ -71,11 +71,11 @@ public class TaxiCompany implements Displayable {
         this.drivers = drivers;
     }
 
-    public Set<Accountant> getAccountants() {
+    public Set<Employee> getAccountants() {
         return accountants;
     }
 
-    public void setAccountants(Set<Accountant> accountants) {
+    public void setAccountants(Set<Employee> accountants) {
         this.accountants = accountants;
     }
 
@@ -85,6 +85,16 @@ public class TaxiCompany implements Displayable {
 
     public void setVehicles(ArrayList<TaxiVehicle> vehicles) {
         this.vehicles = vehicles;
+    }
+
+    public void addDriverWithVehicle(Driver driver, TaxiVehicle vehicle) throws DuplicateRegistrationPlateException {
+/*        if (driverVehicleMap.isEmpty()) {
+            driverVehicleMap = new HashMap<>();
+        }*/
+        addDriver(driver);
+        addVehicle(vehicle);
+        driver.setVehicle(vehicle);
+        driverVehicleMap.put(driver, vehicle);
     }
 
     public void printCustomerNames() {
@@ -120,7 +130,7 @@ public class TaxiCompany implements Displayable {
     public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
         for (Vehicle v : vehicles) {
             if (v.getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {
-                throw new DuplicateRegistrationPlateException("There is another car with the same registration plate assigned!");
+                throw new DuplicateRegistrationPlateException("There is another car with the same registration plate assigned!" + v.getRegistrationPlate());
             }
         }
     }
@@ -146,7 +156,7 @@ public class TaxiCompany implements Displayable {
             LOGGER.info(customer.getFirstName() + " " + customer.getLastName() + " " + customer.getSpentMoney());
         }
         LOGGER.info("List of company Accountants:");
-        for (Accountant accountant : accountants) {
+        for (Employee accountant : accountants) {
             LOGGER.info(accountant.getFirstName() + " " + accountant.getLastName() + " " + accountant.getSalary());
         }
     }

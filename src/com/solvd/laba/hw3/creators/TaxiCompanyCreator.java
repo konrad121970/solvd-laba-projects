@@ -4,6 +4,7 @@ import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.exceptions.InvalidEmployeeDataException;
 import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
 import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
@@ -29,7 +30,7 @@ public class TaxiCompanyCreator {
         ArrayList<Driver> drivers = createDrivers(vehicles);
 
         ArrayList<Customer> customers = createCustomers();
-        Set<Accountant> accountants = createAccountants();
+        Set<Employee> accountants = createAccountants();
 
         //[] locations = createLocations();
         ArrayList<TransportOrder> transportOrders = new ArrayList<>();
@@ -54,6 +55,7 @@ public class TaxiCompanyCreator {
             ArrayList<Driver> driverArrayList = new ArrayList<>();
             driverArrayList.add(new Driver("Bartolomeo", "Diaz", 23, "123123123", vehicles.get(0), 3500));
             driverArrayList.add(new Driver("Leon", "Kaputt", 67, "123123123", vehicles.get(1), 4000));
+
             return driverArrayList;
         } catch (InvalidPersonDataException e) {
             LOGGER.error(e.getMessage());
@@ -64,9 +66,9 @@ public class TaxiCompanyCreator {
         }
     }
 
-    private static Set<Accountant> createAccountants() {
+    private static Set<Employee> createAccountants() {
         try {
-            Set<Accountant> accountantsSet = new HashSet<>();
+            Set<Employee> accountantsSet = new HashSet<>();
             accountantsSet.add(new Accountant("Katharine", "Note", "123123123", 23, 2500));
             accountantsSet.add(new Accountant("Elias", "Bismark", "123123123", 19, 4000));
             return accountantsSet;

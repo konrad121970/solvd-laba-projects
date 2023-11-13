@@ -19,56 +19,106 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
     static TaxiCompany taxiCompany = TaxiCompanyCreator.create();
     static ArrayList<Customer> customers = taxiCompany.getCustomers();
     static ArrayList<Driver> drivers = taxiCompany.getDrivers();
-    static Set<Accountant> accountants = taxiCompany.getAccountants();
+    static Set<Employee> accountants = taxiCompany.getAccountants();
 
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
 
-        Vehicle vehicle = null; // Parent class
+        Vehicle newVehicle = null; // Parent class
         try {
-            vehicle = new Vehicle("JEEP", "Grand Cherokee", 5, "BI 1987A");
+            newVehicle = new Vehicle("JEEP", "Grand Cherokee", 5, "BI 1987A");
         } catch (InvalidNumberOfSeatsException ex) {
             LOGGER.error(ex.getMessage());
         }
 
-        TaxiVehicle taxiVehicle = null; // Child class
+        TaxiVehicle taxiVehicle1 = null; // Child class
+        TaxiVehicle taxiVehicle2 = null; // Child class
+
         try {
-            taxiVehicle = new TaxiVehicle("Volkswagen", "Polo", "BZA 12345", 4, 2.5);
+            taxiVehicle1 = new TaxiVehicle("Volkswagen", "Polo", "ANDRZEJKURLA", 4, 2.5);
+            taxiVehicle2 = new TaxiVehicle("Audi", "A7", "444", 4, 2.5);
         } catch (InvalidNumberOfSeatsException e) {
             LOGGER.error(e.getMessage());
         }
 
         try {
-            taxiVehicle.scheduleMaintenance(LocalDate.of(2024, 11, 8)); // Setting wrong maintenance date
+            taxiVehicle1.scheduleMaintenance(LocalDate.of(2024, 11, 8)); // Setting wrong maintenance date
         } catch (InvalidNextMaintenanceDateException ex) {
             LOGGER.error(ex.getMessage(), ex); // Exception for wrong next maintenance date
         }
 
-        Employee newDriver = null;
+        Driver newDriver1 = null;
+        Driver newDriver2 = null;
         try {
-            newDriver = new Driver("Andrzej", "Kowalski", 50, "123123123", taxiVehicle, 4000);
+            newDriver1 = new Driver("Andrzej", "Kowalski", 50, "123123123", taxiVehicle1, 4000);
+            newDriver2 = new Driver("Pawel", "Andrzejuk", 22, "123123123", taxiVehicle2, 4000);
         } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
 
-        Employee newAccountant = null;
+        // Adding entries to driverVehicleMap
         try {
-            newAccountant = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
+            taxiCompany.addDriverWithVehicle(newDriver1, taxiVehicle1);
+            taxiCompany.addDriverWithVehicle(newDriver2, taxiVehicle2);
+        } catch (DuplicateRegistrationPlateException e) {
+            LOGGER.info(e.getMessage());
+        }
+
+        Map<Driver, Vehicle> driverVehicleMap = taxiCompany.getDriverVehicleMap();
+
+        LOGGER.info("Size of driverVehicleMap: " + driverVehicleMap.size());
+        LOGGER.info("****************** ITERATE MAP - ITERATOR ******************");
+        // Iterate Map using iterator
+        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Driver, Vehicle> entry = iterator.next();
+            LOGGER.info("Key = " + entry.getKey() + " Value = " + entry.getValue());
+        }
+
+        LOGGER.info("****************** ITERATE MAP - FOREACH ******************");
+        for (Map.Entry<Driver, Vehicle> entry : driverVehicleMap.entrySet()) {
+            Driver key = entry.getKey();
+            Vehicle value = entry.getValue();
+            LOGGER.info("Key: " + key + ", Value: " + value);
+        }
+
+        Employee newAccountant1 = null;
+        Employee newAccountant2 = null;
+        try {
+            newAccountant1 = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
+            newAccountant2 = new Accountant("Hubert", "Kowalski", "123123123", 20, 3000);
         } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
 
-        newDriver.showDetails();        // Using interfaces
-        newAccountant.showDetails();
+        //newDriver.showDetails();        // Using interfaces
+        //newAccountant.showDetails();
+
+        // Adding entries to Accountants Set
+
+        accountants.add(newAccountant1);
+        accountants.add(newAccountant2);
+
+        LOGGER.info("Size of accountants Set: " + accountants.size());
+        LOGGER.info("****************** ITERATE SET - ITERATOR ******************");
+        // Iterate Set using iterator allows for dynamic removing of elements during iteration
+        Iterator<Employee> iterator1 = accountants.iterator(); //
+        while (iterator1.hasNext()) {
+            Employee accountant = iterator1.next();
+            LOGGER.info(accountant);
+        }
+        LOGGER.info("****************** ITERATE SET - FOREACH ******************");
+        // Iterate Set using foreach
+        for (Employee employee : accountants) {
+            LOGGER.info(employee);
+        }
 
         Location loc1 = new Location("New York", "Blue St");
         Location loc2 = new Location("New York", "Yellow St");
@@ -81,7 +131,7 @@ public class TaxiCompanyMain {
         tr1.setPayment(new CashPayment(LocalDate.of(2023, 11, 3), drivers.get(0).getVehicle().calculatePrice(10.00)));
         tr1.setReview(new Review(5, "It was an amazing ride!\n"));
 
-        LOGGER.info("Customer[0] spent money value: " + customers.get(0).getSpentMoney() + "\n");
+        LOGGER.info("Customer: " + customers.get(0).getFirstName() + " spent money value: " + customers.get(0).getSpentMoney() + "\n");
 
         changePosition(drivers.get(0), "Start", "End"); // Using interface as parameter
         changePosition(customers.get(0), "Start", "End");
