@@ -29,3 +29,162 @@
 [INFO ] 2023-11-14 16:37:58.968 [main] TaxiCompanyMain - 2. Create a Transport Order
 [INFO ] 2023-11-14 16:37:58.968 [main] TaxiCompanyMain - 3. Exit
 [INFO ] 2023-11-14 16:37:58.968 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-14 18:25:04.770 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-14 18:25:04.778 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-14 18:25:04.794 [main] TaxiCompanyMain - Size of driverVehicleMap: 2
+[INFO ] 2023-11-14 18:25:04.794 [main] TaxiCompanyMain - ****************** ITERATE MAP - ITERATOR ******************
+[INFO ] 2023-11-14 18:25:04.794 [main] TaxiCompanyMain - Key = Driver [name=Andrzej, lastName=Kowalski] Value = TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:25:04.795 [main] TaxiCompanyMain - Key = Driver [name=Pawel, lastName=Andrzejuk] Value = TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:25:04.795 [main] TaxiCompanyMain - ****************** ITERATE MAP - FOREACH ******************
+[INFO ] 2023-11-14 18:25:04.795 [main] TaxiCompanyMain - Key: Driver [name=Andrzej, lastName=Kowalski], Value: TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:25:04.795 [main] TaxiCompanyMain - Key: Driver [name=Pawel, lastName=Andrzejuk], Value: TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:25:04.795 [main] TaxiCompanyMain - Size of accountants Set: 4
+[INFO ] 2023-11-14 18:25:04.795 [main] TaxiCompanyMain - ****************** ITERATE SET - ITERATOR ******************
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - ****************** ITERATE SET - FOREACH ******************
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:25:04.796 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:25:04.797 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:25:04.798 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-14 18:25:04.798 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-14 18:25:04.799 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-14 18:25:04.801 [main] TaxiCompanyMain - Customer: Andrzej spent money value: 35.0
+
+[INFO ] 2023-11-14 18:25:04.801 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-14 18:25:04.803 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-14 18:25:04.804 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-14 18:25:04.804 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-14 18:25:04.804 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-14 18:25:04.804 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-14 18:42:35.570 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-14 18:42:35.575 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-14 18:42:35.588 [main] TaxiCompanyMain - Size of driverVehicleMap: 2
+[INFO ] 2023-11-14 18:42:35.588 [main] TaxiCompanyMain - ****************** ITERATE MAP - ITERATOR ******************
+[INFO ] 2023-11-14 18:42:35.588 [main] TaxiCompanyMain - Key = Driver [name=Andrzej, lastName=Kowalski] Value = TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:42:35.588 [main] TaxiCompanyMain - Key = Driver [name=Pawel, lastName=Andrzejuk] Value = TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:42:35.588 [main] TaxiCompanyMain - ****************** ITERATE MAP - FOREACH ******************
+[INFO ] 2023-11-14 18:42:35.588 [main] TaxiCompanyMain - Key: Driver [name=Andrzej, lastName=Kowalski], Value: TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:42:35.588 [main] TaxiCompanyMain - Key: Driver [name=Pawel, lastName=Andrzejuk], Value: TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:42:35.589 [main] Vehicle - Vehicle [make=Volkswagen, model=Polo]
+[INFO ] 2023-11-14 18:42:35.589 [main] TaxiCompanyMain - Size of accountants Set: 4
+[INFO ] 2023-11-14 18:42:35.589 [main] TaxiCompanyMain - ****************** ITERATE SET - ITERATOR ******************
+[INFO ] 2023-11-14 18:42:35.590 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:42:35.590 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:42:35.590 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:42:35.590 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:42:35.591 [main] TaxiCompanyMain - ****************** ITERATE SET - FOREACH ******************
+[INFO ] 2023-11-14 18:42:35.591 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:42:35.591 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:42:35.591 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:42:35.591 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:42:35.592 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-14 18:42:35.592 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-14 18:42:35.593 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-14 18:42:35.594 [main] TaxiCompanyMain - Customer: Andrzej spent money value: 35.0
+
+[INFO ] 2023-11-14 18:42:35.594 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-14 18:42:35.597 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-14 18:42:35.597 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-14 18:42:35.597 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-14 18:42:35.597 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-14 18:42:35.597 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-14 18:45:13.201 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-14 18:45:13.208 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-14 18:45:13.221 [main] TaxiCompanyMain - Size of driverVehicleMap: 2
+[INFO ] 2023-11-14 18:45:13.221 [main] TaxiCompanyMain - ****************** ITERATE MAP - ITERATOR ******************
+[INFO ] 2023-11-14 18:45:13.221 [main] TaxiCompanyMain - Key = Driver [name=Andrzej, lastName=Kowalski] Value = TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:45:13.221 [main] TaxiCompanyMain - Key = Driver [name=Pawel, lastName=Andrzejuk] Value = TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:45:13.221 [main] TaxiCompanyMain - ****************** ITERATE MAP - FOREACH ******************
+[INFO ] 2023-11-14 18:45:13.221 [main] TaxiCompanyMain - Key: Driver [name=Andrzej, lastName=Kowalski], Value: TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:45:13.221 [main] TaxiCompanyMain - Key: Driver [name=Pawel, lastName=Andrzejuk], Value: TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:45:13.222 [main] Vehicle - Vehicle [make=JEEP, model=Grand Cherokee]
+[INFO ] 2023-11-14 18:45:13.222 [main] TaxiCompanyMain - Size of accountants Set: 4
+[INFO ] 2023-11-14 18:45:13.222 [main] TaxiCompanyMain - ****************** ITERATE SET - ITERATOR ******************
+[INFO ] 2023-11-14 18:45:13.223 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:45:13.223 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:45:13.223 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:45:13.223 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:45:13.225 [main] TaxiCompanyMain - ****************** ITERATE SET - FOREACH ******************
+[INFO ] 2023-11-14 18:45:13.225 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:45:13.225 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:45:13.225 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:45:13.225 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:45:13.227 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-14 18:45:13.227 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-14 18:45:13.230 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-14 18:45:13.231 [main] TaxiCompanyMain - Customer: Andrzej spent money value: 35.0
+
+[INFO ] 2023-11-14 18:45:13.231 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-14 18:45:13.236 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-14 18:45:13.236 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-14 18:45:13.236 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-14 18:45:13.236 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-14 18:45:13.236 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-14 18:45:25.410 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-14 18:45:25.415 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-14 18:45:25.426 [main] TaxiCompanyMain - Size of driverVehicleMap: 2
+[INFO ] 2023-11-14 18:45:25.426 [main] TaxiCompanyMain - ****************** ITERATE MAP - ITERATOR ******************
+[INFO ] 2023-11-14 18:45:25.426 [main] TaxiCompanyMain - Key = Driver [name=Andrzej, lastName=Kowalski] Value = TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:45:25.426 [main] TaxiCompanyMain - Key = Driver [name=Pawel, lastName=Andrzejuk] Value = TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:45:25.426 [main] TaxiCompanyMain - ****************** ITERATE MAP - FOREACH ******************
+[INFO ] 2023-11-14 18:45:25.427 [main] TaxiCompanyMain - Key: Driver [name=Andrzej, lastName=Kowalski], Value: TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 18:45:25.427 [main] TaxiCompanyMain - Key: Driver [name=Pawel, lastName=Andrzejuk], Value: TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 18:45:25.427 [main] Vehicle - Vehicle [make=Volkswagen, model=Polo]
+[INFO ] 2023-11-14 18:45:25.427 [main] TaxiCompanyMain - Size of accountants Set: 4
+[INFO ] 2023-11-14 18:45:25.427 [main] TaxiCompanyMain - ****************** ITERATE SET - ITERATOR ******************
+[INFO ] 2023-11-14 18:45:25.428 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:45:25.428 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:45:25.428 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:45:25.429 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:45:25.429 [main] TaxiCompanyMain - ****************** ITERATE SET - FOREACH ******************
+[INFO ] 2023-11-14 18:45:25.429 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 18:45:25.429 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 18:45:25.429 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 18:45:25.429 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 18:45:25.430 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-14 18:45:25.430 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-14 18:45:25.431 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-14 18:45:25.432 [main] TaxiCompanyMain - Customer: Andrzej spent money value: 35.0
+
+[INFO ] 2023-11-14 18:45:25.432 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-14 18:45:25.435 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-14 18:45:25.435 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-14 18:45:25.435 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-14 18:45:25.435 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-14 18:45:25.436 [main] TaxiCompanyMain - Enter your choice: 
+[INFO ] 2023-11-14 19:00:09.834 [main] TaxiCompanyCreator - TaxiCompanyCreator class initialized.
+[INFO ] 2023-11-14 19:00:09.840 [main] TaxiCompanyMain - Main application has just been started!
+[INFO ] 2023-11-14 19:00:09.852 [main] TaxiCompanyMain - Size of driverVehicleMap: 2
+[INFO ] 2023-11-14 19:00:09.852 [main] TaxiCompanyMain - ****************** ITERATE MAP - ITERATOR ******************
+[INFO ] 2023-11-14 19:00:09.853 [main] TaxiCompanyMain - Key = Driver [name=Andrzej, lastName=Kowalski] Value = TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 19:00:09.853 [main] TaxiCompanyMain - Key = Driver [name=Pawel, lastName=Andrzejuk] Value = TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 19:00:09.853 [main] TaxiCompanyMain - ****************** ITERATE MAP - FOREACH ******************
+[INFO ] 2023-11-14 19:00:09.853 [main] TaxiCompanyMain - Key: Driver [name=Andrzej, lastName=Kowalski], Value: TaxiVehicle [make = Volkswagen, model = Polo]
+[INFO ] 2023-11-14 19:00:09.853 [main] TaxiCompanyMain - Key: Driver [name=Pawel, lastName=Andrzejuk], Value: TaxiVehicle [make = Audi, model = A7]
+[INFO ] 2023-11-14 19:00:09.854 [main] Vehicle - Vehicle [make=Volkswagen, model=Polo]
+[INFO ] 2023-11-14 19:00:09.854 [main] TaxiCompanyMain - Size of accountants Set: 4
+[INFO ] 2023-11-14 19:00:09.854 [main] TaxiCompanyMain - ****************** ITERATE SET - ITERATOR ******************
+[INFO ] 2023-11-14 19:00:09.855 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - ****************** ITERATE SET - FOREACH ******************
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - Accountant [name=Hubert, lastName=Kowalski]
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - Accountant [name=Elias, lastName=Bismark]
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - Accountant [name=Robert, lastName=Roberto]
+[INFO ] 2023-11-14 19:00:09.856 [main] TaxiCompanyMain - Accountant [name=Katharine, lastName=Note]
+[INFO ] 2023-11-14 19:00:09.857 [main] TaxiCompanyMain - Customer [firstName=Andrzej, lastName=Kowalski]
+[INFO ] 2023-11-14 19:00:09.857 [main] Driver - Bartolomeo: I am en route to Blue St!. I started my journey from Yellow St.
+[INFO ] 2023-11-14 19:00:09.859 [main] Customer - Customer Andrzej has just spent 25.0 USD!
+[INFO ] 2023-11-14 19:00:09.860 [main] TaxiCompanyMain - Customer: Andrzej spent money value: 35.0
+
+[INFO ] 2023-11-14 19:00:09.860 [main] Driver - Bartolomeo: I am en route to Start!. I started my journey from End.
+[INFO ] 2023-11-14 19:00:09.862 [main] TaxiCompanyMain - Taxi Company Menu:
+[INFO ] 2023-11-14 19:00:09.863 [main] TaxiCompanyMain - 1. Assign Vehicle to Company
+[INFO ] 2023-11-14 19:00:09.863 [main] TaxiCompanyMain - 2. Create a Transport Order
+[INFO ] 2023-11-14 19:00:09.864 [main] TaxiCompanyMain - 3. Exit
+[INFO ] 2023-11-14 19:00:09.864 [main] TaxiCompanyMain - Enter your choice: 

@@ -26,23 +26,16 @@ public class TaxiCompanyMain {
     static TaxiCompany taxiCompany = TaxiCompanyCreator.create();
     static ArrayList<Customer> customers = taxiCompany.getCustomers();
     static ArrayList<Driver> drivers = taxiCompany.getDrivers();
-    static Set<Employee> accountants = taxiCompany.getAccountants();
+    static Set<Accountant> accountants = taxiCompany.getAccountants();
 
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
-
-        Vehicle newVehicle = null; // Parent class
-        try {
-            newVehicle = new Vehicle("JEEP", "Grand Cherokee", 5, "BI 1987A");
-        } catch (InvalidNumberOfSeatsException ex) {
-            LOGGER.error(ex.getMessage());
-        }
 
         TaxiVehicle taxiVehicle1 = null; // Child class
         TaxiVehicle taxiVehicle2 = null; // Child class
 
         try {
-            taxiVehicle1 = new TaxiVehicle("Volkswagen", "Polo", "ANDRZEJKURLA", 4, 2.5);
+            taxiVehicle1 = new TaxiVehicle("Volkswagen", "Polo", "ALALA", 4, 2.5);
             taxiVehicle2 = new TaxiVehicle("Audi", "A7", "444", 4, 2.5);
         } catch (InvalidNumberOfSeatsException e) {
             LOGGER.error(e.getMessage());
@@ -89,14 +82,16 @@ public class TaxiCompanyMain {
             LOGGER.info("Key: " + key + ", Value: " + value);
         }
 
-        Employee newAccountant1 = null;
-        Employee newAccountant2 = null;
+        Accountant newAccountant1 = null;
+        Accountant newAccountant2 = null;
         try {
             newAccountant1 = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
             newAccountant2 = new Accountant("Hubert", "Kowalski", "123123123", 20, 3000);
         } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
+
+        VehicleUtils.processVehicle(taxiVehicle1);
 
         //newDriver.showDetails();        // Using interfaces
         //newAccountant.showDetails();
@@ -109,7 +104,7 @@ public class TaxiCompanyMain {
         LOGGER.info("Size of accountants Set: " + accountants.size());
         LOGGER.info("****************** ITERATE SET - ITERATOR ******************");
         // Iterate Set using iterator allows for dynamic removing of elements during iteration
-        Iterator<Employee> iterator1 = accountants.iterator(); //
+        Iterator<Accountant> iterator1 = accountants.iterator(); //
         while (iterator1.hasNext()) {
             Employee accountant = iterator1.next();
             LOGGER.info(accountant);

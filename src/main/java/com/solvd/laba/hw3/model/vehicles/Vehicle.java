@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Vehicle implements Maintainable, Displayable {
+public abstract class Vehicle implements Maintainable, Displayable {
     private static final Logger LOGGER = LogManager.getLogger(Vehicle.class);
     protected String make;
     protected String model;

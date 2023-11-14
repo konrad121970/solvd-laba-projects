@@ -2,6 +2,7 @@ package com.solvd.laba.hw3.custom;
 
 public class CustomLinkedList<T> {
     private Node<T> head;
+    private int size;
 
     public CustomLinkedList() {
         this.head = null;
@@ -18,6 +19,35 @@ public class CustomLinkedList<T> {
             }
             current.next = newNode;
         }
+        size++;
+    }
+
+    public void delete(T data) {
+        if (head == null) {
+            return; // If the list is empty, do nothing
+        }
+
+        if (head.data.equals(data)) {
+            head = head.next;
+            size--;
+            return;
+        }
+
+        Node<T> current = head;
+        Node<T> previous = null;
+
+        while (current != null && !current.data.equals(data)) {
+            previous = current;
+            current = current.next;
+        }
+
+        if (current == null) {
+            return; // Element not found in the list
+        }
+
+        // Remove the element by updating the pointers
+        previous.next = current.next;
+        size--;
     }
 
     public void display() {
@@ -27,5 +57,9 @@ public class CustomLinkedList<T> {
             current = current.next;
         }
         System.out.println();
+    }
+
+    public int size() {
+        return size;
     }
 }

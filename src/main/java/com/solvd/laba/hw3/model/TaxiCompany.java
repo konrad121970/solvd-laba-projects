@@ -4,6 +4,7 @@ import com.solvd.laba.hw3.model.exceptions.DuplicateRegistrationPlateException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.people.customer.Customer;
+import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
@@ -24,13 +25,13 @@ public class TaxiCompany implements Displayable {
     private ArrayList<Customer> customers;
     private ArrayList<Driver> drivers;
     private ArrayList<TaxiVehicle> vehicles;
-    private Set<Employee> accountants;
+    private Set<Accountant> accountants;
 
     public TaxiCompany(String name) {
         this.name = name;
     }
 
-    public TaxiCompany(String name, ArrayList<TransportOrder> transportOrders, ArrayList<Customer> customers, ArrayList<Driver> drivers, Set<Employee> accountants, ArrayList<TaxiVehicle> vehicles) {
+    public TaxiCompany(String name, ArrayList<TransportOrder> transportOrders, ArrayList<Customer> customers, ArrayList<Driver> drivers, Set<Accountant> accountants, ArrayList<TaxiVehicle> vehicles) {
         this.name = name;
         this.transportOrders = transportOrders;
         this.customers = customers;
@@ -71,11 +72,11 @@ public class TaxiCompany implements Displayable {
         this.drivers = drivers;
     }
 
-    public Set<Employee> getAccountants() {
+    public Set<Accountant> getAccountants() {
         return accountants;
     }
 
-    public void setAccountants(Set<Employee> accountants) {
+    public void setAccountants(Set<Accountant> accountants) {
         this.accountants = accountants;
     }
 
