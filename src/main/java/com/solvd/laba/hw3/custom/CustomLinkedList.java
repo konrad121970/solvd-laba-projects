@@ -1,6 +1,10 @@
 package com.solvd.laba.hw3.custom;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class CustomLinkedList<T> {
+    private static final Logger LOGGER = LogManager.getLogger(CustomLinkedList.class);
     private Node<T> head;
     private int size;
 
@@ -53,10 +57,9 @@ public class CustomLinkedList<T> {
     public void display() {
         Node<T> current = head;
         while (current != null) {
-            System.out.print(current.data + " ");
+            LOGGER.info(current.data + " ");
             current = current.next;
         }
-        System.out.println();
     }
 
     public int size() {

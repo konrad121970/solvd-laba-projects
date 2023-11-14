@@ -1,6 +1,7 @@
 package com.solvd.laba.hw3;
 
 import com.solvd.laba.hw3.creators.TaxiCompanyCreator;
+import com.solvd.laba.hw3.custom.CustomLinkedList;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.exceptions.*;
 import com.solvd.laba.hw3.model.interfaces.Transportable;
@@ -30,6 +31,15 @@ public class TaxiCompanyMain {
 
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
+
+
+        CustomLinkedList<Integer> linkedList = new CustomLinkedList<>();
+        linkedList.add(1);
+        linkedList.add(2);
+        linkedList.add(4);
+        linkedList.add(3);
+        LOGGER.info(linkedList.size());
+        linkedList.display();
 
         TaxiVehicle taxiVehicle1 = null; // Child class
         TaxiVehicle taxiVehicle2 = null; // Child class
