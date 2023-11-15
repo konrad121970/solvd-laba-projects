@@ -26,8 +26,8 @@ import java.util.*;
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
     static TaxiCompany taxiCompany = TaxiCompanyCreator.create();
-    static ArrayList<Customer> customers = taxiCompany.getCustomers();
-    static ArrayList<Driver> drivers = taxiCompany.getDrivers();
+    static List<Customer> customers = taxiCompany.getCustomers();
+    static List<Driver> drivers = taxiCompany.getDrivers();
     static Set<Accountant> accountants = taxiCompany.getAccountants();
 
     public static void main(String[] args) {

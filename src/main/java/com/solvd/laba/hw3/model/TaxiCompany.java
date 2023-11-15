@@ -12,26 +12,29 @@ import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class TaxiCompany implements Displayable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
     private final String name;
-    private final Map<Driver, Vehicle> driverVehicleMap = new HashMap<>();
-    private ArrayList<TransportOrder> transportOrders;
-    private ArrayList<Customer> customers;
-    private ArrayList<Driver> drivers;
-    private ArrayList<TaxiVehicle> vehicles;
+    private Map<Driver, Vehicle> driverVehicleMap;
+    private List<TransportOrder> transportOrders;
+    private List<Customer> customers;
+    private List<Driver> drivers;
+    private List<TaxiVehicle> vehicles;
     private Set<Accountant> accountants;
 
     public TaxiCompany(String name) {
         this.name = name;
+        this.driverVehicleMap = new HashMap<>();
+        this.transportOrders = new ArrayList<>();
+        this.customers = new ArrayList<>();
+        this.drivers = new ArrayList<>();
+        this.vehicles = new ArrayList<>();
+        this.accountants = new HashSet<>();
     }
 
-    public TaxiCompany(String name, ArrayList<TransportOrder> transportOrders, ArrayList<Customer> customers, ArrayList<Driver> drivers, Set<Accountant> accountants, ArrayList<TaxiVehicle> vehicles) {
+    public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<TaxiVehicle> vehicles) {
         this.name = name;
         this.transportOrders = transportOrders;
         this.customers = customers;
@@ -48,27 +51,27 @@ public class TaxiCompany implements Displayable {
         return driverVehicleMap;
     }
 
-    public ArrayList<TransportOrder> getTransportOrders() {
+    public List<TransportOrder> getTransportOrders() {
         return transportOrders;
     }
 
-    public void setTransportOrders(ArrayList<TransportOrder> transportOrders) {
+    public void setTransportOrders(List<TransportOrder> transportOrders) {
         this.transportOrders = transportOrders;
     }
 
-    public ArrayList<Customer> getCustomers() {
+    public List<Customer> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(ArrayList<Customer> customers) {
+    public void setCustomers(List<Customer> customers) {
         this.customers = customers;
     }
 
-    public ArrayList<Driver> getDrivers() {
+    public List<Driver> getDrivers() {
         return drivers;
     }
 
-    public void setDrivers(ArrayList<Driver> drivers) {
+    public void setDrivers(List<Driver> drivers) {
         this.drivers = drivers;
     }
 
@@ -80,11 +83,11 @@ public class TaxiCompany implements Displayable {
         this.accountants = accountants;
     }
 
-    public ArrayList<TaxiVehicle> getVehicles() {
+    public List<TaxiVehicle> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(ArrayList<TaxiVehicle> vehicles) {
+    public void setVehicles(List<TaxiVehicle> vehicles) {
         this.vehicles = vehicles;
     }
 
