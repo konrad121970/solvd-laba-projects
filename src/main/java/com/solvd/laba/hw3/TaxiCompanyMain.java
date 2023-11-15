@@ -16,6 +16,7 @@ import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
+import com.solvd.laba.hw3.model.vehicles.VehicleUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

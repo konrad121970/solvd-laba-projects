@@ -1,6 +1,4 @@
-package com.solvd.laba.hw3;
-
-import com.solvd.laba.hw3.model.vehicles.Vehicle;
+package com.solvd.laba.hw3.model.vehicles;
 
 import java.time.LocalDate;
 
