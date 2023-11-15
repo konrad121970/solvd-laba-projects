@@ -234,17 +234,5 @@ public class CustomLinkedList<T> implements List<T> {
         result.append("]");
         return result.toString();
     }
-
-    // Other methods (not implemented for brevity)
-    // ...
-
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-
-        Node(E data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
+    
 }
