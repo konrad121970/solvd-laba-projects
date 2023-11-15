@@ -40,7 +40,7 @@ public class TaxiCompanyMain {
         linkedList.add(4);
         linkedList.add(3);
         LOGGER.info(linkedList.size());
-        linkedList.display();
+        //linkedList.display();
 
         TaxiVehicle taxiVehicle1 = null; // Child class
         TaxiVehicle taxiVehicle2 = null; // Child class
