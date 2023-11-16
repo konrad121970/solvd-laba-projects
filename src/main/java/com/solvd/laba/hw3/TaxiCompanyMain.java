@@ -172,7 +172,7 @@ public class TaxiCompanyMain {
                             TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats);
                             taxiCompany.addVehicle(newTaxi);
                             LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
-                            double farePerKilometer = scanner.nextDouble();
+                            double farePerKilometer = readData(scanner);  //scanner.nextDouble();
                             newTaxi.setFarePerKilometer(farePerKilometer);
                             LOGGER.info("New taxi assigned to the company.");
                         } catch (InvalidNumberOfSeatsException | DuplicateRegistrationPlateException ex) {
@@ -219,7 +219,7 @@ public class TaxiCompanyMain {
                             LocalDate orderDate = LocalDate.parse(orderDateStr);
 
                             LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
-                            Double distance = scanner.nextDouble();
+                            Double distance = readData(scanner); //scanner.nextDouble();
 
                             TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
                             selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
@@ -228,7 +228,7 @@ public class TaxiCompanyMain {
                             LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
 
                             LOGGER.info("Payment amount: ");
-                            double paymentAmount = scanner.nextDouble();
+                            double paymentAmount = readData(scanner); //scanner.nextDouble();
                             transportOrder.getCustomer().pay(paymentAmount);
                             transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
 
@@ -245,7 +245,7 @@ public class TaxiCompanyMain {
 
                     case 3:
                         LOGGER.info("Exiting...");
-                        return; // Zakończ main method, co zamknie blok try-with-resources
+                        return;
 
                     default:
                         LOGGER.info("Invalid choice. Please enter a valid option.");
@@ -263,5 +263,24 @@ public class TaxiCompanyMain {
 
     public static void printPersonData(Person person) {
         person.toString();
+    }
+
+    private static Double readData(Scanner scanner) {
+        while (true) {
+            String input = scanner.next();
+
+            try {
+                // Try parsing with dot as the decimal separator
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e1) {
+                try {
+                    // Try parsing with comma as the decimal separator
+                    return Double.parseDouble(input.replace(",", "."));
+                } catch (NumberFormatException e2) {
+                    // Handle the exception (e.g., inform the user about the invalid input)
+                    System.out.println("Invalid input. Please enter a valid data in X.XX or X,XX format.");
+                }
+            }
+        }
     }
 }

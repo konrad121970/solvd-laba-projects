@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TaxiCompanyCreator {
@@ -25,10 +26,10 @@ public class TaxiCompanyCreator {
     }
 
     public static TaxiCompany create() {
-        ArrayList<TaxiVehicle> vehicles = createVehicles();
-        ArrayList<Driver> drivers = createDrivers(vehicles);
+        List<TaxiVehicle> vehicles = createVehicles();
+        List<Driver> drivers = createDrivers(vehicles);
 
-        ArrayList<Customer> customers = createCustomers();
+        List<Customer> customers = createCustomers();
         Set<Accountant> accountants = createAccountants();
 
         //[] locations = createLocations();
@@ -36,10 +37,10 @@ public class TaxiCompanyCreator {
         return new TaxiCompany("DzieduszkaTrans", transportOrders, customers, drivers, accountants, vehicles);
     }
 
-    private static ArrayList<TaxiVehicle> createVehicles() {
+    private static List<TaxiVehicle> createVehicles() {
 
         try {
-            ArrayList<TaxiVehicle> taxiVehicleArrayList = new ArrayList<>();
+            List<TaxiVehicle> taxiVehicleArrayList = new ArrayList<>();
             taxiVehicleArrayList.add(new TaxiVehicle("Audi", "A4", "BHA 18XX", 4, 2.50));
             taxiVehicleArrayList.add(new TaxiVehicle("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00));
             return taxiVehicleArrayList;
@@ -49,9 +50,9 @@ public class TaxiCompanyCreator {
         }
     }
 
-    private static ArrayList<Driver> createDrivers(ArrayList<TaxiVehicle> vehicles) {
+    private static List<Driver> createDrivers(List<TaxiVehicle> vehicles) {
         try {
-            ArrayList<Driver> driverArrayList = new ArrayList<>();
+            List<Driver> driverArrayList = new ArrayList<>();
             driverArrayList.add(new Driver("Bartolomeo", "Diaz", 23, "123123123", vehicles.get(0), 3500));
             driverArrayList.add(new Driver("Leon", "Kaputt", 67, "123123123", vehicles.get(1), 4000));
 
@@ -81,9 +82,9 @@ public class TaxiCompanyCreator {
     }
 
 
-    private static ArrayList<Customer> createCustomers() {
+    private static List<Customer> createCustomers() {
         try {
-            ArrayList<Customer> customerArrayList = new ArrayList<>();
+            List<Customer> customerArrayList = new ArrayList<>();
             customerArrayList.add(new Customer("Andrzej", "Kowalski", "123123123"));
             customerArrayList.add(new Customer("Paolo", "Nowak", "111222333"));
             customerArrayList.add(new Customer("Herbert", "Shmidt", "333222111"));

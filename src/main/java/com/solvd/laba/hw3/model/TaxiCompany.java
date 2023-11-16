@@ -36,6 +36,7 @@ public class TaxiCompany implements Displayable {
 
     public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<TaxiVehicle> vehicles) {
         this.name = name;
+        this.driverVehicleMap = new HashMap<>();
         this.transportOrders = transportOrders;
         this.customers = customers;
         this.drivers = drivers;
