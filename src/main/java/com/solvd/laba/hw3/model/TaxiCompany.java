@@ -24,6 +24,16 @@ public class TaxiCompany implements Displayable {
     private List<TaxiVehicle> vehicles;
     private Set<Accountant> accountants;
 
+    public TaxiCompany() {
+        this.name = "DefaultCompany";
+        this.driverVehicleMap = new HashMap<>();
+        this.transportOrders = new ArrayList<>();
+        this.customers = new ArrayList<>();
+        this.drivers = new ArrayList<>();
+        this.vehicles = new ArrayList<>();
+        this.accountants = new HashSet<>();
+    }
+
     public TaxiCompany(String name) {
         this.name = name;
         this.driverVehicleMap = new HashMap<>();
@@ -155,15 +165,23 @@ public class TaxiCompany implements Displayable {
         }
     }
 
-    public void printEmployees() {
+    public void printDrivers(){
         LOGGER.info("List of company Drivers:");
-        for (Customer customer : customers) {
-            LOGGER.info(customer.getFirstName() + " " + customer.getLastName() + " " + customer.getSpentMoney());
+        for (Driver driver : drivers) {
+            LOGGER.info(driver.getFirstName() + " " + driver.getLastName());
         }
-        LOGGER.info("List of company Accountants:");
-        for (Employee accountant : accountants) {
-            LOGGER.info(accountant.getFirstName() + " " + accountant.getLastName() + " " + accountant.getSalary());
+    }
+
+    public void printAccountants(){
+        LOGGER.info("List of company Drivers:");
+        for (Accountant accountant : accountants) {
+            LOGGER.info(accountant.getFirstName() + " " + accountant.getLastName());
         }
+    }
+
+    public void printEmployees() {
+        printAccountants();
+        printDrivers();
     }
 
 
