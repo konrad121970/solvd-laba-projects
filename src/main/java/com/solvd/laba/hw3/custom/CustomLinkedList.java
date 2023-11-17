@@ -26,6 +26,35 @@ public class CustomLinkedList<T> implements List<T> {
     }
 
     @Override
+    public boolean removeAll(Collection<?> c) {
+        boolean modified = false;
+
+        for (Object element : c) {
+            modified |= remove(element);
+        }
+
+        return modified;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        for (T element : c) {
+            add(element);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        for (Object element : c) {
+            if (!contains(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public boolean contains(Object o) {
         Node<T> current = head;
         while (current != null) {
@@ -35,37 +64,6 @@ public class CustomLinkedList<T> implements List<T> {
             current = current.next;
         }
         return false;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return null;
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
-    public <T1> T1[] toArray(T1[] a) {
-        return null;
-    }
-
-    @Override
-    public boolean add(T e) {
-        Node<T> newNode = new Node<>(e);
-        if (head == null) {
-            head = newNode;
-        } else {
-            Node<T> current = head;
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = newNode;
-        }
-        size++;
-        return true;
     }
 
     @Override
@@ -99,37 +97,40 @@ public class CustomLinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean containsAll(Collection<?> c) {
-        for (Object element : c) {
-            if (!contains(element)) {
-                return false;
+    public boolean add(T e) {
+        Node<T> newNode = new Node<>(e);
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node<T> current = head;
+            while (current.next != null) {
+                current = current.next;
             }
+            current.next = newNode;
         }
+        size++;
         return true;
     }
 
+
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        for (T element : c) {
-            add(element);
-        }
-        return true;
+    public Iterator<T> iterator() {
+        return null;
+    }
+
+    @Override
+    public Object[] toArray() {
+        return new Object[0];
+    }
+
+    @Override
+    public <T1> T1[] toArray(T1[] a) {
+        return null;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> c) {
         return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
-        boolean modified = false;
-
-        for (Object element : c) {
-            modified |= remove(element);
-        }
-
-        return modified;
     }
 
     @Override
@@ -141,15 +142,6 @@ public class CustomLinkedList<T> implements List<T> {
     public void clear() {
         head = null;
         size = 0;
-    }
-
-    @Override
-    public int hashCode() {
-        int hashCode = 1;
-        for (T element : this) {
-            hashCode = 31 * hashCode + (element == null ? 0 : element.hashCode());
-        }
-        return hashCode;
     }
 
     @Override
@@ -198,29 +190,20 @@ public class CustomLinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        CustomLinkedList<?> otherList = (CustomLinkedList<?>) obj;
-        if (size != otherList.size) {
-            return false;
-        }
-        Iterator<?> iterator1 = iterator();
-        Iterator<?> iterator2 = otherList.iterator();
-        while (iterator1.hasNext() && iterator2.hasNext()) {
-            Object obj1 = iterator1.next();
-            Object obj2 = iterator2.next();
-            if (!Objects.equals(obj1, obj2)) {
-                return false;
-            }
-        }
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomLinkedList<?> that = (CustomLinkedList<?>) o;
+        return size == that.size && Objects.equals(head, that.head);
     }
-
+    @Override
+    public int hashCode() {
+        int hashCode = 1;
+        for (T element : this) {
+            hashCode = 31 * hashCode + (element == null ? 0 : element.hashCode());
+        }
+        return hashCode;
+    }
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("[");
