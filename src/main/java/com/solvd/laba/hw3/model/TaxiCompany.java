@@ -2,7 +2,6 @@ package com.solvd.laba.hw3.model;
 
 import com.solvd.laba.hw3.model.exceptions.DuplicateRegistrationPlateException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
-import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
@@ -25,13 +24,7 @@ public class TaxiCompany implements Displayable {
     private Set<Accountant> accountants;
 
     public TaxiCompany() {
-        this.name = "DefaultCompany";
-        this.driverVehicleMap = new HashMap<>();
-        this.transportOrders = new ArrayList<>();
-        this.customers = new ArrayList<>();
-        this.drivers = new ArrayList<>();
-        this.vehicles = new ArrayList<>();
-        this.accountants = new HashSet<>();
+        this("Default Company");
     }
 
     public TaxiCompany(String name) {
@@ -165,14 +158,14 @@ public class TaxiCompany implements Displayable {
         }
     }
 
-    public void printDrivers(){
+    public void printDrivers() {
         LOGGER.info("List of company Drivers:");
         for (Driver driver : drivers) {
             LOGGER.info(driver.getFirstName() + " " + driver.getLastName());
         }
     }
 
-    public void printAccountants(){
+    public void printAccountants() {
         LOGGER.info("List of company Drivers:");
         for (Accountant accountant : accountants) {
             LOGGER.info(accountant.getFirstName() + " " + accountant.getLastName());
