@@ -59,80 +59,111 @@ public class TaxiCompany implements Displayable {
         return transportOrders;
     }
 
-    public void setTransportOrders(List<TransportOrder> transportOrders) {
-        this.transportOrders = transportOrders;
-    }
-
     public List<Customer> getCustomers() {
         return customers;
-    }
-
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
     }
 
     public List<Driver> getDrivers() {
         return drivers;
     }
 
-    public void setDrivers(List<Driver> drivers) {
-        this.drivers = drivers;
-    }
-
     public Set<Accountant> getAccountants() {
         return accountants;
-    }
-
-    public void setAccountants(Set<Accountant> accountants) {
-        this.accountants = accountants;
     }
 
     public List<TaxiVehicle> getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(List<TaxiVehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
-
-    public void addDriverWithVehicle(Driver driver, TaxiVehicle vehicle) throws DuplicateRegistrationPlateException {
-/*        if (driverVehicleMap.isEmpty()) {
+/*    public void addDriverWithVehicle(Driver driver, TaxiVehicle vehicle) throws DuplicateRegistrationPlateException {
+        if (driverVehicleMap.isEmpty()) {
             driverVehicleMap = new HashMap<>();
-        }*/
+        }
         addDriver(driver);
         addVehicle(vehicle);
         driver.setVehicle(vehicle);
         driverVehicleMap.put(driver, vehicle);
-    }
+    }*/
 
-    public void printCustomerNames() {
-        int i = 1;
-        for (Customer customer : customers) {
-            LOGGER.info("Customer " + i + ": " + customer.getFirstName() + " " + customer.getLastName());
-            i++;
-        }
-    }
 
     public void addVehicle(TaxiVehicle vehicle) throws DuplicateRegistrationPlateException {
-        isRegistrationPlateDuplicatePresent(vehicle);
-        if (vehicles.isEmpty()) {
-            vehicles = new ArrayList<>();
-        }
-        vehicles.add(vehicle);
+        if (vehicle != null) {
+            if (vehicles == null) {
+                vehicles = new ArrayList<>();
+            }
+            isRegistrationPlateDuplicatePresent(vehicle);
+            vehicles.add(vehicle);
+        } else throw new IllegalArgumentException("TaxiVehicle cannot be null");
     }
 
-    public void addDriver(Driver driver) {
-        if (drivers.isEmpty()) {
-            drivers = new ArrayList<>();
-        }
-        drivers.add(driver);
+    public void addVehicles(List<TaxiVehicle> vehicles) throws DuplicateRegistrationPlateException {
+        if (vehicles != null) {
+            if (this.vehicles == null) {
+                this.vehicles = new ArrayList<>();
+            }
+            for (TaxiVehicle vehicle : vehicles) {
+                isRegistrationPlateDuplicatePresent(vehicle);
+                this.vehicles.add(vehicle);
+            }
+        } else throw new IllegalArgumentException("Vehicles list cannot be null");
+    }
+
+    public void addDriver(Driver driver) throws DuplicateRegistrationPlateException {
+        if (driver != null) {
+            if (drivers == null) {
+                drivers = new ArrayList<>();
+            }
+            drivers.add(driver);
+            driverVehicleMap.put(driver, driver.getVehicle());
+        } else throw new IllegalArgumentException("Driver cannot be null");
+    }
+
+    public void addDrivers(List<Driver> drivers) throws DuplicateRegistrationPlateException {
+        if (drivers != null) {
+            if (this.drivers == null) {
+                this.drivers = new ArrayList<>();
+            }
+            for (Driver driver : drivers) {
+                this.drivers.add(driver);
+                driverVehicleMap.put(driver, driver.getVehicle());
+            }
+        } else throw new IllegalArgumentException("Drivers list cannot be null");
     }
 
     public void addCustomer(Customer customer) {
-        if (customers.isEmpty()) {
-            customers = new ArrayList<>();
-        }
-        customers.add(customer);
+        if (customer != null) {
+            if (customers == null) {
+                customers = new ArrayList<>();
+            }
+            customers.add(customer);
+        } else throw new IllegalArgumentException("Customer cannot be null");
+    }
+
+    public void addCustomers(List<Customer> customers) {
+        if (customers != null) {
+            if (this.customers == null) {
+                this.customers = new ArrayList<>();
+            }
+            this.customers.addAll(customers);
+        } else throw new IllegalArgumentException("Customers list cannot be null");
+    }
+
+    public void addTransportOrder(TransportOrder transportOrder) {
+        if (transportOrder != null) {
+            if (transportOrders == null) {
+                transportOrders = new ArrayList<>();
+            }
+            transportOrders.add(transportOrder);
+        } else throw new IllegalArgumentException("TransportOrder cannot be null");
+    }
+
+    public void addTransportOrder(List<TransportOrder> transportOrders) {
+        if (transportOrders != null) {
+            if (this.transportOrders == null) {
+                this.transportOrders = new ArrayList<>();
+            }
+            this.transportOrders.addAll(transportOrders);
+        } else throw new IllegalArgumentException("TransportOrders list cannot be null");
     }
 
     public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
@@ -142,7 +173,6 @@ public class TaxiCompany implements Displayable {
             }
         }
     }
-
 
     public void printVehicles() {
         LOGGER.info("List of company vehicles:");
@@ -201,7 +231,6 @@ public class TaxiCompany implements Displayable {
                 '}';
     }
 
-    // TODO: implement these methods
     @Override
     public void display() {
         LOGGER.info("Company name: " + this.name);
