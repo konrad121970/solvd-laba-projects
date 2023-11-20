@@ -26,6 +26,10 @@ public class TaxiVehicle extends Vehicle {
     }
 
     public void setFareCost(double fareCost) {
+        if (fareCost < 0) {
+            LOGGER.error("Invalid fare cost: cannot be negative");
+            return;
+        }
         this.fareCost = fareCost;
     }
 
@@ -34,10 +38,18 @@ public class TaxiVehicle extends Vehicle {
     }
 
     public void setFarePerKilometer(Double farePerKilometer) {
+        if (farePerKilometer <= 0) {
+            LOGGER.error("Invalid fare per kilometer: must be greater than 0.");
+            return;
+        }
         this.farePerKilometer = farePerKilometer;
     }
 
     public Double calculatePrice(Double distanceInKm) {
+        if (distanceInKm < 0) {
+            LOGGER.error("Invalid distance: must be greater than or equal to 0.");
+            return null;
+        }
         this.fareCost = distanceInKm * farePerKilometer;
         return fareCost;
     }

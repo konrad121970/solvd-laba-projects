@@ -2,17 +2,17 @@ package com.solvd.laba.hw3.model.people;
 
 import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
 public abstract class Person implements Displayable {
-
     protected String firstName;
     protected String lastName;
     protected String phoneNumber;
 
     public Person(String firstName, String lastName, String phoneNumber) throws InvalidPersonDataException {
-        if (firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()) {
+        if (StringUtils.isEmpty(firstName) || StringUtils.isEmpty(lastName)) {
             throw new InvalidPersonDataException("Invalid " + this.getClass().getSimpleName() + " data: First name and last name must not be empty.");
         }
         this.firstName = firstName;

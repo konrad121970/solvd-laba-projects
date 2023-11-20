@@ -38,7 +38,12 @@ public final class TransportOrder implements Displayable {
     }
 
     public void setRouteStart(Location routeStart) {
-        this.routeStart = routeStart;
+        if (routeStart != null) {
+            this.routeStart = routeStart;
+        } else {
+            LOGGER.error("Invalid route start location: cannot be null or empty");
+            // You can choose to throw an exception, log an error, or handle it according to your application's needs
+        }
     }
 
     public Location getRouteEnd() {
@@ -46,7 +51,12 @@ public final class TransportOrder implements Displayable {
     }
 
     public void setRouteEnd(Location routeEnd) {
-        this.routeEnd = routeEnd;
+        if (routeEnd != null) {
+            this.routeEnd = routeEnd;
+        } else {
+            LOGGER.error("Invalid route end location: cannot be null");
+            // You can choose to throw an exception, log an error, or handle it according to your application's needs
+        }
     }
 
     public Customer getCustomer() {
@@ -58,7 +68,12 @@ public final class TransportOrder implements Displayable {
     }
 
     public void setDriver(Driver driver) {
-        this.driver = driver;
+        if (driver != null) {
+            this.driver = driver;
+        } else {
+            LOGGER.error("Invalid driver: cannot be null");
+            // You can choose to throw an exception, log an error, or handle it according to your application's needs
+        }
     }
 
 
@@ -67,7 +82,12 @@ public final class TransportOrder implements Displayable {
     }
 
     public void setPayment(Payment payment) {
-        this.payment = payment;
+        if (payment != null) {
+            this.payment = payment;
+        } else {
+            LOGGER.error("Invalid payment: cannot be null");
+            // You can choose to throw an exception, log an error, or handle it according to your application's needs
+        }
     }
 
     @Override

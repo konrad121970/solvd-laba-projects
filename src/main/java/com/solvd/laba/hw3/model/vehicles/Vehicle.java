@@ -34,6 +34,9 @@ public abstract class Vehicle implements Maintainable, Displayable {
     }
 
     public void setNextMaintenance(LocalDate nextMaintenance) {
+        if (nextMaintenance != null && nextMaintenance.isBefore(LocalDate.now())) {
+            throw new InvalidNextMaintenanceDateException("Invalid maintenance schedule date: Cannot schedule maintenance in the past.");
+        }
         this.nextMaintenance = nextMaintenance;
     }
 
@@ -66,6 +69,10 @@ public abstract class Vehicle implements Maintainable, Displayable {
     }
 
     public void setNumberOfSeats(int numberOfSeats) {
+        if (numberOfSeats < 1 || numberOfSeats > 300) {
+            LOGGER.error("Invalid number of seats: must be a number between 1 and 300!");
+            return;
+        }
         this.numberOfSeats = numberOfSeats;
     }
 
@@ -103,9 +110,7 @@ public abstract class Vehicle implements Maintainable, Displayable {
     public void doMaintenance() {
         this.lastMaintenance = LocalDate.now();
     }
-
-
-    // TODO:
+    
     @Override
     public void display() {
         LOGGER.info("Vehicle [make=" + this.make + ", model=" + this.model + "]");
