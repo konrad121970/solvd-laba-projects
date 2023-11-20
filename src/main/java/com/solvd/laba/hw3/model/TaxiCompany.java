@@ -182,8 +182,10 @@ public class TaxiCompany implements Displayable {
 
     public void printVehicles() {
         LOGGER.info("List of company vehicles:");
+        int i = 1;
         for (Vehicle vehicle : vehicles) {
-            LOGGER.info(vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+            LOGGER.info(i + ". " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+            i++;
         }
     }
 

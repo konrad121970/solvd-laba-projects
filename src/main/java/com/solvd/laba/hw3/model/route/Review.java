@@ -1,6 +1,7 @@
 package com.solvd.laba.hw3.model.route;
 
 
+import com.solvd.laba.hw3.model.exceptions.InvalidStarRatingException;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.interfaces.Reviewable;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +18,11 @@ public class Review implements Reviewable, Displayable {
     }
 
     public Review(Integer starRating, String content) {
-        this.starRating = starRating;
+        if (starRating != null && starRating >= 1 && starRating <= 5) {
+            this.starRating = starRating;
+        } else {
+            throw new InvalidStarRatingException("Star rating should be between 1 and 6 stars.");
+        }
         this.content = content;
     }
 
@@ -26,7 +31,11 @@ public class Review implements Reviewable, Displayable {
     }
 
     public void setStarRating(Integer starRating) {
-        this.starRating = starRating;
+        if (starRating != null && starRating >= 1 && starRating <= 5) {
+            this.starRating = starRating;
+        } else {
+            throw new InvalidStarRatingException("Star rating should be between 1 and 6 stars.");
+        }
     }
 
     public String getContent() {

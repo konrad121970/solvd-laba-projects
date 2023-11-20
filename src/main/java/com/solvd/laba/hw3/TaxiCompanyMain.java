@@ -19,6 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class TaxiCompanyMain {
@@ -27,7 +28,7 @@ public class TaxiCompanyMain {
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
 
-        ArrayList<TaxiVehicle> taxiVehiclesList = null;
+        ArrayList<TaxiVehicle> taxiVehiclesList;
         try {
             taxiVehiclesList = new ArrayList<>(Arrays.asList(
                     new TaxiVehicle("Audi", "A4", "BHA 18XX", 4, 2.50),
@@ -52,7 +53,6 @@ public class TaxiCompanyMain {
                     new Accountant("Elias", "Bismark", "123123123", 19, 4000)));
         } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
-            ;
         }
 
         List<Customer> customers = null;
@@ -63,7 +63,6 @@ public class TaxiCompanyMain {
                     new Customer("Herbert", "Shmidt", "333222111")));
         } catch (InvalidPersonDataException e) {
             LOGGER.error(e.getMessage());
-            ;
         }
 
         /* USING BUILDER PATTERN */
@@ -179,102 +178,28 @@ public class TaxiCompanyMain {
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 LOGGER.info("Taxi Company Menu:");
-                LOGGER.info("1. Assign Vehicle to Company");
-                LOGGER.info("2. Create a Transport Order");
-                LOGGER.info("3. Exit");
+                LOGGER.info("1. Add new Vehicle");
+                LOGGER.info("2. Add new Employee");
+                LOGGER.info("3. Create a new Transport Order");
+                LOGGER.info("4. Exit");
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
 
                 switch (choice) {
                     case 1:
-                        LOGGER.info("Enter vehicle details:");
-                        LOGGER.info("Make: ");
-                        String make = scanner.next();
-                        LOGGER.info("Model: ");
-                        String model = scanner.next();
-                        LOGGER.info("Number of seats: ");
-                        int numberOfSeats = scanner.nextInt();
-                        LOGGER.info("Plate Number: ");
-                        scanner.nextLine();
-                        String registrationPlate = scanner.nextLine();
-
-                        try {
-                            TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats);
-                            taxiCompany.addVehicle(newTaxi);
-                            LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
-                            double farePerKilometer = readNumberData(scanner);  //scanner.nextDouble();
-                            newTaxi.setFarePerKilometer(farePerKilometer);
-                            LOGGER.info("New taxi assigned to the company.");
-                        } catch (InvalidNumberOfSeatsException | DuplicateRegistrationPlateException ex) {
-                            LOGGER.error(ex.getMessage());
-                            LOGGER.error("Exiting menu option");
-                            break;
-                        }
-                        taxiCompany.printVehicles();
+                        addNewVehicle(scanner, taxiCompany);
                         break;
 
                     case 2:
-                        LOGGER.info("Create a Transport Order:");
-                        LOGGER.info("City: ");
-                        scanner.nextLine();
-                        String city = scanner.nextLine();
-
-                        LOGGER.info("Pickup Location: ");
-                        String pickupLocation = scanner.nextLine();
-                        LOGGER.info("Drop-off Location: ");
-                        String dropOffLocation = scanner.nextLine();
-
-                        Location pickup = new Location(city, pickupLocation);
-                        Location dropOff = new Location(city, dropOffLocation);
-
-                        LOGGER.info("Customer Name: ");
-                        String customerName = scanner.nextLine();
-                        LOGGER.info("Customer Last Name: ");
-                        String customerLastName = scanner.nextLine();
-                        LOGGER.info("Customer Phone Number: ");
-                        String customerPhoneNumber = scanner.next();
-                        Customer customer = new Customer(customerName, customerLastName, customerPhoneNumber);
-                        taxiCompany.addCustomer(customer);
-
-                        LOGGER.info("Select a driver from the list:");
-                        for (int i = 0; i < taxiCompany.getDrivers().size(); i++) {
-                            LOGGER.info(i + ". " + taxiCompany.getDrivers().get(i).getFirstName());
-                        }
-                        int driverChoice = scanner.nextInt();
-
-                        if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().size()) {
-                            Driver selectedDriver = taxiCompany.getDrivers().get(driverChoice);
-                            LOGGER.info("Ride Date (yyyy-MM-dd): ");
-                            String orderDateStr = scanner.next();
-                            LocalDate orderDate = LocalDate.parse(orderDateStr);
-
-                            LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
-                            Double distance = readNumberData(scanner); //scanner.nextDouble();
-
-                            TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
-                            selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
-
-                            selectedDriver.getVehicle().calculatePrice(distance);
-                            LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
-
-                            LOGGER.info("Payment amount: ");
-                            double paymentAmount = readNumberData(scanner); //scanner.nextDouble();
-                            transportOrder.getCustomer().pay(paymentAmount);
-                            transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
-
-                            LOGGER.info("Review (rating from 1 to 5 stars): ");
-                            int rating = scanner.nextInt();
-                            LOGGER.info("Review (comment): ");
-                            String content = scanner.next();
-                            transportOrder.setReview(new Review(rating, content));
-                            scanner.nextLine();
-                            break;
-                        } else {
-                            LOGGER.info("Invalid driver choice.");
-                        }
+                        addNewEmployee(scanner, taxiCompany);
+                        break;
 
                     case 3:
+                        createTransportOrder(scanner, taxiCompany);
+                        break;
+
+                    case 4:
                         LOGGER.info("Exiting...");
                         return;
 
@@ -296,21 +221,274 @@ public class TaxiCompanyMain {
         person.toString();
     }
 
-    private static Double readNumberData(Scanner scanner) {
-        while (true) {
+    private static Double readDoubleData(Scanner scanner) {
+        double number = 0.0;
+        boolean validInput = false;
+
+        while (!validInput) {
             String input = scanner.next();
+
             try {
                 // Try parsing with dot as the decimal separator
-                return Double.parseDouble(input);
+                number = Double.parseDouble(input);
+                validInput = true;
             } catch (NumberFormatException e1) {
                 try {
                     // Try parsing with comma as the decimal separator
-                    return Double.parseDouble(input.replace(",", "."));
+                    number = Double.parseDouble(input.replace(",", "."));
+                    validInput = true;
                 } catch (NumberFormatException e2) {
-                    // Handle the exception (e.g., inform the user about the invalid input)
-                    System.out.println("Invalid input. Please enter a valid data in X.XX or X,XX format.");
+                    LOGGER.warn("Invalid input. Please enter a valid data in X.XX or X,XX format.");
                 }
             }
         }
+
+        return number;
+    }
+
+    private static LocalDate readRideDate(Scanner scanner) {
+        LocalDate orderDate = null;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                String orderDateStr = scanner.next();
+                orderDate = LocalDate.parse(orderDateStr);
+                validInput = true;
+            } catch (DateTimeParseException e) {
+                LOGGER.warn("Invalid date format. Please enter a valid date in the yyyy-MM-dd format.");
+            }
+        }
+
+        return orderDate;
+    }
+
+    private static int readAge(Scanner scanner) {
+        int age = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                age = scanner.nextInt();
+                if (age < 18) throw new InvalidPersonDataException("Age must be greater than 17!");
+                validInput = true;
+            } catch (InputMismatchException e) {
+                LOGGER.error("Invalid input. Please enter a valid age as a number higher than 17.");
+                scanner.next(); // consume the invalid input
+            } catch (InvalidPersonDataException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+
+        return age;
+    }
+
+    private static int readSalary(Scanner scanner) {
+        int salary = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                salary = scanner.nextInt();
+
+                if (salary > 0) {
+                    validInput = true;
+                } else {
+                    LOGGER.warn("Invalid salary. Please enter a positive integer value.");
+                }
+            } catch (InputMismatchException e) {
+                LOGGER.warn("Invalid input. Please enter a valid integer value.");
+                scanner.next(); // Read invalid input to avoid an infinite loop
+            }
+        }
+
+        return salary;
+    }
+
+    private static int readStarRating(Scanner scanner) {
+        int starRating = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                starRating = scanner.nextInt();
+
+                if (starRating >= 1 && starRating <= 5) {
+                    validInput = true;
+                } else {
+                    LOGGER.warn("Invalid star rating. Please enter a rating between 1 and 5.");
+                }
+            } catch (InputMismatchException e) {
+                LOGGER.warn("Invalid input. Please enter a valid number for star rating.");
+                scanner.next(); // Read invalid input to avoid an infinite loop
+            }
+        }
+
+        return starRating;
+    }
+
+    private static int readNumberOfSeats(Scanner scanner) {
+        int numberOfSeats = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                numberOfSeats = scanner.nextInt();
+
+                if (numberOfSeats > 0 && numberOfSeats <= 300) {
+                    validInput = true;
+                } else {
+                    LOGGER.warn("Invalid number of seats. Please enter a value between 1 and 300.");
+                }
+            } catch (InputMismatchException e) {
+                LOGGER.warn("Invalid input. Please enter a valid number for the number of seats.");
+                scanner.next(); // Read invalid input to avoid an infinite loop
+            }
+        }
+
+        return numberOfSeats;
+    }
+
+    public static void addNewVehicle(Scanner scanner, TaxiCompany taxiCompany) {
+        LOGGER.info("Enter vehicle details:");
+        LOGGER.info("Make: ");
+        String make = scanner.next();
+        LOGGER.info("Model: ");
+        String model = scanner.next();
+        LOGGER.info("Number of seats: ");
+        int numberOfSeats = readNumberOfSeats(scanner);
+        LOGGER.info("Plate Number: ");
+        scanner.nextLine();
+        String registrationPlate = scanner.nextLine();
+
+        try {
+            TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats);
+            taxiCompany.addVehicle(newTaxi);
+            LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
+            double farePerKilometer = readDoubleData(scanner);  //scanner.nextDouble();
+            newTaxi.setFarePerKilometer(farePerKilometer);
+            LOGGER.info("New taxi assigned to the company.");
+            taxiCompany.printVehicles();
+        } catch (InvalidNumberOfSeatsException | DuplicateRegistrationPlateException ex) {
+            LOGGER.error(ex.getMessage());
+            LOGGER.error("Exiting menu option");
+        }
+    }
+
+    public static void addNewEmployee(Scanner scanner, TaxiCompany taxiCompany) {
+        LOGGER.info("Enter employee details:");
+        LOGGER.info("First Name: ");
+        String firstName = scanner.next();
+        LOGGER.info("Last Name: ");
+        String lastName = scanner.next();
+        LOGGER.info("Age: ");
+        int age = readAge(scanner);
+        LOGGER.info("Phone Number: ");
+        String phoneNumber = scanner.next();
+
+        try {
+            LOGGER.info("Select employee type:");
+            LOGGER.info("1. Driver");
+            LOGGER.info("2. Accountant");
+            int employeeTypeChoice = scanner.nextInt();
+
+            if (employeeTypeChoice == 1) {
+                LOGGER.info("Select a vehicle for the driver:");
+                taxiCompany.printVehicles();
+                int vehicleChoice = scanner.nextInt();
+
+                if (vehicleChoice >= 0 && vehicleChoice < taxiCompany.getVehicles().size()) {
+                    TaxiVehicle selectedVehicle = taxiCompany.getVehicles().get(vehicleChoice - 1);
+
+                    LOGGER.info("Enter driver salary: ");
+                    Integer salary = readSalary(scanner);
+
+                    Driver newDriver = new Driver(firstName, lastName, age, phoneNumber, selectedVehicle, salary);
+                    taxiCompany.addDriver(newDriver);
+                    LOGGER.info("New driver assigned to the company.");
+                } else {
+                    LOGGER.info("Invalid vehicle choice.");
+                }
+            } else if (employeeTypeChoice == 2) {
+                LOGGER.info("Enter accountant salary: ");
+                Integer salary = readSalary(scanner);
+
+                Accountant newAccountant = new Accountant(firstName, lastName, phoneNumber, age, salary);
+                taxiCompany.addAccountant(newAccountant);
+                LOGGER.info("New accountant assigned to the company.");
+            } else {
+                LOGGER.info("Invalid employee type choice.");
+            }
+        } catch (InvalidPersonDataException | InvalidEmployeeDataException ex) {
+            LOGGER.error(ex.getMessage());
+            LOGGER.error("Exiting menu option");
+        }
+    }
+
+    public static void createTransportOrder(Scanner scanner, TaxiCompany taxiCompany) {
+        LOGGER.info("Create a Transport Order:");
+        LOGGER.info("City: ");
+        scanner.nextLine();
+        String city = scanner.nextLine();
+
+        LOGGER.info("Pickup Location: ");
+        String pickupLocation = scanner.nextLine();
+        LOGGER.info("Drop-off Location: ");
+        String dropOffLocation = scanner.nextLine();
+
+        Location pickup = new Location(city, pickupLocation);
+        Location dropOff = new Location(city, dropOffLocation);
+
+        LOGGER.info("Customer Name: ");
+        String customerName = scanner.nextLine();
+        LOGGER.info("Customer Last Name: ");
+        String customerLastName = scanner.nextLine();
+        LOGGER.info("Customer Phone Number: ");
+        String customerPhoneNumber = scanner.next();
+        Customer customer;
+        try {
+            customer = new Customer(customerName, customerLastName, customerPhoneNumber);
+        } catch (InvalidPersonDataException e) {
+            throw new RuntimeException(e);
+        }
+        taxiCompany.addCustomer(customer);
+
+        LOGGER.info("Select a driver from the list:");
+        for (int i = 0; i < taxiCompany.getDrivers().size(); i++) {
+            LOGGER.info(i + ". " + taxiCompany.getDrivers().get(i).getFirstName());
+        }
+        int driverChoice = scanner.nextInt();
+
+        if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().size()) {
+            Driver selectedDriver = taxiCompany.getDrivers().get(driverChoice);
+            LOGGER.info("Ride Date (yyyy-MM-dd): ");
+            LocalDate orderDate = readRideDate(scanner);
+            //LocalDate orderDate = LocalDate.parse(orderDateStr);
+
+            LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
+            Double distance = readDoubleData(scanner); //scanner.nextDouble();
+
+            TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
+            selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
+
+            selectedDriver.getVehicle().calculatePrice(distance);
+            LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
+
+            LOGGER.info("Payment amount: ");
+            double paymentAmount = readDoubleData(scanner); //scanner.nextDouble();
+            transportOrder.getCustomer().pay(paymentAmount);
+            transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
+
+            LOGGER.info("Review (rating from 1 to 5 stars): ");
+            int rating = readStarRating(scanner);
+            LOGGER.info("Review (comment): ");
+            String content = scanner.next();
+            transportOrder.setReview(new Review(rating, content));
+            scanner.nextLine();
+            LOGGER.info("New Transport Order added!.");
+        } else {
+            LOGGER.info("Invalid driver choice.");
+        }
+
     }
 }

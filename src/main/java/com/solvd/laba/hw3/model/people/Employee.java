@@ -13,8 +13,11 @@ public abstract class Employee extends Person {
     public Employee(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) throws InvalidEmployeeDataException, InvalidPersonDataException {
         super(firstName, lastName, phoneNumber);
         if (!StringUtils.isEmpty(phoneNumber) && age != null && salary != null) {
-            if (age <= 0 || salary <= 0) {
-                throw new InvalidEmployeeDataException("Invalid employee data: Age and salary must be greater than 0.");
+            if (age < 18) {
+                throw new InvalidEmployeeDataException("Invalid employee data: Age must be greater than 17.");
+            }
+            if (salary <= 0) {
+                throw new InvalidEmployeeDataException("Invalid employee data: Salary must be greater than 0.");
             }
             this.salary = salary;
             this.age = age;
