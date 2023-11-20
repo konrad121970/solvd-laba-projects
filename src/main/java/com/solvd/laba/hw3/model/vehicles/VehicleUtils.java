@@ -8,7 +8,7 @@ public class VehicleUtils {
         // Private constructor to prevent instantiation
     }
 
-    public static void processVehicle(Vehicle vehicle) {
+    public static void performMaintenance(Vehicle vehicle) {
         // Display basic information about the vehicle
         vehicle.display();
 
