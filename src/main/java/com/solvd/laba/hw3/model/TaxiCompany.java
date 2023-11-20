@@ -37,14 +37,14 @@ public class TaxiCompany implements Displayable {
         this.accountants = new HashSet<>();
     }
 
-    public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<TaxiVehicle> vehicles) throws DuplicateRegistrationPlateException {
+/*    public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<TaxiVehicle> vehicles) throws DuplicateRegistrationPlateException {
         this.name = name;
         addTransportOrders(transportOrders);
         addAccountants(accountants);
         addVehicles(vehicles);
         addCustomers(customers);
         addDrivers(drivers);
-    }
+    }*/
 
     public String getName() {
         return name;

@@ -22,7 +22,7 @@ public class TaxiCompanyBuilder {
     private List<TaxiVehicle> vehicles;
     private Set<Accountant> accountants;
 
-    public TaxiCompanyBuilder withName(String name) {
+    public TaxiCompanyBuilder setName(String name) {
         this.name = name;
         return this;
     }

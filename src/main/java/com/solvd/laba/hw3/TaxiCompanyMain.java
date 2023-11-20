@@ -70,7 +70,7 @@ public class TaxiCompanyMain {
         TaxiCompany taxiCompany = null;
         try {
             taxiCompany = new TaxiCompanyBuilder()
-                    .withName("Konrad Taxi")
+                    .setName("Konrad Taxi")
                     .setVehicles(taxiVehiclesList)
                     .setDrivers(driversList)
                     .setAccountants(accountants)
