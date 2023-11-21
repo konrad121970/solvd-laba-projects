@@ -274,7 +274,7 @@ public class TaxiCompanyMain {
                 validInput = true;
             } catch (InputMismatchException e) {
                 LOGGER.error("Invalid input. Please enter a valid age as a number higher than 17.");
-                scanner.next(); // consume the invalid input
+                scanner.next(); // Read invalid input to avoid an infinite loop
             } catch (InvalidPersonDataException e) {
                 LOGGER.error(e.getMessage());
             }
