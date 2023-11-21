@@ -93,7 +93,7 @@ public class TaxiCompanyMain {
         try {
             taxiCompany.addVehicles(Arrays.asList(taxiVehicle1, taxiVehicle2));
         } catch (DuplicateRegistrationPlateException e) {
-            throw new RuntimeException(e);
+            LOGGER.error("Failed to add vehicles to list!");
         }
 
         try {
