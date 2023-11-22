@@ -4,22 +4,30 @@ import com.solvd.laba.hw3.model.exceptions.InvalidEmployeeDataException;
 import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Employee;
-import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
+import com.solvd.laba.hw3.model.vehicles.Taxi;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public final class Driver extends Employee implements Transportable {
     private static final Logger LOGGER = LogManager.getLogger(Driver.class);
     private static int driversCount;
-    private TaxiVehicle taxiVehicle;
+    private Double drivenDistance;
+    private Taxi taxi;
 
 
-    public Driver(String firstName, String lastName, Integer age, String phoneNumber, TaxiVehicle taxiVehicle, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
+    public Driver(String firstName, String lastName, Integer age, String phoneNumber, Taxi taxi, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
         super(firstName, lastName, phoneNumber, age, salary);
-        if (taxiVehicle != null) {
-            this.taxiVehicle = taxiVehicle;
+        if (taxi != null) {
+            this.taxi = taxi;
             driversCount++;
         } else LOGGER.warn("Failed to add Driver! Taxi vehicle cannot be null in Driver class!");
+    }
+
+    // Driver without TaxiVehicle Constructor
+    public Driver(String firstName, String lastName, Integer age, String phoneNumber, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
+        super(firstName, lastName, phoneNumber, age, salary);
+        this.taxi = null;
+        driversCount++;
     }
 
 
@@ -37,24 +45,25 @@ public final class Driver extends Employee implements Transportable {
     }
 
 
-    public TaxiVehicle getVehicle() {
-        return taxiVehicle;
+    public Taxi getVehicle() {
+        return taxi;
     }
 
-    public void setVehicle(TaxiVehicle vehicle) {
-        this.taxiVehicle = vehicle;
+    public void setVehicle(Taxi vehicle) {
+        this.taxi = vehicle;
     }
 
-    @Override
-    public void giveRaise() {
-        this.salary += 100;
-    }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + driversCount;
         return result;
+    }
+
+    @Override
+    protected Double premia() {
+        return new Double(2);
     }
 
     @Override

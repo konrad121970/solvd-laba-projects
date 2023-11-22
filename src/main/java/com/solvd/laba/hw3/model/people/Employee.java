@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Objects;
 
 public abstract class Employee extends Person {
-    protected Integer salary;
+    protected double salary;
     protected Integer age;
 
     public Employee(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) throws InvalidEmployeeDataException, InvalidPersonDataException {
@@ -24,10 +24,14 @@ public abstract class Employee extends Person {
         }
     }
 
-    public abstract void giveRaise();
+    public final void giveRaise(Double percentRaise) {
+        this.salary *= percentRaise + premia();
+    }
 
-    public final Integer getSalary() {
-        return salary;
+    protected abstract Double premia();
+
+    public Integer getSalary() {
+        return (int) salary;
     }
 
     public void setSalary(Integer salary) {

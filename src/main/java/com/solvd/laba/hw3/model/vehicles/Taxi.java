@@ -6,17 +6,17 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Objects;
 
-public class TaxiVehicle extends Vehicle {
-    private static final Logger LOGGER = LogManager.getLogger(TaxiVehicle.class);
+public class Taxi extends Vehicle {
+    private static final Logger LOGGER = LogManager.getLogger(Taxi.class);
     private double farePerKilometer;
     private double fareCost;
 
-    public TaxiVehicle(String make, String model, String registrationPlate, int numberOfSeats, double farePerKilometer) throws InvalidNumberOfSeatsException {
+    public Taxi(String make, String model, String registrationPlate, int numberOfSeats, double farePerKilometer) throws InvalidNumberOfSeatsException {
         super(make, model, numberOfSeats, registrationPlate);
         this.farePerKilometer = farePerKilometer;
     }
 
-    public TaxiVehicle(String make, String model, String registrationPlate, int numberOfSeats) throws InvalidNumberOfSeatsException {
+    public Taxi(String make, String model, String registrationPlate, int numberOfSeats) throws InvalidNumberOfSeatsException {
         super(make, model, numberOfSeats, registrationPlate);
     }
 
@@ -59,7 +59,7 @@ public class TaxiVehicle extends Vehicle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        TaxiVehicle that = (TaxiVehicle) o;
+        Taxi that = (Taxi) o;
         return Double.compare(farePerKilometer, that.farePerKilometer) == 0 && Double.compare(fareCost, that.fareCost) == 0;
     }
 

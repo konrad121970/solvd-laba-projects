@@ -13,7 +13,7 @@ import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
-import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
+import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,11 +28,11 @@ public class TaxiCompanyMain {
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
 
-        ArrayList<TaxiVehicle> taxiVehiclesList;
+        ArrayList<Taxi> taxiVehiclesList;
         try {
             taxiVehiclesList = new ArrayList<>(Arrays.asList(
-                    new TaxiVehicle("Audi", "A4", "BHA 18XX", 4, 2.50),
-                    new TaxiVehicle("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00)));
+                    new Taxi("Audi", "A4", "BHA 18XX", 4, 2.50),
+                    new Taxi("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00)));
         } catch (InvalidNumberOfSeatsException e) {
             throw new RuntimeException(e);
         }
@@ -80,24 +80,25 @@ public class TaxiCompanyMain {
             throw new RuntimeException();
         }
 
+        // taxiCompany.deleteVehicle(taxiVehiclesList.get(0));
 
-        TaxiVehicle taxiVehicle1 = null;
-        TaxiVehicle taxiVehicle2 = null;
+        Taxi taxi1 = null;
+        Taxi taxi2 = null;
         try {
-            taxiVehicle1 = new TaxiVehicle("Volkswagen", "Polo", "ALALA", 4, 2.5);
-            taxiVehicle2 = new TaxiVehicle("Audi", "A7", "444", 4, 2.5);
+            taxi1 = new Taxi("Volkswagen", "Polo", "ALALA", 4, 2.5);
+            taxi2 = new Taxi("Audi", "A7", "444", 4, 2.5);
         } catch (InvalidNumberOfSeatsException e) {
             LOGGER.error(e.getMessage());
         }
 
         try {
-            taxiCompany.addVehicles(Arrays.asList(taxiVehicle1, taxiVehicle2));
+            taxiCompany.addVehicles(Arrays.asList(taxi1, taxi2));
         } catch (DuplicateRegistrationPlateException e) {
             LOGGER.error("Failed to add vehicles to list!");
         }
 
         try {
-            taxiVehicle1.scheduleMaintenance(LocalDate.of(2024, 11, 8)); // Setting wrong maintenance date
+            taxi1.scheduleMaintenance(LocalDate.of(2024, 11, 8)); // Setting wrong maintenance date
         } catch (InvalidNextMaintenanceDateException ex) {
             LOGGER.error(ex.getMessage(), ex); // Exception for wrong next maintenance date
         }
@@ -105,8 +106,8 @@ public class TaxiCompanyMain {
         Driver newDriver1 = null;
         Driver newDriver2 = null;
         try {
-            newDriver1 = new Driver("Andrzej", "Kowalski", 50, "123123123", taxiVehicle1, 4000);
-            newDriver2 = new Driver("Pawel", "Andrzejuk", 22, "123123123", taxiVehicle2, 4000);
+            newDriver1 = new Driver("Andrzej", "Kowalski", 50, "123123123", taxi1, 4000);
+            newDriver2 = new Driver("Pawel", "Andrzejuk", 22, "123123123", taxi2, 4000);
         } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
@@ -362,7 +363,7 @@ public class TaxiCompanyMain {
         String registrationPlate = scanner.nextLine();
 
         try {
-            TaxiVehicle newTaxi = new TaxiVehicle(make, model, registrationPlate, numberOfSeats);
+            Taxi newTaxi = new Taxi(make, model, registrationPlate, numberOfSeats);
             taxiCompany.addVehicle(newTaxi);
             LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
             double farePerKilometer = readDoubleData(scanner);  //scanner.nextDouble();
@@ -398,7 +399,7 @@ public class TaxiCompanyMain {
                 int vehicleChoice = scanner.nextInt();
 
                 if (vehicleChoice >= 0 && vehicleChoice < taxiCompany.getVehicles().size()) {
-                    TaxiVehicle selectedVehicle = taxiCompany.getVehicles().get(vehicleChoice - 1);
+                    Taxi selectedVehicle = taxiCompany.getVehicles().get(vehicleChoice - 1);
 
                     LOGGER.info("Enter driver salary: ");
                     Integer salary = readSalary(scanner);

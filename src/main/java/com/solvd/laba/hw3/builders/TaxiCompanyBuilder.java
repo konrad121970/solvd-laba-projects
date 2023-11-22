@@ -6,7 +6,7 @@ import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
-import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
+import com.solvd.laba.hw3.model.vehicles.Taxi;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +19,7 @@ public class TaxiCompanyBuilder {
     private List<TransportOrder> transportOrders;
     private List<Customer> customers;
     private List<Driver> drivers;
-    private List<TaxiVehicle> vehicles;
+    private List<Taxi> vehicles;
     private Set<Accountant> accountants;
 
     public TaxiCompanyBuilder setName(String name) {
@@ -37,7 +37,7 @@ public class TaxiCompanyBuilder {
         return this;
     }
 
-    public TaxiCompanyBuilder setVehicles(List<TaxiVehicle> vehicles) {
+    public TaxiCompanyBuilder setVehicles(List<Taxi> vehicles) {
         this.vehicles = vehicles;
         return this;
     }

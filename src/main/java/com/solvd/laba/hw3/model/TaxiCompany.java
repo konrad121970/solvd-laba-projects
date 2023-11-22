@@ -6,7 +6,7 @@ import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
-import com.solvd.laba.hw3.model.vehicles.TaxiVehicle;
+import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,11 +16,12 @@ import java.util.*;
 public class TaxiCompany implements Displayable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
     private final String name;
+    private double earnedMoney;
     private Map<Driver, Vehicle> driverVehicleMap;
     private List<TransportOrder> transportOrders;
     private List<Customer> customers;
     private List<Driver> drivers;
-    private List<TaxiVehicle> vehicles;
+    private List<Taxi> vehicles;
     private Set<Accountant> accountants;
 
     public TaxiCompany() {
@@ -37,7 +38,7 @@ public class TaxiCompany implements Displayable {
         this.accountants = new HashSet<>();
     }
 
-    public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<TaxiVehicle> vehicles) throws DuplicateRegistrationPlateException {
+    public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<Taxi> vehicles) throws DuplicateRegistrationPlateException {
         this.name = name;
         addTransportOrders(transportOrders);
         addAccountants(accountants);
@@ -70,11 +71,11 @@ public class TaxiCompany implements Displayable {
         return accountants;
     }
 
-    public List<TaxiVehicle> getVehicles() {
+    public List<Taxi> getVehicles() {
         return vehicles;
     }
 
-    public void addVehicle(TaxiVehicle vehicle) throws DuplicateRegistrationPlateException {
+    public void addVehicle(Taxi vehicle) throws DuplicateRegistrationPlateException {
         if (vehicle != null) {
             if (vehicles == null) {
                 vehicles = new ArrayList<>();
@@ -84,17 +85,28 @@ public class TaxiCompany implements Displayable {
         } else LOGGER.warn("TaxiVehicle cannot be null");
     }
 
-    public void addVehicles(List<TaxiVehicle> vehicles) throws DuplicateRegistrationPlateException {
+    public void addVehicles(List<Taxi> vehicles) throws DuplicateRegistrationPlateException {
         if (vehicles != null) {
             if (this.vehicles == null) {
                 this.vehicles = new ArrayList<>();
             }
-            for (TaxiVehicle vehicle : vehicles) {
+            for (Taxi vehicle : vehicles) {
                 isRegistrationPlateDuplicatePresent(vehicle);
                 this.vehicles.add(vehicle);
             }
         } else LOGGER.warn("Vehicles list cannot be null");
     }
+
+    public void deleteVehicle(Vehicle vehicle) {
+        if (vehicle != null) {
+            vehicles.remove(vehicle);
+        }
+    }
+
+    public void deleteVehicles(List<Vehicle> vehicles) {
+
+    }
+
 
     public void addDriver(Driver driver) {
         if (driver != null) {
@@ -117,6 +129,15 @@ public class TaxiCompany implements Displayable {
             }
         } else LOGGER.warn("Drivers list cannot be null");
     }
+
+    public void deleteDriver(Driver driver) {
+
+    }
+
+    public void deleteDrivers(List<Driver> drivers) {
+
+    }
+
 
     public void addAccountant(Accountant accountant) {
         if (accountant != null) {
@@ -160,6 +181,7 @@ public class TaxiCompany implements Displayable {
                 transportOrders = new ArrayList<>();
             }
             transportOrders.add(transportOrder);
+            this.earnedMoney += transportOrder.getPayment().getAmount();
         } else LOGGER.warn("TransportOrder cannot be null");
     }
 
@@ -168,7 +190,7 @@ public class TaxiCompany implements Displayable {
             if (this.transportOrders == null) {
                 this.transportOrders = new ArrayList<>();
             }
-            this.transportOrders.addAll(transportOrders);
+            transportOrders.stream().forEach(e -> this.earnedMoney += e.getPayment().getAmount());
         } else LOGGER.warn("TransportOrders list cannot be null");
     }
 

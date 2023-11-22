@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 public final class Accountant extends Employee {
 
     private static final Logger LOGGER = LogManager.getLogger(Accountant.class);
-
     private static int accountantsCount;
 
     public Accountant(String firstName, String lastName, String phoneNumber,
@@ -23,8 +22,8 @@ public final class Accountant extends Employee {
     }
 
     @Override
-    public void giveRaise() {
-        this.salary += 200;
+    protected Double premia() {
+        return new Double(2);
     }
 
     @Override
