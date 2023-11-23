@@ -63,7 +63,7 @@ public final class Driver extends Employee implements Transportable {
 
     @Override
     protected Double premia() {
-        return new Double(2);
+        return new Double(3);
     }
 
     @Override
