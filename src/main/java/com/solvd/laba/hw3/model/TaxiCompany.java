@@ -104,7 +104,9 @@ public class TaxiCompany implements Displayable {
     }
 
     public void deleteVehicles(List<Vehicle> vehicles) {
-
+        for (Vehicle vehicle : vehicles) {
+            this.vehicles.remove(vehicle);
+        }
     }
 
 
