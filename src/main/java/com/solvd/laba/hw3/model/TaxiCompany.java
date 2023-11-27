@@ -111,13 +111,29 @@ public class TaxiCompany implements Displayable {
     public void deleteVehicle(Vehicle vehicle) {
         if (vehicle != null) {
             vehicles.remove(vehicle);
+            Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Driver, Vehicle> entry = iterator.next();
+                if (entry.getValue().equals(vehicle)) {
+                    iterator.remove();
+                    break; // Assuming a driver can only be associated with one vehicle
+                }
+            }
+            LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+        } else {
+            LOGGER.warn("Vehicle cannot be null");
         }
     }
 
     public void deleteVehicles(List<Vehicle> vehicles) {
-        for (Vehicle vehicle : vehicles) {
-            this.vehicles.remove(vehicle);
+        if(drivers != null){
+            for (Vehicle vehicle : vehicles) {
+                if(vehicle != null) {
+                    this.vehicles.remove(vehicle);
+                }
+            }
         }
+
     }
 
 
@@ -144,11 +160,19 @@ public class TaxiCompany implements Displayable {
     }
 
     public void deleteDriver(Driver driver) {
-
+        if(driver != null){
+            drivers.remove(driver);
+        }
     }
 
     public void deleteDrivers(List<Driver> drivers) {
-
+        if(drivers != null){
+            for (Driver driver : drivers) {
+                if (driver != null) {
+                    this.drivers.remove(driver);
+                }
+            }
+        }
     }
 
 
