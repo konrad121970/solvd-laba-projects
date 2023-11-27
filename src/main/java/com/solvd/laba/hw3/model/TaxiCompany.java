@@ -22,6 +22,8 @@ public class TaxiCompany implements Displayable {
     private final String name;
     private double earnedMoney;
     private Map<Driver, Vehicle> driverVehicleMap;
+    // TODO: Implement driverTransportOrdersMap and delete driverVehicleMap
+    private Map<Driver, List<TransportOrder>> driverTransportOrdersMap;
     private List<TransportOrder> transportOrders;
     private List<Customer> customers;
     private List<Driver> drivers;
@@ -234,6 +236,7 @@ public class TaxiCompany implements Displayable {
             if (this.transportOrders == null) {
                 this.transportOrders = new ArrayList<>();
             }
+            // stream() used with lambda expression
             transportOrders.stream().forEach(e -> this.earnedMoney += e.getPayment().getAmount());
         } else LOGGER.warn("TransportOrders list cannot be null");
     }
@@ -382,7 +385,7 @@ public class TaxiCompany implements Displayable {
 
             FileUtils.writeLines(file, dataToSave);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error in saving TaxiCompany data: " + e.getMessage());
         }
     }
 
@@ -408,9 +411,8 @@ public class TaxiCompany implements Displayable {
                 return taxiCompany;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Error in reading TaxiCompany data: " + e.getMessage());
         }
-
         return null;
     }
 
