@@ -8,9 +8,12 @@ import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class TaxiCompany implements Displayable {
@@ -46,6 +49,7 @@ public class TaxiCompany implements Displayable {
         addCustomers(customers);
         addDrivers(drivers);
     }
+
 
     public String getName() {
         return name;
@@ -280,4 +284,55 @@ public class TaxiCompany implements Displayable {
                 ", vehicles=" + vehicles +
                 '}');
     }
+
+    public void writeToFile() {
+        File outputFile = new File("target/text-files/taxiCompany.txt");
+
+        List<String> infoLines = new ArrayList<>();
+
+        // Basic Company Information
+        infoLines.add("Company Name: " + name);
+        infoLines.add("Number of Drivers: " + (drivers != null ? drivers.size() : 0));
+        infoLines.add("Number of Vehicles: " + (vehicles != null ? vehicles.size() : 0));
+        infoLines.add("Earned Money: " + earnedMoney);
+
+        // Vehicle Details
+        infoLines.add("---- Vehicles ----");
+        for (Taxi vehicle : vehicles) {
+            infoLines.add(vehicle.toString()); // Assuming you have overridden toString in Taxi class
+        }
+
+        // Driver Details
+        infoLines.add("---- Drivers ----");
+        for (Driver driver : drivers) {
+            infoLines.add(driver.toString()); // Assuming you have overridden toString in Driver class
+        }
+
+        // Accountant Details
+        infoLines.add("---- Accountants ----");
+        for (Accountant accountant : accountants) {
+            infoLines.add(accountant.toString()); // Assuming you have overridden toString in Accountant class
+        }
+
+        // Customer Details
+        infoLines.add("---- Customers ----");
+        for (Customer customer : customers) {
+            infoLines.add(customer.toString()); // Assuming you have overridden toString in Customer class
+        }
+
+        // Transport Order Details
+        infoLines.add("---- Transport Orders ----");
+        for (TransportOrder transportOrder : transportOrders) {
+            infoLines.add(transportOrder.toString()); // Assuming you have overridden toString in TransportOrder class
+        }
+
+        try {
+            FileUtils.writeLines(outputFile, "UTF-8", infoLines);
+        } catch (IOException e) {
+            LOGGER.error("Error writing to the file: " + e.getMessage());
+        }
+
+    }
+
+
 }

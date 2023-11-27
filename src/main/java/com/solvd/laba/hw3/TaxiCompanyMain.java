@@ -177,6 +177,8 @@ public class TaxiCompanyMain {
         printPersonData(customers.get(0)); // Using abstract class as parameter
         printPersonData(driversList.get(0));
 
+        taxiCompany.writeToFile();
+
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 LOGGER.info("Taxi Company Menu:");
