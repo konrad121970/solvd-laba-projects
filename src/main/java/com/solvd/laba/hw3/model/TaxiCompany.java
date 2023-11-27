@@ -50,6 +50,13 @@ public class TaxiCompany implements Displayable {
         addDrivers(drivers);
     }
 
+    public double getEarnedMoney() {
+        return earnedMoney;
+    }
+
+    public void setEarnedMoney(double earnedMoney) {
+        this.earnedMoney = earnedMoney;
+    }
 
     public String getName() {
         return name;
@@ -286,7 +293,7 @@ public class TaxiCompany implements Displayable {
     }
 
     public void writeToFile() {
-        File outputFile = new File("target/text-files/taxiCompany.txt");
+        File outputFile = new File("target/text-files/taxiCompanyData.txt");
 
         List<String> infoLines = new ArrayList<>();
 
@@ -299,31 +306,31 @@ public class TaxiCompany implements Displayable {
         // Vehicle Details
         infoLines.add("---- Vehicles ----");
         for (Taxi vehicle : vehicles) {
-            infoLines.add(vehicle.toString()); // Assuming you have overridden toString in Taxi class
+            infoLines.add(vehicle.toString());
         }
 
         // Driver Details
         infoLines.add("---- Drivers ----");
         for (Driver driver : drivers) {
-            infoLines.add(driver.toString()); // Assuming you have overridden toString in Driver class
+            infoLines.add(driver.toString());
         }
 
         // Accountant Details
         infoLines.add("---- Accountants ----");
         for (Accountant accountant : accountants) {
-            infoLines.add(accountant.toString()); // Assuming you have overridden toString in Accountant class
+            infoLines.add(accountant.toString());
         }
 
         // Customer Details
         infoLines.add("---- Customers ----");
         for (Customer customer : customers) {
-            infoLines.add(customer.toString()); // Assuming you have overridden toString in Customer class
+            infoLines.add(customer.toString());
         }
 
         // Transport Order Details
         infoLines.add("---- Transport Orders ----");
         for (TransportOrder transportOrder : transportOrders) {
-            infoLines.add(transportOrder.toString()); // Assuming you have overridden toString in TransportOrder class
+            infoLines.add(transportOrder.toString());
         }
 
         try {
@@ -331,8 +338,49 @@ public class TaxiCompany implements Displayable {
         } catch (IOException e) {
             LOGGER.error("Error writing to the file: " + e.getMessage());
         }
-
     }
 
+
+    public void saveToFile() {
+        try {
+            File file = new File("target/text-files/taxiCompanySave.txt");
+
+            HashSet<String> dataToSave = new HashSet<>();
+            dataToSave.add("Company Name: " + this.getName());
+            dataToSave.add("Earned Money: " + this.earnedMoney);
+
+            FileUtils.writeLines(file, dataToSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public TaxiCompany readFromFile() {
+        TaxiCompany taxiCompany = null;
+        try {
+            File file = new File("target/text-files/taxiCompanySave.txt");
+
+            List<String> lines = FileUtils.readLines(file, "UTF-8");
+
+            for (String line : lines) {
+                String companyName = null;
+                double earnedMoney = 0;
+                if (line.startsWith("Company Name:")) {
+                    companyName = line.substring("Company Name: ".length());
+
+                } else if (line.startsWith("Earned Money:")) {
+                    String earnedMoneyStr = line.substring("Earned Money: ".length());
+                    earnedMoney = Double.parseDouble(earnedMoneyStr.trim());
+                }
+                taxiCompany = new TaxiCompany(companyName.trim());
+                taxiCompany.setEarnedMoney(earnedMoney);
+                return taxiCompany;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }

@@ -178,6 +178,10 @@ public class TaxiCompanyMain {
         printPersonData(driversList.get(0));
 
         taxiCompany.writeToFile();
+        taxiCompany.saveToFile();
+        TaxiCompany taxiCompany2 = taxiCompany.readFromFile();
+
+        LOGGER.info(taxiCompany2.getName());
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
@@ -371,7 +375,7 @@ public class TaxiCompanyMain {
             Taxi newTaxi = new Taxi(make, model, registrationPlate, numberOfSeats);
             taxiCompany.addVehicle(newTaxi);
 
-            LOGGER.info(StringUtils.center("Fare per kilometer:", 50, "="));
+            LOGGER.info(StringUtils.rightPad("Fare per kilometer:", 50));
             double farePerKilometer = readDoubleData(scanner);
             newTaxi.setFarePerKilometer(farePerKilometer);
 
