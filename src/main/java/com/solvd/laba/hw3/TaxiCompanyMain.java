@@ -415,7 +415,7 @@ public class TaxiCompanyMain {
                     LOGGER.info("Enter driver salary: ");
                     Integer salary = readSalary(scanner);
 
-                    Driver newDriver = new Driver(firstName, lastName, age, phoneNumber, selectedVehicle, salary);
+                    Driver newDriver = new Driver(StringUtils.capitalize(firstName).trim(), StringUtils.capitalize(lastName).trim(), age, phoneNumber, selectedVehicle, salary);
                     taxiCompany.addDriver(newDriver);
                     LOGGER.info("New driver assigned to the company.");
                 } else {
@@ -425,7 +425,7 @@ public class TaxiCompanyMain {
                 LOGGER.info("Enter accountant salary: ");
                 Integer salary = readSalary(scanner);
 
-                Accountant newAccountant = new Accountant(firstName, lastName, phoneNumber, age, salary);
+                Accountant newAccountant = new Accountant(StringUtils.capitalize(firstName).trim(), StringUtils.capitalize(lastName).trim(), phoneNumber, age, salary);
                 taxiCompany.addAccountant(newAccountant);
                 LOGGER.info("New accountant assigned to the company.");
             } else {
@@ -459,7 +459,7 @@ public class TaxiCompanyMain {
         String customerPhoneNumber = scanner.next();
         Customer customer;
         try {
-            customer = new Customer(customerName, customerLastName, customerPhoneNumber);
+            customer = new Customer(StringUtils.capitalize(customerName).trim(), StringUtils.capitalize(customerLastName).trim(), customerPhoneNumber);
         } catch (InvalidPersonDataException e) {
             throw new RuntimeException(e);
         }
