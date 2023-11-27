@@ -15,6 +15,7 @@ import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -350,29 +351,33 @@ public class TaxiCompanyMain {
         return numberOfSeats;
     }
 
+    private static String readUserInput(Scanner scanner, String prompt) {
+        LOGGER.info(StringUtils.rightPad(prompt + ":", 20) + StringUtils.leftPad("", 30));
+        return scanner.next();
+    }
+
     public static void addNewVehicle(Scanner scanner, TaxiCompany taxiCompany) {
-        LOGGER.info("Enter vehicle details:");
-        LOGGER.info("Make: ");
-        String make = scanner.next();
-        LOGGER.info("Model: ");
-        String model = scanner.next();
-        LOGGER.info("Number of seats: ");
+        LOGGER.info(StringUtils.center("Enter vehicle details", 50, "="));
+
+        String make = readUserInput(scanner, "Make");
+        String model = readUserInput(scanner, "Model");
+        LOGGER.info(StringUtils.rightPad("Number of Seats:", 20) + StringUtils.leftPad("", 30));
         int numberOfSeats = readNumberOfSeats(scanner);
-        LOGGER.info("Plate Number: ");
-        scanner.nextLine();
-        String registrationPlate = scanner.nextLine();
+        String registrationPlate = readUserInput(scanner, "Plate Number");
 
         try {
             Taxi newTaxi = new Taxi(make, model, registrationPlate, numberOfSeats);
             taxiCompany.addVehicle(newTaxi);
-            LOGGER.info("Fare per kilometer(you should use \",\" as a separator): ");
-            double farePerKilometer = readDoubleData(scanner);  //scanner.nextDouble();
+
+            LOGGER.info(StringUtils.center("Fare per kilometer:", 50, "="));
+            double farePerKilometer = readDoubleData(scanner);
             newTaxi.setFarePerKilometer(farePerKilometer);
-            LOGGER.info("New taxi assigned to the company.");
+
+            LOGGER.info(StringUtils.center("New taxi assigned to the company", 50, "="));
             taxiCompany.printVehicles();
         } catch (InvalidNumberOfSeatsException | DuplicateRegistrationPlateException ex) {
             LOGGER.error(ex.getMessage());
-            LOGGER.error("Exiting menu option");
+            LOGGER.error(StringUtils.center("Exiting menu option", 50, "="));
         }
     }
 
