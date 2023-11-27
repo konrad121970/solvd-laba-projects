@@ -9,6 +9,7 @@ import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -111,29 +112,35 @@ public class TaxiCompany implements Displayable {
     public void deleteVehicle(Vehicle vehicle) {
         if (vehicle != null) {
             vehicles.remove(vehicle);
-            Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<Driver, Vehicle> entry = iterator.next();
-                if (entry.getValue().equals(vehicle)) {
-                    iterator.remove();
-                    break; // Assuming a driver can only be associated with one vehicle
-                }
-            }
-            LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+            deleteEntry(vehicle);
         } else {
             LOGGER.warn("Vehicle cannot be null");
         }
     }
 
     public void deleteVehicles(List<Vehicle> vehicles) {
-        if(drivers != null){
+        if (drivers != null) {
             for (Vehicle vehicle : vehicles) {
-                if(vehicle != null) {
+                if (vehicle != null) {
                     this.vehicles.remove(vehicle);
+                    deleteEntry(vehicle);
+                } else {
+                    LOGGER.warn("Vehicle cannot be null");
                 }
             }
         }
+    }
 
+    private void deleteEntry(Vehicle vehicle) {
+        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Driver, Vehicle> entry = iterator.next();
+            if (entry.getValue().equals(vehicle)) {
+                iterator.remove();
+                break; // Assuming a driver can only be associated with one vehicle
+            }
+        }
+        LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
     }
 
 
@@ -160,13 +167,13 @@ public class TaxiCompany implements Displayable {
     }
 
     public void deleteDriver(Driver driver) {
-        if(driver != null){
+        if (driver != null) {
             drivers.remove(driver);
         }
     }
 
     public void deleteDrivers(List<Driver> drivers) {
-        if(drivers != null){
+        if (drivers != null) {
             for (Driver driver : drivers) {
                 if (driver != null) {
                     this.drivers.remove(driver);
@@ -328,31 +335,31 @@ public class TaxiCompany implements Displayable {
         infoLines.add("Earned Money: " + earnedMoney);
 
         // Vehicle Details
-        infoLines.add("---- Vehicles ----");
+        infoLines.add(StringUtils.center("VEHICLES", 50, "="));
         for (Taxi vehicle : vehicles) {
             infoLines.add(vehicle.toString());
         }
 
         // Driver Details
-        infoLines.add("---- Drivers ----");
+        infoLines.add(StringUtils.center("DRIVERS", 50, "="));
         for (Driver driver : drivers) {
             infoLines.add(driver.toString());
         }
 
         // Accountant Details
-        infoLines.add("---- Accountants ----");
+        infoLines.add(StringUtils.center("ACCOUNTANTS", 50, "="));
         for (Accountant accountant : accountants) {
             infoLines.add(accountant.toString());
         }
 
         // Customer Details
-        infoLines.add("---- Customers ----");
+        infoLines.add(StringUtils.center("CUSTOMERS", 50, "="));
         for (Customer customer : customers) {
             infoLines.add(customer.toString());
         }
 
         // Transport Order Details
-        infoLines.add("---- Transport Orders ----");
+        infoLines.add(StringUtils.center("TRANSPORT ORDERS", 50, "="));
         for (TransportOrder transportOrder : transportOrders) {
             infoLines.add(transportOrder.toString());
         }
