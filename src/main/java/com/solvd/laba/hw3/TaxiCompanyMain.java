@@ -162,7 +162,7 @@ public class TaxiCompanyMain {
         TransportOrder tr1 = new TransportOrder(loc1, loc2, customers.get(0), driversList.get(0));
         LOGGER.info(customers.get(0));
 
-        driversList.get(0).move(loc1.getStreetName(), loc2.getStreetName());
+        driversList.get(0).driveFromTo(loc1.getStreetName(), loc2.getStreetName(), 10.00);
         tr1.getCustomer().pay(driversList.get(0).getVehicle().calculatePrice(10.00));
         tr1.setPayment(new CashPayment(LocalDate.of(2023, 11, 3), driversList.get(0).getVehicle().calculatePrice(10.00)));
         tr1.setReview(new Review(5, "It was an amazing ride!\n"));
@@ -470,7 +470,7 @@ public class TaxiCompanyMain {
             Double distance = readDoubleData(scanner); //scanner.nextDouble();
 
             TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
-            selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName());
+            selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName(), distance);
 
             selectedDriver.getVehicle().calculatePrice(distance);
             LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());

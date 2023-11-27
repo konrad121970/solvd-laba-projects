@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 public final class Driver extends Employee implements Transportable {
     private static final Logger LOGGER = LogManager.getLogger(Driver.class);
     private static int driversCount;
-    private Double drivenDistance;
+    private double drivenDistance;
     private Taxi taxi;
 
 
@@ -36,12 +36,14 @@ public final class Driver extends Employee implements Transportable {
     }
 
 
-    public void driveFromTo(String startLocation, String endLocation) {
+    public void driveFromTo(String startLocation, String endLocation, Double distanceInKm) {
         LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + ".");
+        drivenDistance += distanceInKm;
     }
 
-    public void driveFromTo(String startLocation, String endLocation, String dateTime) {
+    public void driveFromTo(String startLocation, String endLocation, String dateTime, Double distanceInKm) {
         LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + " at " + dateTime + ".");
+        drivenDistance += distanceInKm;
     }
 
 
@@ -62,8 +64,8 @@ public final class Driver extends Employee implements Transportable {
     }
 
     @Override
-    protected Double premia() {
-        return new Double(3);
+    protected int bonus() {
+        return (int) (drivenDistance * 0.1);
     }
 
     @Override
