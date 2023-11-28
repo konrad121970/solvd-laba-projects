@@ -21,8 +21,6 @@ public class TaxiCompany implements Displayable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
     private final String name;
     private double earnedMoney;
-    private Map<Driver, Vehicle> driverVehicleMap;
-    // TODO: Implement driverTransportOrdersMap and delete driverVehicleMap
     private Map<Driver, List<TransportOrder>> driverTransportOrdersMap;
     private List<TransportOrder> transportOrders;
     private List<Customer> customers;
@@ -36,7 +34,7 @@ public class TaxiCompany implements Displayable {
 
     public TaxiCompany(String name) {
         this.name = name;
-        this.driverVehicleMap = new HashMap<>();
+        this.driverTransportOrdersMap = new HashMap<>();
         this.transportOrders = new ArrayList<>();
         this.customers = new ArrayList<>();
         this.drivers = new ArrayList<>();
@@ -46,11 +44,15 @@ public class TaxiCompany implements Displayable {
 
     public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<Taxi> vehicles) throws DuplicateRegistrationPlateException {
         this.name = name;
-        addTransportOrders(transportOrders);
+        addTransportOrders(transportOrders, drivers);
         addAccountants(accountants);
         addVehicles(vehicles);
         addCustomers(customers);
         addDrivers(drivers);
+    }
+
+    public Map<Driver, List<TransportOrder>> getDriverTransportOrdersMap() {
+        return driverTransportOrdersMap;
     }
 
     public double getEarnedMoney() {
@@ -63,10 +65,6 @@ public class TaxiCompany implements Displayable {
 
     public String getName() {
         return name;
-    }
-
-    public Map<Driver, Vehicle> getDriverVehicleMap() {
-        return driverVehicleMap;
     }
 
     public List<TransportOrder> getTransportOrders() {
@@ -114,7 +112,7 @@ public class TaxiCompany implements Displayable {
     public void deleteVehicle(Vehicle vehicle) {
         if (vehicle != null) {
             vehicles.remove(vehicle);
-            deleteEntry(vehicle);
+            //deleteEntry(vehicle);
         } else {
             LOGGER.warn("Vehicle cannot be null");
         }
@@ -125,7 +123,7 @@ public class TaxiCompany implements Displayable {
             for (Vehicle vehicle : vehicles) {
                 if (vehicle != null) {
                     this.vehicles.remove(vehicle);
-                    deleteEntry(vehicle);
+                    //deleteEntry(vehicle);
                 } else {
                     LOGGER.warn("Vehicle cannot be null");
                 }
@@ -133,17 +131,19 @@ public class TaxiCompany implements Displayable {
         }
     }
 
+/*
     private void deleteEntry(Vehicle vehicle) {
         Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Driver, Vehicle> entry = iterator.next();
             if (entry.getValue().equals(vehicle)) {
                 iterator.remove();
-                break; // Assuming a driver can only be associated with one vehicle
+                break;
             }
         }
         LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
     }
+*/
 
 
     public void addDriver(Driver driver) {
@@ -152,7 +152,6 @@ public class TaxiCompany implements Displayable {
                 drivers = new ArrayList<>();
             }
             drivers.add(driver);
-            driverVehicleMap.put(driver, driver.getVehicle());
         } else LOGGER.warn("Driver cannot be null");
     }
 
@@ -163,14 +162,15 @@ public class TaxiCompany implements Displayable {
             }
             for (Driver driver : drivers) {
                 this.drivers.add(driver);
-                driverVehicleMap.put(driver, driver.getVehicle());
             }
         } else LOGGER.warn("Drivers list cannot be null");
     }
 
+    // Each driver comes to company with his own vehicle so it also has to be deleted
     public void deleteDriver(Driver driver) {
         if (driver != null) {
             drivers.remove(driver);
+            vehicles.remove(driver.getVehicle());
         }
     }
 
@@ -179,6 +179,7 @@ public class TaxiCompany implements Displayable {
             for (Driver driver : drivers) {
                 if (driver != null) {
                     this.drivers.remove(driver);
+                    vehicles.remove(driver.getVehicle());
                 }
             }
         }
@@ -221,25 +222,47 @@ public class TaxiCompany implements Displayable {
         } else LOGGER.warn("Customers list cannot be null");
     }
 
-    public void addTransportOrder(TransportOrder transportOrder) {
+    public void addTransportOrder(TransportOrder transportOrder, Driver driver) {
         if (transportOrder != null) {
             if (transportOrders == null) {
                 transportOrders = new ArrayList<>();
             }
             transportOrders.add(transportOrder);
             this.earnedMoney += transportOrder.getPayment().getAmount();
+
+            if (!driverTransportOrdersMap.containsKey(driver)) { // Check if Map contains the driver
+                driverTransportOrdersMap.put(driver, new ArrayList<>()); // If not add new entry
+            }
+            driverTransportOrdersMap.get(driver).add(transportOrder);
         } else LOGGER.warn("TransportOrder cannot be null");
     }
 
-    public void addTransportOrders(List<TransportOrder> transportOrders) {
+    public void addTransportOrders(List<TransportOrder> transportOrders, List<Driver> drivers) {
         if (transportOrders != null) {
             if (this.transportOrders == null) {
                 this.transportOrders = new ArrayList<>();
             }
-            // stream() used with lambda expression
-            transportOrders.stream().forEach(e -> this.earnedMoney += e.getPayment().getAmount());
-        } else LOGGER.warn("TransportOrders list cannot be null");
+            transportOrders.forEach(tr -> {
+                if (tr != null) {
+                    this.transportOrders.add(tr);
+                    this.earnedMoney += tr.getPayment().getAmount();
+
+                    Driver driver = drivers.get(transportOrders.indexOf(tr));
+
+                    if (!driverTransportOrdersMap.containsKey(driver)) {
+                        driverTransportOrdersMap.put(driver, new ArrayList<>()); // create new key
+                    }
+                    driverTransportOrdersMap.get(driver).add(tr); // Add Transport order to driver key
+                } else {
+                    LOGGER.warn("TransportOrder in the list cannot be null");
+                }
+            });
+
+        } else {
+            LOGGER.warn("TransportOrders list cannot be null");
+        }
     }
+
 
     public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
         for (Vehicle v : vehicles) {
@@ -272,6 +295,21 @@ public class TaxiCompany implements Displayable {
         }
     }
 
+    public void printDriverTransportOrders() {
+        LOGGER.info("Driver Transport Orders:");
+        for (Map.Entry<Driver, List<TransportOrder>> entry : driverTransportOrdersMap.entrySet()) {
+            Driver driver = entry.getKey();
+            List<TransportOrder> transportOrders = entry.getValue();
+
+            LOGGER.info("Driver: " + driver.getFirstName() + " " + driver.getLastName());
+            LOGGER.info("Transport Orders:");
+
+            for (TransportOrder transportOrder : transportOrders) {
+                transportOrder.showDetails();
+            }
+        }
+    }
+
     public void printAccountants() {
         LOGGER.info("List of company Drivers:");
         for (Accountant accountant : accountants) {
@@ -299,7 +337,6 @@ public class TaxiCompany implements Displayable {
     public String toString() {
         return "TaxiCompany{" +
                 "name='" + name + '\'' +
-                ", driverVehicleMap=" + driverVehicleMap +
                 ", transportOrders=" + transportOrders +
                 ", customers=" + customers +
                 ", drivers=" + drivers +
@@ -317,7 +354,6 @@ public class TaxiCompany implements Displayable {
     public void showDetails() {
         LOGGER.info("TaxiCompany{" +
                 "name='" + name + '\'' +
-                ", driverVehicleMap=" + driverVehicleMap +
                 ", transportOrders=" + transportOrders +
                 ", customers=" + customers +
                 ", drivers=" + drivers +
@@ -389,7 +425,7 @@ public class TaxiCompany implements Displayable {
         }
     }
 
-    public TaxiCompany readFromFile() {
+    public TaxiCompany loadFromFile() {
         TaxiCompany taxiCompany = null;
         try {
             File file = new File("target/text-files/taxiCompanySave.txt");
