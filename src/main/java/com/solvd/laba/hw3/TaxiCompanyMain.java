@@ -14,7 +14,6 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
-import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -115,21 +114,21 @@ public class TaxiCompanyMain {
 
         taxiCompany.addDrivers(Arrays.asList(newDriver1, newDriver2));
 
-        LOGGER.info("Size of driverVehicleMap: " + taxiCompany.getDriverVehicleMap().size());
+/*        LOGGER.info("Size of driverTransportOrders Map: " + taxiCompany.getDriverTransportOrdersMap().size());
         LOGGER.info("****************** ITERATE MAP - ITERATOR ******************");
         // Iterate Map using iterator
-        Iterator<Map.Entry<Driver, Vehicle>> iterator = taxiCompany.getDriverVehicleMap().entrySet().iterator();
+        Iterator<Map.Entry<Driver, Vehicle>> iterator = taxiCompany.getDriverTransportOrdersMap().entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<Driver, Vehicle> entry = iterator.next();
             LOGGER.info("Key = " + entry.getKey() + " Value = " + entry.getValue());
         }
 
         LOGGER.info("****************** ITERATE MAP - FOREACH ******************");
-        for (Map.Entry<Driver, Vehicle> entry : taxiCompany.getDriverVehicleMap().entrySet()) {
+        for (Map.Entry<Driver, TransportOrder> entry : taxiCompany.getDriverTransportOrdersMap().entrySet()) {
             Driver key = entry.getKey();
             Vehicle value = entry.getValue();
             LOGGER.info("Key: " + key + ", Value: " + value);
-        }
+        }*/
 
         Accountant newAccountant1 = null;
         Accountant newAccountant2 = null;
@@ -160,7 +159,7 @@ public class TaxiCompanyMain {
         Location loc1 = new Location("New York", "Blue St");
         Location loc2 = new Location("New York", "Yellow St");
 
-        TransportOrder tr1 = new TransportOrder(loc1, loc2, customers.get(0), driversList.get(0));
+        TransportOrder tr1 = new TransportOrder(loc1, loc2, customers.get(0));
         LOGGER.info(customers.get(0));
 
         driversList.get(0).driveFromTo(loc1.getStreetName(), loc2.getStreetName(), 10.00);
@@ -172,14 +171,14 @@ public class TaxiCompanyMain {
 
         changePosition(driversList.get(0), "Start", "End"); // Using interface as parameter
         changePosition(customers.get(0), "Start", "End");
-        taxiCompany.addTransportOrder(tr1);
+        taxiCompany.addTransportOrder(tr1, driversList.get(0));
 
         printPersonData(customers.get(0)); // Using abstract class as parameter
         printPersonData(driversList.get(0));
 
         taxiCompany.writeToFile();
         taxiCompany.saveToFile();
-        TaxiCompany taxiCompany2 = taxiCompany.readFromFile();
+        TaxiCompany taxiCompany2 = taxiCompany.loadFromFile();
 
         LOGGER.info(taxiCompany2.getName());
 
@@ -189,7 +188,8 @@ public class TaxiCompanyMain {
                 LOGGER.info("1. Add new Vehicle");
                 LOGGER.info("2. Add new Employee");
                 LOGGER.info("3. Create a new Transport Order");
-                LOGGER.info("4. Exit");
+                LOGGER.info("4. Show all drivers with their transport orders");
+                LOGGER.info("5. Exit");
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -208,6 +208,10 @@ public class TaxiCompanyMain {
                         break;
 
                     case 4:
+                        taxiCompany.printDriverTransportOrders();
+                        break;
+
+                    case 5:
                         LOGGER.info("Exiting...");
                         return;
 
@@ -480,7 +484,7 @@ public class TaxiCompanyMain {
             LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
             Double distance = readDoubleData(scanner); //scanner.nextDouble();
 
-            TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer, selectedDriver);
+            TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer);
             selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName(), distance);
 
             selectedDriver.getVehicle().calculatePrice(distance);
@@ -496,6 +500,7 @@ public class TaxiCompanyMain {
             LOGGER.info("Review (comment): ");
             String content = scanner.next();
             transportOrder.setReview(new Review(rating, content));
+            taxiCompany.addTransportOrder(transportOrder, selectedDriver);
             scanner.nextLine();
             LOGGER.info("New Transport Order added!.");
         } else {

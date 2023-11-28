@@ -57,7 +57,7 @@ public class TaxiCompanyBuilder {
         LOGGER.info("TaxiCompanyBuilder has been used to create taxiCompany class!");
 
         if (transportOrders != null) {
-            taxiCompany.addTransportOrders(transportOrders);
+            taxiCompany.addTransportOrders(transportOrders, drivers);
         }
 
         if (accountants != null) {

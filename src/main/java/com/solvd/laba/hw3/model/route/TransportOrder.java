@@ -3,7 +3,7 @@ package com.solvd.laba.hw3.model.route;
 import com.solvd.laba.hw3.model.interfaces.Displayable;
 import com.solvd.laba.hw3.model.payment.Payment;
 import com.solvd.laba.hw3.model.people.customer.Customer;
-import com.solvd.laba.hw3.model.people.employees.Driver;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,15 +14,14 @@ public final class TransportOrder implements Displayable {
     private final Customer customer;
     private Location routeStart;
     private Location routeEnd;
-    private Driver driver;
     private Payment payment;
     private Review review;
 
-    public TransportOrder(Location routeStart, Location routeEnd, Customer customer, Driver driver) {
+    public TransportOrder(Location routeStart, Location routeEnd, Customer customer) {
         this.routeStart = routeStart;
         this.routeEnd = routeEnd;
         this.customer = customer;
-        this.driver = driver;
+        //this.driver = driver;
     }
 
     public Review getReview() {
@@ -63,6 +62,7 @@ public final class TransportOrder implements Displayable {
         return customer;
     }
 
+/*
     public Driver getDriver() {
         return driver;
     }
@@ -72,10 +72,10 @@ public final class TransportOrder implements Displayable {
             this.driver = driver;
         } else {
             LOGGER.error("Invalid driver: cannot be null");
-            // You can choose to throw an exception, log an error, or handle it according to your application's needs
         }
     }
 
+*/
 
     public Payment getPayment() {
         return payment;
@@ -86,7 +86,6 @@ public final class TransportOrder implements Displayable {
             this.payment = payment;
         } else {
             LOGGER.error("Invalid payment: cannot be null");
-            // You can choose to throw an exception, log an error, or handle it according to your application's needs
         }
     }
 
@@ -95,34 +94,42 @@ public final class TransportOrder implements Displayable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransportOrder that = (TransportOrder) o;
-        return Objects.equals(routeStart, that.routeStart) && Objects.equals(routeEnd, that.routeEnd) && Objects.equals(customer, that.customer) && Objects.equals(driver, that.driver) && Objects.equals(payment, that.payment) && Objects.equals(review, that.review);
+        return Objects.equals(routeStart, that.routeStart) && Objects.equals(routeEnd, that.routeEnd) && Objects.equals(customer, that.customer) && Objects.equals(payment, that.payment) && Objects.equals(review, that.review);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(routeStart, routeEnd, customer, driver, payment, review);
+        return Objects.hash(routeStart, routeEnd, customer, payment, review);
     }
 
     @Override
     public String toString() {
-        return "TransportOrder{" +
-                "routeStart=" + routeStart +
-                ", routeEnd=" + routeEnd +
-                ", customer=" + customer +
-                ", driver=" + driver +
-                ", payment=" + payment +
-                ", review=" + review +
-                '}';
+        return StringUtils.join(
+                "Transport Order:",
+                "  Route Start: " + routeStart,
+                "  Route End: " + routeEnd,
+                "  Customer: " + customer);
     }
-
-    // TODO:
+    
     @Override
     public void display() {
-
+        LOGGER.info(StringUtils.join(
+                "Transport Order:",
+                "  Route Start: " + routeStart,
+                "  Route End: " + routeEnd,
+                "  Customer: " + customer
+        ));
     }
 
     @Override
     public void showDetails() {
-
+        LOGGER.info(StringUtils.join(
+                "Transport Order Details:",
+                "  Route Start: " + routeStart,
+                "  Route End: " + routeEnd,
+                "  Customer: " + customer,
+                "  Payment: " + payment,
+                "  Review: " + review
+        ));
     }
 }
