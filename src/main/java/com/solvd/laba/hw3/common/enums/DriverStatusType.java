@@ -7,8 +7,8 @@ public enum DriverStatusType {
 
     private final String status;
 
-    DriverStatusType(String description) {
-        this.status = description;
+    DriverStatusType(String status) {
+        this.status = status;
     }
 
     public String getStatus() {
