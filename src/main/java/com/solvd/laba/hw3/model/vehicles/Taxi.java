@@ -1,6 +1,6 @@
 package com.solvd.laba.hw3.model.vehicles;
 
-import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.exceptions.InvalidNumberOfSeatsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

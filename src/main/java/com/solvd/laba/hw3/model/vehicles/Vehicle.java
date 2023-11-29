@@ -1,9 +1,9 @@
 package com.solvd.laba.hw3.model.vehicles;
 
-import com.solvd.laba.hw3.model.exceptions.InvalidNextMaintenanceDateException;
-import com.solvd.laba.hw3.model.exceptions.InvalidNumberOfSeatsException;
-import com.solvd.laba.hw3.model.interfaces.Displayable;
-import com.solvd.laba.hw3.model.interfaces.Maintainable;
+import com.solvd.laba.hw3.exceptions.InvalidNextMaintenanceDateException;
+import com.solvd.laba.hw3.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.interfaces.Displayable;
+import com.solvd.laba.hw3.interfaces.Maintainable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -110,7 +110,7 @@ public abstract class Vehicle implements Maintainable, Displayable {
     public void doMaintenance() {
         this.lastMaintenance = LocalDate.now();
     }
-    
+
     @Override
     public void display() {
         LOGGER.info("Vehicle [make=" + this.make + ", model=" + this.model + "]");
