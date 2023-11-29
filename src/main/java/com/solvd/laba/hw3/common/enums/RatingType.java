@@ -6,42 +6,20 @@ import org.apache.logging.log4j.Logger;
 
 public enum RatingType {
 
-    TERRIBLE("Terrible") {
-        @Override
-        public void displayMessage() {
-            System.out.println("Oh no! We're sorry to hear that.");
-        }
-    },
-    POOR("Poor") {
-        @Override
-        public void displayMessage() {
-            System.out.println("We appreciate your feedback. We'll work on improving.");
-        }
-    },
-    AVERAGE("Average") {
-        @Override
-        public void displayMessage() {
-            System.out.println("Thank you for your feedback. We'll strive to do better.");
-        }
-    },
-    GOOD("Good") {
-        @Override
-        public void displayMessage() {
-            System.out.println("Great to hear! We're glad you had a positive experience.");
-        }
-    },
-    EXCELLENT("Excellent") {
-        @Override
-        public void displayMessage() {
-            LOGGER.info("Wow! Thanks for the fantastic feedback!");
-        }
-    };
+    TERRIBLE("Terrible", "Oh no! We're sorry to hear that."),
+    POOR("Poor", "We appreciate your feedback. We'll work on improving."),
+    AVERAGE("Average", "Thank you for your feedback. We'll strive to do better."),
+    GOOD("Good", "Great to hear! We're glad you had a positive experience."),
+    EXCELLENT("Excellent", "Wow! Thanks for the fantastic feedback!");
     private static final Logger LOGGER = LogManager.getLogger(RatingType.class);
-    private final String description;
+    private final String name;
+    private final String message;
 
-    RatingType(String description) {
-        this.description = description;
+    RatingType(String rating, String message) {
+        this.name = rating;
+        this.message = message;
     }
+
 
     public static RatingType getByOption(int option) {
         switch (option) {
@@ -65,10 +43,11 @@ public enum RatingType {
         }
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    // Abstract method to show additional message after receiving an Review
-    public abstract void displayMessage();
+    public String getMessage() {
+        return message;
+    }
 }

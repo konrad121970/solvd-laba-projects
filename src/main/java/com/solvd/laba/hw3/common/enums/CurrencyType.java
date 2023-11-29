@@ -1,29 +1,16 @@
 package com.solvd.laba.hw3.common.enums;
 
 public enum CurrencyType {
-    USD("US Dollar") {
-        @Override
-        public String getSymbol() {
-            return "$";
-        }
-    },
-    EUR("Euro") {
-        @Override
-        public String getSymbol() {
-            return "€";
-        }
-    },
-    GBP("British Pound") {
-        @Override
-        public String getSymbol() {
-            return "£";
-        }
-    };
+    USD("US Dollar", "$"),
+    EUR("Euro", "€"),
+    GBP("British Pound", "£");
 
     private final String name;
+    private final String symbol;
 
-    CurrencyType(String name) {
+    CurrencyType(String name, String symbol) {
         this.name = name;
+        this.symbol = symbol;
     }
 
     public static CurrencyType getByOption(int option) {
@@ -46,5 +33,7 @@ public enum CurrencyType {
         return name;
     }
 
-    public abstract String getSymbol();
+    public String getSymbol() {
+        return symbol;
+    }
 }

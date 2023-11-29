@@ -5,13 +5,13 @@ public enum DriverStatusType {
     UNAVAILABLE("Unavailable"),
     ON_BREAK("On Break");
 
-    private final String description;
+    private final String status;
 
     DriverStatusType(String description) {
-        this.description = description;
+        this.status = description;
     }
 
-    public String getDescription() {
-        return description;
+    public String getStatus() {
+        return status;
     }
 }

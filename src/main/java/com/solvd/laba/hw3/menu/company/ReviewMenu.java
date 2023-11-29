@@ -17,7 +17,7 @@ public class ReviewMenu {
     public static void addReview(Scanner scanner, TransportOrder transportOrder) {
         LOGGER.info("Review (rating from 1 to 5 stars): ");
         for (RatingType rating : RatingType.values()) {
-            LOGGER.info((rating.ordinal() + 1) + ". " + rating.getDescription());
+            LOGGER.info((rating.ordinal() + 1) + ". " + rating.getName());
         }
 
         int rating = InputReader.readStarRating(scanner);
@@ -31,7 +31,7 @@ public class ReviewMenu {
 
         LOGGER.info("Review (comment): ");
         String content = scanner.next();
-        selectedRating.displayMessage();
+        selectedRating.getMessage();
         transportOrder.setReview(new Review(selectedRating, content));
     }
 
