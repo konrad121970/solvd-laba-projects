@@ -18,6 +18,12 @@ public final class Location implements Displayable {
         this.streetName = streetName;
     }
 
+    public Location(String city, String streetName, LocationType locationType) {
+        this.city = city;
+        this.streetName = streetName;
+        this.locationType = locationType;
+    }
+
     public LocationType getLocationType() {
         return locationType;
     }

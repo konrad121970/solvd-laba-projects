@@ -16,6 +16,8 @@ public final class Driver extends Employee implements Transportable {
     private Taxi taxi;
     private DriverStatusType driverStatus;
 
+    public Driver() {
+    }
 
     public Driver(String firstName, String lastName, Integer age, String phoneNumber, Taxi taxi, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
         super(firstName, lastName, phoneNumber, age, salary);

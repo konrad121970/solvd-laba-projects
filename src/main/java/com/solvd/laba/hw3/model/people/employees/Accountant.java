@@ -11,6 +11,9 @@ public final class Accountant extends Employee {
     private static final Logger LOGGER = LogManager.getLogger(Accountant.class);
     private static int accountantsCount;
 
+    public Accountant() {
+    }
+
     public Accountant(String firstName, String lastName, String phoneNumber,
                       Integer age, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
         super(firstName, lastName, phoneNumber, age, salary);

@@ -10,6 +10,9 @@ public abstract class Employee extends Person {
     protected double salary;
     protected Integer age;
 
+    public Employee() {
+    }
+
     public Employee(String firstName, String lastName, String phoneNumber, Integer age, Integer salary) throws InvalidEmployeeDataException, InvalidPersonDataException {
         super(firstName, lastName, phoneNumber);
         if (!StringUtils.isEmpty(phoneNumber) && age != null && salary != null) {

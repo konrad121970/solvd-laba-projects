@@ -14,14 +14,22 @@ import java.util.Objects;
 
 public final class TransportOrder implements Displayable {
     private static final Logger LOGGER = LogManager.getLogger(TransportOrder.class);
-    private final Customer customer;
+    private Customer customer;
     private List<Location> routeStops;
     private Payment payment;
     private Review review;
 
+    public TransportOrder() {
+        this.routeStops = new ArrayList<>();
+    }
+
     public TransportOrder(Customer customer) {
         this.routeStops = new ArrayList<>();
         this.customer = customer;
+    }
+
+    public List<Location> getRouteStops() {
+        return routeStops;
     }
 
     public Review getReview() {

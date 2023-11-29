@@ -10,10 +10,14 @@ import java.util.Objects;
 public final class CardPayment extends Payment {
     private static final Logger LOGGER = LogManager.getLogger(CardPayment.class);
     private String cardNumber;
-    private String cardType;
 
     public CardPayment(LocalDate date, Double amount, CurrencyType currency) {
         super(date, amount, currency);
+    }
+
+    public CardPayment(LocalDate date, Double amount, CurrencyType currency, String cardNumber) {
+        super(date, amount, currency);
+        this.cardNumber = cardNumber;
     }
 
     public String getCardNumber() {
@@ -24,19 +28,18 @@ public final class CardPayment extends Payment {
         this.cardNumber = cardNumber;
     }
 
-    public String getCardType() {
+/*    public String getCardType() {
         return cardType;
     }
 
     public void setCardType(String cardType) {
         this.cardType = cardType;
-    }
+    }*/
 
     @Override
     public String toString() {
         return "CardPayment{" +
                 "cardNumber='" + cardNumber + '\'' +
-                ", cardType='" + cardType + '\'' +
                 '}';
     }
 
@@ -46,12 +49,12 @@ public final class CardPayment extends Payment {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CardPayment that = (CardPayment) o;
-        return Objects.equals(cardNumber, that.cardNumber) && Objects.equals(cardType, that.cardType);
+        return Objects.equals(cardNumber, that.cardNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), cardNumber, cardType);
+        return Objects.hash(super.hashCode(), cardNumber);
     }
 
     @Override
