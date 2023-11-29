@@ -47,7 +47,6 @@ public final class TransportOrder implements Displayable {
         routeStops.add(location);
     }
 
-
     public Customer getCustomer() {
         return customer;
     }

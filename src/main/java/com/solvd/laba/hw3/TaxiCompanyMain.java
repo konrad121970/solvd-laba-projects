@@ -4,6 +4,7 @@ import com.solvd.laba.hw3.builders.TaxiCompanyBuilder;
 import com.solvd.laba.hw3.enums.CurrencyType;
 import com.solvd.laba.hw3.enums.DriverStatusType;
 import com.solvd.laba.hw3.enums.RatingType;
+import com.solvd.laba.hw3.enums.TaxiStandardType;
 import com.solvd.laba.hw3.exceptions.*;
 import com.solvd.laba.hw3.interfaces.Transportable;
 import com.solvd.laba.hw3.model.TaxiCompany;
@@ -34,8 +35,8 @@ public class TaxiCompanyMain {
         ArrayList<Taxi> taxiVehiclesList;
         try {
             taxiVehiclesList = new ArrayList<>(Arrays.asList(
-                    new Taxi("Audi", "A4", "BHA 18XX", 4, 2.50),
-                    new Taxi("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00)));
+                    new Taxi("Audi", "A4", "BHA 18XX", 4, 2.50, TaxiStandardType.LUXURY),
+                    new Taxi("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00, TaxiStandardType.STANDARD)));
         } catch (InvalidNumberOfSeatsException e) {
             throw new RuntimeException(e);
         }
@@ -88,8 +89,8 @@ public class TaxiCompanyMain {
         Taxi taxi1 = null;
         Taxi taxi2 = null;
         try {
-            taxi1 = new Taxi("Volkswagen", "Polo", "ALALA", 4, 2.5);
-            taxi2 = new Taxi("Audi", "A7", "444", 4, 2.5);
+            taxi1 = new Taxi("Volkswagen", "Polo", "ALALA", 4, 2.5, TaxiStandardType.ECO_FRIENDLY);
+            taxi2 = new Taxi("Audi", "A7", "444", 4, 2.5, TaxiStandardType.LUXURY);
         } catch (InvalidNumberOfSeatsException e) {
             LOGGER.error(e.getMessage());
         }
@@ -373,6 +374,22 @@ public class TaxiCompanyMain {
             LOGGER.info(StringUtils.rightPad("Fare per kilometer:", 50));
             double farePerKilometer = readDoubleData(scanner);
             newTaxi.setFarePerKilometer(farePerKilometer);
+
+            LOGGER.info("Taxi standard: ");
+            for (TaxiStandardType taxiStandardType : TaxiStandardType.values()) {
+                LOGGER.info((taxiStandardType.ordinal() + 1) + ". " + taxiStandardType.getCategoryName());
+            }
+
+            int standardNumber = scanner.nextInt();
+
+            TaxiStandardType selectedStandard = null;
+            try {
+                selectedStandard = TaxiStandardType.getByOption(standardNumber);
+            } catch (InvalidStarRatingException e) {
+                LOGGER.info("Invalid rating option. Defaulting to EXCELLENT.");
+            }
+
+            newTaxi.setTaxiStandard(selectedStandard);
 
             LOGGER.info(StringUtils.center("New taxi assigned to the company", 50, "="));
             taxiCompany.printVehicles();

@@ -1,5 +1,6 @@
 package com.solvd.laba.hw3.model.vehicles;
 
+import com.solvd.laba.hw3.enums.TaxiStandardType;
 import com.solvd.laba.hw3.exceptions.InvalidNumberOfSeatsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,16 +11,25 @@ public class Taxi extends Vehicle {
     private static final Logger LOGGER = LogManager.getLogger(Taxi.class);
     private double farePerKilometer;
     private double fareCost;
+    private TaxiStandardType taxiStandard;
 
-    public Taxi(String make, String model, String registrationPlate, int numberOfSeats, double farePerKilometer) throws InvalidNumberOfSeatsException {
+    public Taxi(String make, String model, String registrationPlate, int numberOfSeats, double farePerKilometer, TaxiStandardType taxiStandard) throws InvalidNumberOfSeatsException {
         super(make, model, numberOfSeats, registrationPlate);
         this.farePerKilometer = farePerKilometer;
+        this.taxiStandard = taxiStandard;
     }
 
     public Taxi(String make, String model, String registrationPlate, int numberOfSeats) throws InvalidNumberOfSeatsException {
         super(make, model, numberOfSeats, registrationPlate);
     }
 
+    public TaxiStandardType getTaxiStandard() {
+        return taxiStandard;
+    }
+
+    public void setTaxiStandard(TaxiStandardType taxiStandard) {
+        this.taxiStandard = taxiStandard;
+    }
 
     public double getFareCost() {
         return fareCost;
@@ -50,7 +60,7 @@ public class Taxi extends Vehicle {
             LOGGER.error("Invalid distance: must be greater than or equal to 0.");
             return null;
         }
-        this.fareCost = distanceInKm * farePerKilometer;
+        this.fareCost = distanceInKm * farePerKilometer * taxiStandard.getFareMultiplier();
         return fareCost;
     }
 
