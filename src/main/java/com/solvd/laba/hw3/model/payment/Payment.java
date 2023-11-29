@@ -1,7 +1,8 @@
 package com.solvd.laba.hw3.model.payment;
 
-import com.solvd.laba.hw3.model.interfaces.Displayable;
-import com.solvd.laba.hw3.model.interfaces.Payable;
+import com.solvd.laba.hw3.enums.CurrencyType;
+import com.solvd.laba.hw3.interfaces.Displayable;
+import com.solvd.laba.hw3.interfaces.Payable;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -10,11 +11,20 @@ public abstract class Payment implements Payable, Displayable {
     private LocalDate date;
     private Double amount;
     private boolean isPaid;
-    private String currency;
+    private CurrencyType currency;
 
-    public Payment(LocalDate date, Double amount) {
+    public Payment(LocalDate date, Double amount, CurrencyType currency) {
         this.date = date;
         this.amount = amount;
+        this.currency = currency;
+    }
+
+    public CurrencyType getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(CurrencyType currency) {
+        this.currency = currency;
     }
 
     public boolean isPaid() {

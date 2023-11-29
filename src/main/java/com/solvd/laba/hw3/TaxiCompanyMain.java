@@ -1,9 +1,12 @@
 package com.solvd.laba.hw3;
 
 import com.solvd.laba.hw3.builders.TaxiCompanyBuilder;
+import com.solvd.laba.hw3.enums.CurrencyType;
+import com.solvd.laba.hw3.enums.DriverStatusType;
+import com.solvd.laba.hw3.enums.RatingType;
+import com.solvd.laba.hw3.exceptions.*;
+import com.solvd.laba.hw3.interfaces.Transportable;
 import com.solvd.laba.hw3.model.TaxiCompany;
-import com.solvd.laba.hw3.model.exceptions.*;
-import com.solvd.laba.hw3.model.interfaces.Transportable;
 import com.solvd.laba.hw3.model.payment.CashPayment;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.people.Person;
@@ -27,7 +30,7 @@ public class TaxiCompanyMain {
 
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
-
+        Long L = 0l;
         ArrayList<Taxi> taxiVehiclesList;
         try {
             taxiVehiclesList = new ArrayList<>(Arrays.asList(
@@ -114,22 +117,6 @@ public class TaxiCompanyMain {
 
         taxiCompany.addDrivers(Arrays.asList(newDriver1, newDriver2));
 
-/*        LOGGER.info("Size of driverTransportOrders Map: " + taxiCompany.getDriverTransportOrdersMap().size());
-        LOGGER.info("****************** ITERATE MAP - ITERATOR ******************");
-        // Iterate Map using iterator
-        Iterator<Map.Entry<Driver, Vehicle>> iterator = taxiCompany.getDriverTransportOrdersMap().entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Driver, Vehicle> entry = iterator.next();
-            LOGGER.info("Key = " + entry.getKey() + " Value = " + entry.getValue());
-        }
-
-        LOGGER.info("****************** ITERATE MAP - FOREACH ******************");
-        for (Map.Entry<Driver, TransportOrder> entry : taxiCompany.getDriverTransportOrdersMap().entrySet()) {
-            Driver key = entry.getKey();
-            Vehicle value = entry.getValue();
-            LOGGER.info("Key: " + key + ", Value: " + value);
-        }*/
-
         Accountant newAccountant1 = null;
         Accountant newAccountant2 = null;
         try {
@@ -159,15 +146,19 @@ public class TaxiCompanyMain {
         Location loc1 = new Location("New York", "Blue St");
         Location loc2 = new Location("New York", "Yellow St");
 
-        TransportOrder tr1 = new TransportOrder(loc1, loc2, customers.get(0));
+        TransportOrder tr1 = new TransportOrder(customers.get(0));
+        tr1.addRouteStart(loc1);
+        tr1.addRouteEnd(loc2);
         LOGGER.info(customers.get(0));
 
         driversList.get(0).driveFromTo(loc1.getStreetName(), loc2.getStreetName(), 10.00);
-        tr1.getCustomer().pay(driversList.get(0).getVehicle().calculatePrice(10.00));
-        tr1.setPayment(new CashPayment(LocalDate.of(2023, 11, 3), driversList.get(0).getVehicle().calculatePrice(10.00)));
-        tr1.setReview(new Review(5, "It was an amazing ride!\n"));
+        tr1.getCustomer().pay(driversList.get(0).getVehicle().calculatePrice(10.00), CurrencyType.USD);
+        tr1.setPayment(new CashPayment(LocalDate.of(2023, 11, 3), driversList.get(0).getVehicle().calculatePrice(10.00), CurrencyType.USD));
+        tr1.setReview(new Review(RatingType.AVERAGE, "It was an amazing ride!\n"));
 
-        LOGGER.info("Customer: " + customers.get(0).getFirstName() + " spent money value: " + customers.get(0).getSpentMoney() + "\n");
+        LOGGER.info("Customer: " + customers.get(0).getFirstName() + " spent money value: " + customers.get(0).getSpentMoney() + tr1.getPayment().getCurrency() + "!");
+
+        driversList.get(0).endRide();
 
         changePosition(driversList.get(0), "Start", "End"); // Using interface as parameter
         changePosition(customers.get(0), "Start", "End");
@@ -455,6 +446,7 @@ public class TaxiCompanyMain {
         Location pickup = new Location(city, pickupLocation);
         Location dropOff = new Location(city, dropOffLocation);
 
+
         LOGGER.info("Customer Name: ");
         String customerName = scanner.nextLine();
         LOGGER.info("Customer Last Name: ");
@@ -471,8 +463,11 @@ public class TaxiCompanyMain {
 
         LOGGER.info("Select a driver from the list:");
         for (int i = 0; i < taxiCompany.getDrivers().size(); i++) {
-            LOGGER.info(i + ". " + taxiCompany.getDrivers().get(i).getFirstName());
+            if (taxiCompany.getDrivers().get(i).getDriverStatus() == DriverStatusType.AVAILABLE) {
+                LOGGER.info(i + ". " + taxiCompany.getDrivers().get(i).getFirstName());
+            }
         }
+
         int driverChoice = scanner.nextInt();
 
         if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().size()) {
@@ -484,22 +479,51 @@ public class TaxiCompanyMain {
             LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
             Double distance = readDoubleData(scanner); //scanner.nextDouble();
 
-            TransportOrder transportOrder = new TransportOrder(pickup, dropOff, customer);
+            TransportOrder transportOrder = new TransportOrder(customer);
+            transportOrder.addRouteStart(pickup);
+            transportOrder.addRouteEnd(dropOff);
             selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName(), distance);
 
             selectedDriver.getVehicle().calculatePrice(distance);
             LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
 
+            LOGGER.info("Choose a currency option:");
+            LOGGER.info("1. USD (US Dollar)");
+            LOGGER.info("2. EUR (Euro)");
+            LOGGER.info("3. GBP (British Pound)");
+
+            LOGGER.info("Enter the currency option (1, 2, 3): ");
+            int currencyOption = scanner.nextInt();
+            scanner.nextLine(); // Consuming the newline character
+
+            CurrencyType selectedCurrency;
+            try {
+                selectedCurrency = CurrencyType.getByOption(currencyOption);
+            } catch (IllegalArgumentException e) {
+                LOGGER.info("Invalid currency option. Defaulting to USD.");
+                selectedCurrency = CurrencyType.USD;
+            }
             LOGGER.info("Payment amount: ");
             double paymentAmount = readDoubleData(scanner); //scanner.nextDouble();
-            transportOrder.getCustomer().pay(paymentAmount);
-            transportOrder.setPayment(new CashPayment(orderDate, paymentAmount));
+            transportOrder.getCustomer().pay(paymentAmount, selectedCurrency);
+            transportOrder.setPayment(new CashPayment(orderDate, paymentAmount, selectedCurrency));
 
             LOGGER.info("Review (rating from 1 to 5 stars): ");
+            for (RatingType rating : RatingType.values()) {
+                LOGGER.info((rating.ordinal() + 1) + ". " + rating.getDescription());
+            }
+
             int rating = readStarRating(scanner);
+            RatingType selectedRating = null;
+            try {
+                selectedRating = RatingType.getByOption(rating);
+            } catch (InvalidStarRatingException e) {
+                LOGGER.info("Invalid rating option. Defaulting to EXCELLENT.");
+            }
             LOGGER.info("Review (comment): ");
             String content = scanner.next();
-            transportOrder.setReview(new Review(rating, content));
+            selectedRating.displayMessage();
+            transportOrder.setReview(new Review(selectedRating, content));
             taxiCompany.addTransportOrder(transportOrder, selectedDriver);
             scanner.nextLine();
             LOGGER.info("New Transport Order added!.");
