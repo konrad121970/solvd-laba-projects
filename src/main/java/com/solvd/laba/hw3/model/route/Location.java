@@ -1,6 +1,7 @@
 package com.solvd.laba.hw3.model.route;
 
-import com.solvd.laba.hw3.model.interfaces.Displayable;
+import com.solvd.laba.hw3.enums.LocationType;
+import com.solvd.laba.hw3.interfaces.Displayable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,10 +11,19 @@ public final class Location implements Displayable {
     private static final Logger LOGGER = LogManager.getLogger(Location.class);
     private String city;
     private String streetName;
+    private LocationType locationType;
 
     public Location(String city, String streetName) {
         this.city = city;
         this.streetName = streetName;
+    }
+
+    public LocationType getLocationType() {
+        return locationType;
+    }
+
+    public void setLocationType(LocationType locationType) {
+        this.locationType = locationType;
     }
 
     public String getStreetName() {
