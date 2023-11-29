@@ -8,13 +8,9 @@ import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class TaxiCompany implements Displayable {
@@ -109,6 +105,20 @@ public class TaxiCompany implements Displayable {
         } else LOGGER.warn("Vehicles list cannot be null");
     }
 
+/*
+    private void deleteEntry(Vehicle vehicle) {
+        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Driver, Vehicle> entry = iterator.next();
+            if (entry.getValue().equals(vehicle)) {
+                iterator.remove();
+                break;
+            }
+        }
+        LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+    }
+*/
+
     public void deleteVehicle(Vehicle vehicle) {
         if (vehicle != null) {
             vehicles.remove(vehicle);
@@ -130,21 +140,6 @@ public class TaxiCompany implements Displayable {
             }
         }
     }
-
-/*
-    private void deleteEntry(Vehicle vehicle) {
-        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Driver, Vehicle> entry = iterator.next();
-            if (entry.getValue().equals(vehicle)) {
-                iterator.remove();
-                break;
-            }
-        }
-        LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
-    }
-*/
-
 
     public void addDriver(Driver driver) {
         if (driver != null) {
@@ -184,7 +179,6 @@ public class TaxiCompany implements Displayable {
             }
         }
     }
-
 
     public void addAccountant(Accountant accountant) {
         if (accountant != null) {
@@ -263,7 +257,6 @@ public class TaxiCompany implements Displayable {
         }
     }
 
-
     public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
         for (Vehicle v : vehicles) {
             if (v.getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {
@@ -322,7 +315,6 @@ public class TaxiCompany implements Displayable {
         printDrivers();
     }
 
-
     @Override
     public int hashCode() {
         return super.hashCode();
@@ -360,96 +352,6 @@ public class TaxiCompany implements Displayable {
                 ", accountants=" + accountants +
                 ", vehicles=" + vehicles +
                 '}');
-    }
-
-    public void writeToFile() {
-        File outputFile = new File("target/text-files/taxiCompanyData.txt");
-
-        List<String> infoLines = new ArrayList<>();
-
-        // Basic Company Information
-        infoLines.add("Company Name: " + name);
-        infoLines.add("Number of Drivers: " + (drivers != null ? drivers.size() : 0));
-        infoLines.add("Number of Vehicles: " + (vehicles != null ? vehicles.size() : 0));
-        infoLines.add("Earned Money: " + earnedMoney);
-
-        // Vehicle Details
-        infoLines.add(StringUtils.center("VEHICLES", 50, "="));
-        for (Taxi vehicle : vehicles) {
-            infoLines.add(vehicle.toString());
-        }
-
-        // Driver Details
-        infoLines.add(StringUtils.center("DRIVERS", 50, "="));
-        for (Driver driver : drivers) {
-            infoLines.add(driver.toString());
-        }
-
-        // Accountant Details
-        infoLines.add(StringUtils.center("ACCOUNTANTS", 50, "="));
-        for (Accountant accountant : accountants) {
-            infoLines.add(accountant.toString());
-        }
-
-        // Customer Details
-        infoLines.add(StringUtils.center("CUSTOMERS", 50, "="));
-        for (Customer customer : customers) {
-            infoLines.add(customer.toString());
-        }
-
-        // Transport Order Details
-        infoLines.add(StringUtils.center("TRANSPORT ORDERS", 50, "="));
-        for (TransportOrder transportOrder : transportOrders) {
-            infoLines.add(transportOrder.toString());
-        }
-
-        try {
-            FileUtils.writeLines(outputFile, "UTF-8", infoLines);
-        } catch (IOException e) {
-            LOGGER.error("Error writing to the file: " + e.getMessage());
-        }
-    }
-
-
-    public void saveToFile() {
-        try {
-            File file = new File("target/text-files/taxiCompanySave.txt");
-
-            HashSet<String> dataToSave = new HashSet<>();
-            dataToSave.add("Company Name: " + this.getName());
-            dataToSave.add("Earned Money: " + this.earnedMoney);
-
-            FileUtils.writeLines(file, dataToSave);
-        } catch (IOException e) {
-            LOGGER.error("Error in saving TaxiCompany data: " + e.getMessage());
-        }
-    }
-
-    public TaxiCompany loadFromFile() {
-        TaxiCompany taxiCompany = null;
-        try {
-            File file = new File("target/text-files/taxiCompanySave.txt");
-
-            List<String> lines = FileUtils.readLines(file, "UTF-8");
-
-            for (String line : lines) {
-                String companyName = null;
-                double earnedMoney = 0;
-                if (line.startsWith("Company Name:")) {
-                    companyName = line.substring("Company Name: ".length());
-
-                } else if (line.startsWith("Earned Money:")) {
-                    String earnedMoneyStr = line.substring("Earned Money: ".length());
-                    earnedMoney = Double.parseDouble(earnedMoneyStr.trim());
-                }
-                taxiCompany = new TaxiCompany(companyName.trim());
-                taxiCompany.setEarnedMoney(earnedMoney);
-                return taxiCompany;
-            }
-        } catch (IOException e) {
-            LOGGER.error("Error in reading TaxiCompany data: " + e.getMessage());
-        }
-        return null;
     }
 
 }
