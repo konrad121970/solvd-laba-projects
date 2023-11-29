@@ -2,15 +2,14 @@ package com.solvd.laba.hw3;
 
 import com.solvd.laba.hw3.builders.TaxiCompanyBuilder;
 import com.solvd.laba.hw3.enums.CurrencyType;
-import com.solvd.laba.hw3.enums.DriverStatusType;
 import com.solvd.laba.hw3.enums.RatingType;
 import com.solvd.laba.hw3.enums.TaxiStandardType;
 import com.solvd.laba.hw3.exceptions.*;
 import com.solvd.laba.hw3.interfaces.Transportable;
+import com.solvd.laba.hw3.menu.company.TaxiCompanyMenu;
+import com.solvd.laba.hw3.menu.company.TransportOrderMenu;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.payment.CashPayment;
-import com.solvd.laba.hw3.model.people.Employee;
-import com.solvd.laba.hw3.model.people.Person;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
@@ -18,12 +17,12 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
-import org.apache.commons.lang3.StringUtils;
+import com.solvd.laba.hw3.utils.TaxiCompanyReaderUtil;
+import com.solvd.laba.hw3.utils.TaxiCompanyWriterUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class TaxiCompanyMain {
@@ -31,7 +30,6 @@ public class TaxiCompanyMain {
 
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
-        Long L = 0l;
         ArrayList<Taxi> taxiVehiclesList;
         try {
             taxiVehiclesList = new ArrayList<>(Arrays.asList(
@@ -70,7 +68,6 @@ public class TaxiCompanyMain {
         }
 
         /* USING BUILDER PATTERN */
-
         TaxiCompany taxiCompany = null;
         try {
             taxiCompany = new TaxiCompanyBuilder()
@@ -130,7 +127,7 @@ public class TaxiCompanyMain {
         taxiCompany.addAccountants(new HashSet<>(Arrays.asList(newAccountant1, newAccountant2)));
         // VehicleUtils.performMaintenance(taxiVehicle1);
 
-        LOGGER.info("Size of accountants Set: " + accountants.size());
+/*        LOGGER.info("Size of accountants Set: " + accountants.size());
         LOGGER.info("****************** ITERATE SET - ITERATOR ******************");
         // Iterate Set using iterator allows for dynamic removing of elements during iteration
         Iterator<Accountant> iterator1 = accountants.iterator(); //
@@ -142,7 +139,7 @@ public class TaxiCompanyMain {
         // Iterate Set using foreach
         for (Employee employee : accountants) {
             LOGGER.info(employee);
-        }
+        }*/
 
         Location loc1 = new Location("New York", "Blue St");
         Location loc2 = new Location("New York", "Yellow St");
@@ -165,38 +162,32 @@ public class TaxiCompanyMain {
         changePosition(customers.get(0), "Start", "End");
         taxiCompany.addTransportOrder(tr1, driversList.get(0));
 
-        printPersonData(customers.get(0)); // Using abstract class as parameter
-        printPersonData(driversList.get(0));
-
-        taxiCompany.writeToFile();
-        taxiCompany.saveToFile();
-        TaxiCompany taxiCompany2 = taxiCompany.loadFromFile();
-
-        LOGGER.info(taxiCompany2.getName());
-
         try (Scanner scanner = new Scanner(System.in)) {
+
             while (true) {
                 LOGGER.info("Taxi Company Menu:");
                 LOGGER.info("1. Add new Vehicle");
                 LOGGER.info("2. Add new Employee");
                 LOGGER.info("3. Create a new Transport Order");
                 LOGGER.info("4. Show all drivers with their transport orders");
-                LOGGER.info("5. Exit");
+                LOGGER.info("5. Save TaxiCompany data");
+                LOGGER.info("6. Load TaxiCompany data");
+                LOGGER.info("7. Exit");
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
 
                 switch (choice) {
                     case 1:
-                        addNewVehicle(scanner, taxiCompany);
+                        TaxiCompanyMenu.addNewVehicle(scanner, taxiCompany);
                         break;
 
                     case 2:
-                        addNewEmployee(scanner, taxiCompany);
+                        TaxiCompanyMenu.addNewEmployee(scanner, taxiCompany);
                         break;
 
                     case 3:
-                        createTransportOrder(scanner, taxiCompany);
+                        TransportOrderMenu.addTransportOrder(scanner, taxiCompany);
                         break;
 
                     case 4:
@@ -204,6 +195,15 @@ public class TaxiCompanyMain {
                         break;
 
                     case 5:
+                        TaxiCompanyWriterUtil.writeToFile("src/main/resources/taxiCompany.json", taxiCompany);
+                        break;
+
+                    case 6:
+                        taxiCompany = TaxiCompanyReaderUtil.readFromFile("src/main/resources/taxiCompany.json");
+                        LOGGER.info("Taxi Company data succesfully loaded!");
+                        break;
+
+                    case 7:
                         LOGGER.info("Exiting...");
                         return;
 
@@ -219,334 +219,5 @@ public class TaxiCompanyMain {
 
     public static void changePosition(Transportable transportable, String startLocation, String destination) {
         transportable.move(startLocation, destination);
-    }
-
-    public static void printPersonData(Person person) {
-        person.toString();
-    }
-
-    private static Double readDoubleData(Scanner scanner) {
-        double number = 0.0;
-        boolean validInput = false;
-
-        while (!validInput) {
-            String input = scanner.next();
-
-            try {
-                // Try parsing with dot as the decimal separator
-                number = Double.parseDouble(input);
-                validInput = true;
-            } catch (NumberFormatException e1) {
-                try {
-                    // Try parsing with comma as the decimal separator
-                    number = Double.parseDouble(input.replace(",", "."));
-                    validInput = true;
-                } catch (NumberFormatException e2) {
-                    LOGGER.warn("Invalid input. Please enter a valid data in X.XX or X,XX format.");
-                }
-            }
-        }
-
-        return number;
-    }
-
-    private static LocalDate readRideDate(Scanner scanner) {
-        LocalDate orderDate = null;
-        boolean validInput = false;
-
-        while (!validInput) {
-            try {
-                String orderDateStr = scanner.next();
-                orderDate = LocalDate.parse(orderDateStr);
-                validInput = true;
-            } catch (DateTimeParseException e) {
-                LOGGER.warn("Invalid date format. Please enter a valid date in the yyyy-MM-dd format.");
-            }
-        }
-
-        return orderDate;
-    }
-
-    private static int readAge(Scanner scanner) {
-        int age = 0;
-        boolean validInput = false;
-
-        while (!validInput) {
-            try {
-                age = scanner.nextInt();
-                if (age < 18) throw new InvalidPersonDataException("Age must be greater than 17!");
-                validInput = true;
-            } catch (InputMismatchException e) {
-                LOGGER.error("Invalid input. Please enter a valid age as a number higher than 17.");
-                scanner.next(); // Read invalid input to avoid an infinite loop
-            } catch (InvalidPersonDataException e) {
-                LOGGER.error(e.getMessage());
-            }
-        }
-
-        return age;
-    }
-
-    private static int readSalary(Scanner scanner) {
-        int salary = 0;
-        boolean validInput = false;
-
-        while (!validInput) {
-            try {
-                salary = scanner.nextInt();
-
-                if (salary > 0) {
-                    validInput = true;
-                } else {
-                    LOGGER.warn("Invalid salary. Please enter a positive integer value.");
-                }
-            } catch (InputMismatchException e) {
-                LOGGER.warn("Invalid input. Please enter a valid integer value.");
-                scanner.next(); // Read invalid input to avoid an infinite loop
-            }
-        }
-
-        return salary;
-    }
-
-    private static int readStarRating(Scanner scanner) {
-        int starRating = 0;
-        boolean validInput = false;
-
-        while (!validInput) {
-            try {
-                starRating = scanner.nextInt();
-
-                if (starRating >= 1 && starRating <= 5) {
-                    validInput = true;
-                } else {
-                    LOGGER.warn("Invalid star rating. Please enter a rating between 1 and 5.");
-                }
-            } catch (InputMismatchException e) {
-                LOGGER.warn("Invalid input. Please enter a valid number for star rating.");
-                scanner.next(); // Read invalid input to avoid an infinite loop
-            }
-        }
-
-        return starRating;
-    }
-
-    private static int readNumberOfSeats(Scanner scanner) {
-        int numberOfSeats = 0;
-        boolean validInput = false;
-
-        while (!validInput) {
-            try {
-                numberOfSeats = scanner.nextInt();
-
-                if (numberOfSeats > 0 && numberOfSeats <= 300) {
-                    validInput = true;
-                } else {
-                    LOGGER.warn("Invalid number of seats. Please enter a value between 1 and 300.");
-                }
-            } catch (InputMismatchException e) {
-                LOGGER.warn("Invalid input. Please enter a valid number for the number of seats.");
-                scanner.next(); // Read invalid input to avoid an infinite loop
-            }
-        }
-
-        return numberOfSeats;
-    }
-
-    private static String readUserInput(Scanner scanner, String prompt) {
-        LOGGER.info(StringUtils.rightPad(prompt + ":", 20) + StringUtils.leftPad("", 30));
-        return scanner.next();
-    }
-
-    public static void addNewVehicle(Scanner scanner, TaxiCompany taxiCompany) {
-        LOGGER.info(StringUtils.center("Enter vehicle details", 50, "="));
-
-        String make = readUserInput(scanner, "Make");
-        String model = readUserInput(scanner, "Model");
-        LOGGER.info(StringUtils.rightPad("Number of Seats:", 20) + StringUtils.leftPad("", 30));
-        int numberOfSeats = readNumberOfSeats(scanner);
-        String registrationPlate = readUserInput(scanner, "Plate Number");
-
-        try {
-            Taxi newTaxi = new Taxi(make, model, registrationPlate, numberOfSeats);
-            taxiCompany.addVehicle(newTaxi);
-
-            LOGGER.info(StringUtils.rightPad("Fare per kilometer:", 50));
-            double farePerKilometer = readDoubleData(scanner);
-            newTaxi.setFarePerKilometer(farePerKilometer);
-
-            LOGGER.info("Taxi standard: ");
-            for (TaxiStandardType taxiStandardType : TaxiStandardType.values()) {
-                LOGGER.info((taxiStandardType.ordinal() + 1) + ". " + taxiStandardType.getCategoryName());
-            }
-
-            int standardNumber = scanner.nextInt();
-
-            TaxiStandardType selectedStandard = null;
-            try {
-                selectedStandard = TaxiStandardType.getByOption(standardNumber);
-            } catch (InvalidStarRatingException e) {
-                LOGGER.info("Invalid rating option. Defaulting to EXCELLENT.");
-            }
-
-            newTaxi.setTaxiStandard(selectedStandard);
-
-            LOGGER.info(StringUtils.center("New taxi assigned to the company", 50, "="));
-            taxiCompany.printVehicles();
-        } catch (InvalidNumberOfSeatsException | DuplicateRegistrationPlateException ex) {
-            LOGGER.error(ex.getMessage());
-            LOGGER.error(StringUtils.center("Exiting menu option", 50, "="));
-        }
-    }
-
-    public static void addNewEmployee(Scanner scanner, TaxiCompany taxiCompany) {
-        LOGGER.info("Enter employee details:");
-        LOGGER.info("First Name: ");
-        String firstName = scanner.next();
-        LOGGER.info("Last Name: ");
-        String lastName = scanner.next();
-        LOGGER.info("Age: ");
-        int age = readAge(scanner);
-        LOGGER.info("Phone Number: ");
-        String phoneNumber = scanner.next();
-
-        try {
-            LOGGER.info("Select employee type:");
-            LOGGER.info("1. Driver");
-            LOGGER.info("2. Accountant");
-            int employeeTypeChoice = scanner.nextInt();
-
-            if (employeeTypeChoice == 1) {
-                LOGGER.info("Select a vehicle for the driver:");
-                taxiCompany.printVehicles();
-                int vehicleChoice = scanner.nextInt();
-
-                if (vehicleChoice >= 0 && vehicleChoice < taxiCompany.getVehicles().size()) {
-                    Taxi selectedVehicle = taxiCompany.getVehicles().get(vehicleChoice - 1);
-
-                    LOGGER.info("Enter driver salary: ");
-                    Integer salary = readSalary(scanner);
-
-                    Driver newDriver = new Driver(StringUtils.capitalize(firstName).trim(), StringUtils.capitalize(lastName).trim(), age, phoneNumber, selectedVehicle, salary);
-                    taxiCompany.addDriver(newDriver);
-                    LOGGER.info("New driver assigned to the company.");
-                } else {
-                    LOGGER.info("Invalid vehicle choice.");
-                }
-            } else if (employeeTypeChoice == 2) {
-                LOGGER.info("Enter accountant salary: ");
-                Integer salary = readSalary(scanner);
-
-                Accountant newAccountant = new Accountant(StringUtils.capitalize(firstName).trim(), StringUtils.capitalize(lastName).trim(), phoneNumber, age, salary);
-                taxiCompany.addAccountant(newAccountant);
-                LOGGER.info("New accountant assigned to the company.");
-            } else {
-                LOGGER.info("Invalid employee type choice.");
-            }
-        } catch (InvalidPersonDataException | InvalidEmployeeDataException ex) {
-            LOGGER.error(ex.getMessage());
-            LOGGER.error("Exiting menu option");
-        }
-    }
-
-    public static void createTransportOrder(Scanner scanner, TaxiCompany taxiCompany) {
-        LOGGER.info("Create a Transport Order:");
-        LOGGER.info("City: ");
-        scanner.nextLine();
-        String city = scanner.nextLine();
-
-        LOGGER.info("Pickup Location: ");
-        String pickupLocation = scanner.nextLine();
-        LOGGER.info("Drop-off Location: ");
-        String dropOffLocation = scanner.nextLine();
-
-        Location pickup = new Location(city, pickupLocation);
-        Location dropOff = new Location(city, dropOffLocation);
-
-
-        LOGGER.info("Customer Name: ");
-        String customerName = scanner.nextLine();
-        LOGGER.info("Customer Last Name: ");
-        String customerLastName = scanner.nextLine();
-        LOGGER.info("Customer Phone Number: ");
-        String customerPhoneNumber = scanner.next();
-        Customer customer;
-        try {
-            customer = new Customer(StringUtils.capitalize(customerName).trim(), StringUtils.capitalize(customerLastName).trim(), customerPhoneNumber);
-        } catch (InvalidPersonDataException e) {
-            throw new RuntimeException(e);
-        }
-        taxiCompany.addCustomer(customer);
-
-        LOGGER.info("Select a driver from the list:");
-        for (int i = 0; i < taxiCompany.getDrivers().size(); i++) {
-            if (taxiCompany.getDrivers().get(i).getDriverStatus() == DriverStatusType.AVAILABLE) {
-                LOGGER.info(i + ". " + taxiCompany.getDrivers().get(i).getFirstName());
-            }
-        }
-
-        int driverChoice = scanner.nextInt();
-
-        if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().size()) {
-            Driver selectedDriver = taxiCompany.getDrivers().get(driverChoice);
-            LOGGER.info("Ride Date (yyyy-MM-dd): ");
-            LocalDate orderDate = readRideDate(scanner);
-            //LocalDate orderDate = LocalDate.parse(orderDateStr);
-
-            LOGGER.info("Enter the distance in kilometers(X,XX or X.XX format): ");
-            Double distance = readDoubleData(scanner); //scanner.nextDouble();
-
-            TransportOrder transportOrder = new TransportOrder(customer);
-            transportOrder.addRouteStart(pickup);
-            transportOrder.addRouteEnd(dropOff);
-            selectedDriver.driveFromTo(pickup.getStreetName(), dropOff.getStreetName(), distance);
-
-            selectedDriver.getVehicle().calculatePrice(distance);
-            LOGGER.info("Order price: " + selectedDriver.getVehicle().getFareCost());
-
-            LOGGER.info("Choose a currency option:");
-            LOGGER.info("1. USD (US Dollar)");
-            LOGGER.info("2. EUR (Euro)");
-            LOGGER.info("3. GBP (British Pound)");
-
-            LOGGER.info("Enter the currency option (1, 2, 3): ");
-            int currencyOption = scanner.nextInt();
-            scanner.nextLine(); // Consuming the newline character
-
-            CurrencyType selectedCurrency;
-            try {
-                selectedCurrency = CurrencyType.getByOption(currencyOption);
-            } catch (IllegalArgumentException e) {
-                LOGGER.info("Invalid currency option. Defaulting to USD.");
-                selectedCurrency = CurrencyType.USD;
-            }
-            LOGGER.info("Payment amount: ");
-            double paymentAmount = readDoubleData(scanner); //scanner.nextDouble();
-            transportOrder.getCustomer().pay(paymentAmount, selectedCurrency);
-            transportOrder.setPayment(new CashPayment(orderDate, paymentAmount, selectedCurrency));
-
-            LOGGER.info("Review (rating from 1 to 5 stars): ");
-            for (RatingType rating : RatingType.values()) {
-                LOGGER.info((rating.ordinal() + 1) + ". " + rating.getDescription());
-            }
-
-            int rating = readStarRating(scanner);
-            RatingType selectedRating = null;
-            try {
-                selectedRating = RatingType.getByOption(rating);
-            } catch (InvalidStarRatingException e) {
-                LOGGER.info("Invalid rating option. Defaulting to EXCELLENT.");
-            }
-            LOGGER.info("Review (comment): ");
-            String content = scanner.next();
-            selectedRating.displayMessage();
-            transportOrder.setReview(new Review(selectedRating, content));
-            taxiCompany.addTransportOrder(transportOrder, selectedDriver);
-            scanner.nextLine();
-            LOGGER.info("New Transport Order added!.");
-        } else {
-            LOGGER.info("Invalid driver choice.");
-        }
-
     }
 }
