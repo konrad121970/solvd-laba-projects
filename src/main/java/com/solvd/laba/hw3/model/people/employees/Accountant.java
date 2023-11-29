@@ -25,7 +25,7 @@ public final class Accountant extends Employee {
     }
 
     @Override
-    protected int bonus() {
+    protected int givebonus() {
         if (age > 30 && salary > 10000) {
             return 1000;
         } else return 500;
