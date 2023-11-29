@@ -1,8 +1,9 @@
 package com.solvd.laba.hw3.model.people.employees;
 
-import com.solvd.laba.hw3.model.exceptions.InvalidEmployeeDataException;
-import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
-import com.solvd.laba.hw3.model.interfaces.Transportable;
+import com.solvd.laba.hw3.enums.DriverStatusType;
+import com.solvd.laba.hw3.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +14,7 @@ public final class Driver extends Employee implements Transportable {
     private static int driversCount;
     private double drivenDistance;
     private Taxi taxi;
+    private DriverStatusType driverStatus;
 
 
     public Driver(String firstName, String lastName, Integer age, String phoneNumber, Taxi taxi, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
@@ -35,14 +37,27 @@ public final class Driver extends Employee implements Transportable {
         return driversCount;
     }
 
+    public DriverStatusType getDriverStatus() {
+        return driverStatus;
+    }
+
+    public void endRide() {
+        driverStatus = DriverStatusType.AVAILABLE;
+    }
+
+    public void goOnBrake() {
+        driverStatus = DriverStatusType.ON_BREAK;
+    }
 
     public void driveFromTo(String startLocation, String endLocation, Double distanceInKm) {
         LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + ".");
+        driverStatus = DriverStatusType.UNAVAILABLE;
         drivenDistance += distanceInKm;
     }
 
     public void driveFromTo(String startLocation, String endLocation, String dateTime, Double distanceInKm) {
         LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + " at " + dateTime + ".");
+        driverStatus = DriverStatusType.UNAVAILABLE;
         drivenDistance += distanceInKm;
     }
 
