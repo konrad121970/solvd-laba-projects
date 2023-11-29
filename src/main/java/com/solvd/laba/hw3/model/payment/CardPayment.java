@@ -1,5 +1,6 @@
 package com.solvd.laba.hw3.model.payment;
 
+import com.solvd.laba.hw3.enums.CurrencyType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,8 +12,8 @@ public final class CardPayment extends Payment {
     private String cardNumber;
     private String cardType;
 
-    public CardPayment(LocalDate date, Double amount) {
-        super(date, amount);
+    public CardPayment(LocalDate date, Double amount, CurrencyType currency) {
+        super(date, amount, currency);
     }
 
     public String getCardNumber() {

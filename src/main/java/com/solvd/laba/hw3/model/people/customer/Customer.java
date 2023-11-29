@@ -1,7 +1,8 @@
 package com.solvd.laba.hw3.model.people.customer;
 
-import com.solvd.laba.hw3.model.exceptions.InvalidPersonDataException;
-import com.solvd.laba.hw3.model.interfaces.Transportable;
+import com.solvd.laba.hw3.enums.CurrencyType;
+import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +22,8 @@ public final class Customer extends Person implements Transportable {
         return customersCount;
     }
 
-    public void pay(Double cash) {
-        LOGGER.info("Customer " + this.firstName + " " + "has just spent " + cash + " USD!");
+    public void pay(Double cash, CurrencyType currencyType) {
+        LOGGER.info("Customer " + this.firstName + " " + "has just spent " + cash + " " + currencyType.getSymbol());
         this.spentMoney += cash;
     }
 
