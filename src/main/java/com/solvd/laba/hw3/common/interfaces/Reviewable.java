@@ -1,6 +1,6 @@
-package com.solvd.laba.hw3.interfaces;
+package com.solvd.laba.hw3.common.interfaces;
 
-import com.solvd.laba.hw3.enums.RatingType;
+import com.solvd.laba.hw3.common.enums.RatingType;
 
 public interface Reviewable {
     void writeReview(RatingType ratingType, String Review);

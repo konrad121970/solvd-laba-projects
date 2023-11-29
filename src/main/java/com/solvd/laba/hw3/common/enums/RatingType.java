@@ -1,6 +1,6 @@
-package com.solvd.laba.hw3.enums;
+package com.solvd.laba.hw3.common.enums;
 
-import com.solvd.laba.hw3.exceptions.InvalidStarRatingException;
+import com.solvd.laba.hw3.common.exceptions.InvalidStarRatingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

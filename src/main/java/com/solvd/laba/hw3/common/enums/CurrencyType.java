@@ -1,4 +1,4 @@
-package com.solvd.laba.hw3.enums;
+package com.solvd.laba.hw3.common.enums;
 
 public enum CurrencyType {
     USD("US Dollar") {

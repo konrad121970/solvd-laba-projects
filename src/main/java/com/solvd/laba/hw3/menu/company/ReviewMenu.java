@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.menu.company;
 
-import com.solvd.laba.hw3.enums.RatingType;
-import com.solvd.laba.hw3.exceptions.InvalidStarRatingException;
+import com.solvd.laba.hw3.common.enums.RatingType;
+import com.solvd.laba.hw3.common.exceptions.InvalidStarRatingException;
 import com.solvd.laba.hw3.menu.input.InputReader;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;

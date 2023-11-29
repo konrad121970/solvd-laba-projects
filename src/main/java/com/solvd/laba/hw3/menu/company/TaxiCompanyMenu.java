@@ -1,9 +1,9 @@
 package com.solvd.laba.hw3.menu.company;
 
-import com.solvd.laba.hw3.enums.TaxiStandardType;
-import com.solvd.laba.hw3.exceptions.DuplicateRegistrationPlateException;
-import com.solvd.laba.hw3.exceptions.InvalidNumberOfSeatsException;
-import com.solvd.laba.hw3.exceptions.InvalidStarRatingException;
+import com.solvd.laba.hw3.common.enums.TaxiStandardType;
+import com.solvd.laba.hw3.common.exceptions.DuplicateRegistrationPlateException;
+import com.solvd.laba.hw3.common.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.common.exceptions.InvalidStarRatingException;
 import com.solvd.laba.hw3.menu.input.InputReader;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.vehicles.Taxi;

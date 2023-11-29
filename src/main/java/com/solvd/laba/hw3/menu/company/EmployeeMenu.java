@@ -1,6 +1,6 @@
 package com.solvd.laba.hw3.menu.company;
 
-import com.solvd.laba.hw3.enums.DriverStatusType;
+import com.solvd.laba.hw3.common.enums.DriverStatusType;
 import com.solvd.laba.hw3.menu.input.InputReader;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.people.employees.Accountant;

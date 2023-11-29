@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.model;
 
-import com.solvd.laba.hw3.exceptions.DuplicateRegistrationPlateException;
-import com.solvd.laba.hw3.interfaces.Displayable;
+import com.solvd.laba.hw3.common.exceptions.DuplicateRegistrationPlateException;
+import com.solvd.laba.hw3.common.interfaces.Displayable;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;

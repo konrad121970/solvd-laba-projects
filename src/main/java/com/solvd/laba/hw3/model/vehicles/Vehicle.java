@@ -1,9 +1,9 @@
 package com.solvd.laba.hw3.model.vehicles;
 
-import com.solvd.laba.hw3.exceptions.InvalidNextMaintenanceDateException;
-import com.solvd.laba.hw3.exceptions.InvalidNumberOfSeatsException;
-import com.solvd.laba.hw3.interfaces.Displayable;
-import com.solvd.laba.hw3.interfaces.Maintainable;
+import com.solvd.laba.hw3.common.exceptions.InvalidNextMaintenanceDateException;
+import com.solvd.laba.hw3.common.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.common.interfaces.Displayable;
+import com.solvd.laba.hw3.common.interfaces.Maintainable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

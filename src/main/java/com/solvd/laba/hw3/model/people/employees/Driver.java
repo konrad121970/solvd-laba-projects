@@ -1,9 +1,9 @@
 package com.solvd.laba.hw3.model.people.employees;
 
-import com.solvd.laba.hw3.enums.DriverStatusType;
-import com.solvd.laba.hw3.exceptions.InvalidEmployeeDataException;
-import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
-import com.solvd.laba.hw3.interfaces.Transportable;
+import com.solvd.laba.hw3.common.enums.DriverStatusType;
+import com.solvd.laba.hw3.common.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.common.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Employee;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import org.apache.logging.log4j.LogManager;

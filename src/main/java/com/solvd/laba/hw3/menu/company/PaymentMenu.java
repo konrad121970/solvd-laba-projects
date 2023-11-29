@@ -1,6 +1,6 @@
 package com.solvd.laba.hw3.menu.company;
 
-import com.solvd.laba.hw3.enums.CurrencyType;
+import com.solvd.laba.hw3.common.enums.CurrencyType;
 import com.solvd.laba.hw3.menu.input.InputReader;
 import com.solvd.laba.hw3.model.payment.CardPayment;
 import com.solvd.laba.hw3.model.payment.CashPayment;

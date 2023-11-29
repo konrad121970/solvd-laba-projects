@@ -1,8 +1,8 @@
 package com.solvd.laba.hw3.model.people.customer;
 
-import com.solvd.laba.hw3.enums.CurrencyType;
-import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
-import com.solvd.laba.hw3.interfaces.Transportable;
+import com.solvd.laba.hw3.common.enums.CurrencyType;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.common.interfaces.Transportable;
 import com.solvd.laba.hw3.model.people.Person;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

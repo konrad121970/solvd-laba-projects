@@ -1,6 +1,6 @@
 package com.solvd.laba.hw3.menu.input;
 
-import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

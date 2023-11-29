@@ -1,4 +1,4 @@
-package com.solvd.laba.hw3.enums;
+package com.solvd.laba.hw3.common.enums;
 
 public enum TaxiStandardType {
     STANDARD("Standard Taxi", 1.0),

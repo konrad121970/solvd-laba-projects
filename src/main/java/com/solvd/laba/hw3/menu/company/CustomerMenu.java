@@ -1,6 +1,6 @@
 package com.solvd.laba.hw3.menu.company;
 
-import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import org.apache.commons.lang3.StringUtils;

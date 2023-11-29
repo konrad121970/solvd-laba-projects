@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.model.route;
 
-import com.solvd.laba.hw3.enums.LocationType;
-import com.solvd.laba.hw3.interfaces.Displayable;
+import com.solvd.laba.hw3.common.enums.LocationType;
+import com.solvd.laba.hw3.common.interfaces.Displayable;
 import com.solvd.laba.hw3.model.payment.Payment;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import org.apache.commons.lang3.StringUtils;

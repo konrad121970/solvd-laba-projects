@@ -1,10 +1,10 @@
 package com.solvd.laba.hw3.model.route;
 
 
-import com.solvd.laba.hw3.enums.RatingType;
-import com.solvd.laba.hw3.exceptions.InvalidStarRatingException;
-import com.solvd.laba.hw3.interfaces.Displayable;
-import com.solvd.laba.hw3.interfaces.Reviewable;
+import com.solvd.laba.hw3.common.enums.RatingType;
+import com.solvd.laba.hw3.common.exceptions.InvalidStarRatingException;
+import com.solvd.laba.hw3.common.interfaces.Displayable;
+import com.solvd.laba.hw3.common.interfaces.Reviewable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

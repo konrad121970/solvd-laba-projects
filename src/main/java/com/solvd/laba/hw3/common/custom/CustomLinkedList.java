@@ -1,4 +1,4 @@
-package com.solvd.laba.hw3.custom;
+package com.solvd.laba.hw3.common.custom;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -196,6 +196,7 @@ public class CustomLinkedList<T> implements List<T> {
         CustomLinkedList<?> that = (CustomLinkedList<?>) o;
         return size == that.size && Objects.equals(head, that.head);
     }
+
     @Override
     public int hashCode() {
         int hashCode = 1;
@@ -204,6 +205,7 @@ public class CustomLinkedList<T> implements List<T> {
         }
         return hashCode;
     }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("[");
@@ -217,5 +219,5 @@ public class CustomLinkedList<T> implements List<T> {
         result.append("]");
         return result.toString();
     }
-    
+
 }

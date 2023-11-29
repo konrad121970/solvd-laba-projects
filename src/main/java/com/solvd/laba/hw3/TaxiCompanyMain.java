@@ -1,11 +1,11 @@
 package com.solvd.laba.hw3;
 
-import com.solvd.laba.hw3.builders.TaxiCompanyBuilder;
-import com.solvd.laba.hw3.enums.CurrencyType;
-import com.solvd.laba.hw3.enums.RatingType;
-import com.solvd.laba.hw3.enums.TaxiStandardType;
-import com.solvd.laba.hw3.exceptions.*;
-import com.solvd.laba.hw3.interfaces.Transportable;
+import com.solvd.laba.hw3.common.builders.TaxiCompanyBuilder;
+import com.solvd.laba.hw3.common.enums.CurrencyType;
+import com.solvd.laba.hw3.common.enums.RatingType;
+import com.solvd.laba.hw3.common.enums.TaxiStandardType;
+import com.solvd.laba.hw3.common.exceptions.*;
+import com.solvd.laba.hw3.common.interfaces.Transportable;
 import com.solvd.laba.hw3.menu.company.TaxiCompanyMenu;
 import com.solvd.laba.hw3.menu.company.TransportOrderMenu;
 import com.solvd.laba.hw3.model.TaxiCompany;

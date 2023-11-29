@@ -1,6 +1,6 @@
 package com.solvd.laba.hw3.menu.company;
 
-import com.solvd.laba.hw3.enums.LocationType;
+import com.solvd.laba.hw3.common.enums.LocationType;
 import com.solvd.laba.hw3.model.route.Location;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

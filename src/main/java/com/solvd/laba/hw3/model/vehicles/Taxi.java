@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.model.vehicles;
 
-import com.solvd.laba.hw3.enums.TaxiStandardType;
-import com.solvd.laba.hw3.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.common.enums.TaxiStandardType;
+import com.solvd.laba.hw3.common.exceptions.InvalidNumberOfSeatsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,8 +1,8 @@
 package com.solvd.laba.hw3.model.payment;
 
-import com.solvd.laba.hw3.enums.CurrencyType;
-import com.solvd.laba.hw3.interfaces.Displayable;
-import com.solvd.laba.hw3.interfaces.Payable;
+import com.solvd.laba.hw3.common.enums.CurrencyType;
+import com.solvd.laba.hw3.common.interfaces.Displayable;
+import com.solvd.laba.hw3.common.interfaces.Payable;
 
 import java.time.LocalDate;
 import java.util.Objects;

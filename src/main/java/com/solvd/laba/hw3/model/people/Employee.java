@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.model.people;
 
-import com.solvd.laba.hw3.exceptions.InvalidEmployeeDataException;
-import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package com.solvd.laba.hw3.custom;
+package com.solvd.laba.hw3.common.custom;
 
 public class Node<T> {
     T data;

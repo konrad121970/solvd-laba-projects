@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.model.route;
 
-import com.solvd.laba.hw3.enums.LocationType;
-import com.solvd.laba.hw3.interfaces.Displayable;
+import com.solvd.laba.hw3.common.enums.LocationType;
+import com.solvd.laba.hw3.common.interfaces.Displayable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

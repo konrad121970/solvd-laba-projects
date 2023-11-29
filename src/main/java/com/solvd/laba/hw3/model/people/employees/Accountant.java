@@ -1,7 +1,7 @@
 package com.solvd.laba.hw3.model.people.employees;
 
-import com.solvd.laba.hw3.exceptions.InvalidEmployeeDataException;
-import com.solvd.laba.hw3.exceptions.InvalidPersonDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.people.Employee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
