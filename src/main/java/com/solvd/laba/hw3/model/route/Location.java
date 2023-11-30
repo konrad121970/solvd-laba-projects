@@ -5,9 +5,10 @@ import com.solvd.laba.hw3.common.interfaces.Displayable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class Location implements Displayable {
+public final class Location implements Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(Location.class);
     private String city;
     private String streetName;

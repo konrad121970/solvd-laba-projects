@@ -7,10 +7,11 @@ import com.solvd.laba.hw3.common.interfaces.Maintainable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public abstract class Vehicle implements Maintainable, Displayable {
+public abstract class Vehicle implements Maintainable, Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(Vehicle.class);
     protected String make;
     protected String model;

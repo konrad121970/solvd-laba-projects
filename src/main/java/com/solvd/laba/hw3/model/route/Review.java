@@ -8,9 +8,10 @@ import com.solvd.laba.hw3.common.interfaces.Reviewable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Review implements Reviewable, Displayable {
+public class Review implements Reviewable, Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(Review.class);
     private RatingType ratingType;
     private String content;

@@ -4,9 +4,10 @@ import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.common.interfaces.Displayable;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public abstract class Person implements Displayable {
+public abstract class Person implements Displayable, Serializable {
     protected String firstName;
     protected String lastName;
     protected String phoneNumber;

@@ -4,10 +4,11 @@ import com.solvd.laba.hw3.common.enums.CurrencyType;
 import com.solvd.laba.hw3.common.interfaces.Displayable;
 import com.solvd.laba.hw3.common.interfaces.Payable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public abstract class Payment implements Payable, Displayable {
+public abstract class Payment implements Payable, Displayable, Serializable {
     private LocalDate date;
     private Double amount;
     private boolean isPaid;
