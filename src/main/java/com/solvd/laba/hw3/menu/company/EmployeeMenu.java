@@ -17,6 +17,7 @@ public class EmployeeMenu {
 
     public static Driver selectDriver(Scanner scanner, TaxiCompany taxiCompany) throws Exception {
         LOGGER.info("Select a driver from the list:");
+
         for (int i = 0; i < taxiCompany.getDrivers().size(); i++) {
             if (taxiCompany.getDrivers().get(i).getDriverStatus() == DriverStatusType.AVAILABLE) {
                 LOGGER.info(i + ". " + taxiCompany.getDrivers().get(i).getFirstName());

@@ -17,9 +17,11 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -28,6 +30,11 @@ public class TaxiCompanyMain {
 
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
+        try {
+            FileUtils.delete(FileUtils.getFile("src/main/resources/customers_list"));
+        } catch (IOException e) {
+            LOGGER.info("Error in deleting customers file");
+        }
         ArrayList<Taxi> taxiVehiclesList;
         try {
             taxiVehiclesList = new ArrayList<>(Arrays.asList(
@@ -160,12 +167,16 @@ public class TaxiCompanyMain {
         changePosition(customers.get(0), "Start", "End");
         taxiCompany.addTransportOrder(tr1, driversList.get(0));
 
+        taxiCompany.printDrivers(driver -> driver.getFirstName() + " " + driver.getLastName());
+
         System.out.println("\n\n\n\n\n\n\n\n\n");
 
+        taxiCompany.writeCustomersToFile();
 
-        List<Customer> newList = Customer.loadCustomersFromFile();
+        List<Customer> newList = TaxiCompany.loadCustomersFromFile();
 
-        newList.stream().forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));
+        // CONSUMER
+        newList.forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));
 
         try (Scanner scanner = new Scanner(System.in)) {
 

@@ -1,6 +1,7 @@
 package com.solvd.laba.hw3.model;
 
 import com.solvd.laba.hw3.common.exceptions.DuplicateRegistrationPlateException;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.common.interfaces.Displayable;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
@@ -8,15 +9,14 @@ import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
+import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class TaxiCompany implements Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
@@ -52,6 +52,65 @@ public class TaxiCompany implements Displayable, Serializable {
         addDrivers(drivers);
     }
 
+    public static TaxiCompany loadState(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (TaxiCompany) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            LOGGER.error("Error loading state: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static List<Customer> loadCustomersFromFile() {
+        List<Customer> customers = new ArrayList<>();
+
+        try {
+            File file = new File("src/main/resources/customers_list");
+            if (file.exists()) {
+                List<String> lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
+
+                Customer customer = null;
+                for (String line : lines) {
+                    if (line.startsWith("Name: ")) {
+                        if (customer != null) {
+                            customers.add(customer);
+                        }
+
+                        String[] nameParts = line.replace("Name: ", "").split(" ");
+                        customer = new Customer(nameParts[0], nameParts[1], "");
+                    } else if (line.startsWith("Phone Number: ")) {
+                        if (customer != null) {
+                            String number = line.replace("Phone Number: ", "");
+                            customer.setPhoneNumber(number);
+                        }
+                    } else if (line.startsWith("Spent Money: ")) {
+                        if (customer != null) {
+                            customer.setSpentMoney(Double.parseDouble(line.replace("Spent Money: ", "")));
+                        }
+                    }
+                }
+
+                if (customer != null) {
+                    customers.add(customer);
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.error("Error loading customer information from file: " + e.getMessage());
+        } catch (InvalidPersonDataException | NumberFormatException e) {
+            LOGGER.error("Error creating customer object: " + e.getMessage());
+        }
+        return customers;
+    }
+
+    public void saveState(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(this);
+            LOGGER.info("State saved successfully.");
+        } catch (IOException e) {
+            LOGGER.error("Error saving state: " + e.getMessage());
+        }
+    }
+
     public Map<Driver, List<TransportOrder>> getDriverTransportOrdersMap() {
         return driverTransportOrdersMap;
     }
@@ -84,6 +143,20 @@ public class TaxiCompany implements Displayable, Serializable {
         return accountants;
     }
 
+/*
+    private void deleteEntry(Vehicle vehicle) {
+        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Driver, Vehicle> entry = iterator.next();
+            if (entry.getValue().equals(vehicle)) {
+                iterator.remove();
+                break;
+            }
+        }
+        LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+    }
+*/
+
     public List<Taxi> getVehicles() {
         return vehicles;
     }
@@ -109,20 +182,6 @@ public class TaxiCompany implements Displayable, Serializable {
             }
         } else LOGGER.warn("Vehicles list cannot be null");
     }
-
-/*
-    private void deleteEntry(Vehicle vehicle) {
-        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Driver, Vehicle> entry = iterator.next();
-            if (entry.getValue().equals(vehicle)) {
-                iterator.remove();
-                break;
-            }
-        }
-        LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
-    }
-*/
 
     public void deleteVehicle(Vehicle vehicle) {
         if (vehicle != null) {
@@ -262,11 +321,10 @@ public class TaxiCompany implements Displayable, Serializable {
         }
     }
 
+    // PREDICATE
     public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
-        for (Vehicle v : vehicles) {
-            if (v.getRegistrationPlate().equals(vehicle.getRegistrationPlate())) {
-                throw new DuplicateRegistrationPlateException("There is another car with the same registration plate assigned!" + v.getRegistrationPlate());
-            }
+        if (vehicles.stream().anyMatch(v -> v.getRegistrationPlate().equals(vehicle.getRegistrationPlate()))) {
+            throw new DuplicateRegistrationPlateException("There is another car with the same registration plate assigned!" + vehicle.getRegistrationPlate());
         }
     }
 
@@ -290,6 +348,15 @@ public class TaxiCompany implements Displayable, Serializable {
         LOGGER.info("List of company Drivers:");
         for (Driver driver : drivers) {
             LOGGER.info(driver.getFirstName() + " " + driver.getLastName());
+        }
+    }
+
+    // FUNCTION
+    public void printDrivers(Function<Driver, String> fullNameMapper) {
+
+        LOGGER.info("List of Driver Full Names:");
+        for (Driver driver : drivers) {
+            LOGGER.info(fullNameMapper.apply(driver));
         }
     }
 
@@ -320,38 +387,23 @@ public class TaxiCompany implements Displayable, Serializable {
         printDrivers();
     }
 
-    public void saveState(String fileName) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(this);
-            LOGGER.info("State saved successfully.");
+    public void writeCustomersToFile() {
+        try {
+            StringBuilder data = new StringBuilder();
+
+            data.append("Consumer Information\n");
+
+            for (Customer customer : customers) {
+                data.append("Name: ").append(customer.getFirstName()).append(" ").append(customer.getLastName()).append("\n");
+                data.append("Phone Number: ").append(customer.getPhoneNumber()).append("\n");
+                data.append("Spent Money: ").append(customer.getSpentMoney()).append("\n");
+                data.append("---------------\n");
+            }
+
+            FileUtils.writeStringToFile(new File("src/main/resources/customers_list"), data.toString(), StandardCharsets.UTF_8, true);
         } catch (IOException e) {
-            LOGGER.error("Error saving state: " + e.getMessage());
+            LOGGER.error("Error saving customer " + this.toString() + " information to file: " + e.getMessage());
         }
-    }
-
-    public static TaxiCompany loadState(String fileName) {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            return (TaxiCompany) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            LOGGER.error("Error loading state: " + e.getMessage());
-            return null;
-        }
-    }
-
-    public void deleteVehicles(Predicate<Taxi> predicate) {
-        vehicles.removeIf(vehicle -> !predicate.test(vehicle));
-    }
-
-    public void forEachCustomer(Consumer<Customer> consumer) {
-        customers.forEach(consumer);
-    }
-
-    public Taxi createTaxi(Supplier<Taxi> supplier) {
-        return supplier.get();
-    }
-
-    public String getDriverFullName(Driver driver, Function<Driver, String> mapper) {
-        return mapper.apply(driver);
     }
 
     @Override
@@ -392,5 +444,6 @@ public class TaxiCompany implements Displayable, Serializable {
                 ", vehicles=" + vehicles +
                 '}');
     }
+
 
 }
