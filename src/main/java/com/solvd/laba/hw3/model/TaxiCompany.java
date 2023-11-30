@@ -11,9 +11,10 @@ import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.*;
 import java.util.*;
 
-public class TaxiCompany implements Displayable {
+public class TaxiCompany implements Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
     private final String name;
     private double earnedMoney;
@@ -45,6 +46,15 @@ public class TaxiCompany implements Displayable {
         addVehicles(vehicles);
         addCustomers(customers);
         addDrivers(drivers);
+    }
+
+    public static TaxiCompany loadState(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (TaxiCompany) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            LOGGER.error("Error loading state: " + e.getMessage());
+            return null;
+        }
     }
 
     public Map<Driver, List<TransportOrder>> getDriverTransportOrdersMap() {
@@ -83,6 +93,20 @@ public class TaxiCompany implements Displayable {
         return vehicles;
     }
 
+/*
+    private void deleteEntry(Vehicle vehicle) {
+        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Driver, Vehicle> entry = iterator.next();
+            if (entry.getValue().equals(vehicle)) {
+                iterator.remove();
+                break;
+            }
+        }
+        LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
+    }
+*/
+
     public void addVehicle(Taxi vehicle) throws DuplicateRegistrationPlateException {
         if (vehicle != null) {
             if (vehicles == null) {
@@ -104,20 +128,6 @@ public class TaxiCompany implements Displayable {
             }
         } else LOGGER.warn("Vehicles list cannot be null");
     }
-
-/*
-    private void deleteEntry(Vehicle vehicle) {
-        Iterator<Map.Entry<Driver, Vehicle>> iterator = driverVehicleMap.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<Driver, Vehicle> entry = iterator.next();
-            if (entry.getValue().equals(vehicle)) {
-                iterator.remove();
-                break;
-            }
-        }
-        LOGGER.info("Vehicle removed: " + vehicle.getMake() + " " + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
-    }
-*/
 
     public void deleteVehicle(Vehicle vehicle) {
         if (vehicle != null) {
@@ -315,6 +325,15 @@ public class TaxiCompany implements Displayable {
         printDrivers();
     }
 
+    public void saveState(String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(this);
+            LOGGER.info("State saved successfully.");
+        } catch (IOException e) {
+            LOGGER.error("Error saving state: " + e.getMessage());
+        }
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();
@@ -324,6 +343,7 @@ public class TaxiCompany implements Displayable {
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
+
 
     @Override
     public String toString() {

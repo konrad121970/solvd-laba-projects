@@ -17,8 +17,6 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
-import com.solvd.laba.hw3.utils.TaxiCompanyReaderUtil;
-import com.solvd.laba.hw3.utils.TaxiCompanyWriterUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -162,6 +160,8 @@ public class TaxiCompanyMain {
         changePosition(customers.get(0), "Start", "End");
         taxiCompany.addTransportOrder(tr1, driversList.get(0));
 
+        System.out.println("\n\n\n\n\n\n\n\n\n");
+
         try (Scanner scanner = new Scanner(System.in)) {
 
             while (true) {
@@ -195,11 +195,13 @@ public class TaxiCompanyMain {
                         break;
 
                     case 5:
-                        TaxiCompanyWriterUtil.writeToFile("src/main/resources/taxiCompany.json", taxiCompany);
+                        if (taxiCompany != null) {
+                            taxiCompany.saveState("src/main/resources/taxiCompany.ser");
+                        }
                         break;
 
                     case 6:
-                        taxiCompany = TaxiCompanyReaderUtil.readFromFile("src/main/resources/taxiCompany.json");
+                        taxiCompany = taxiCompany.loadState("src/main/resources/taxiCompany.ser");
                         LOGGER.info("Taxi Company data succesfully loaded!");
                         break;
 
