@@ -162,6 +162,11 @@ public class TaxiCompanyMain {
 
         System.out.println("\n\n\n\n\n\n\n\n\n");
 
+
+        List<Customer> newList = Customer.loadCustomersFromFile();
+
+        newList.stream().forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));
+
         try (Scanner scanner = new Scanner(System.in)) {
 
             while (true) {
