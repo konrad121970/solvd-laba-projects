@@ -30,10 +30,10 @@ public abstract class Employee extends Person {
     /* TEMPLATE METHOD */
     /* Everytime an employee receives a raise he also gets a bonus. */
     public final void giveRaise(Double percentRaise) {
-        this.salary *= percentRaise + givebonus();
+        this.salary *= percentRaise + giveBonus();
     }
 
-    protected abstract int givebonus();
+    protected abstract int giveBonus();
 
     public Integer getSalary() {
         return (int) salary;

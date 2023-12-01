@@ -81,7 +81,7 @@ public final class Driver extends Employee implements Transportable {
     }
 
     @Override
-    protected int givebonus() {
+    protected int giveBonus() {
         return (int) (drivenDistance * 0.1);
     }
 
