@@ -20,12 +20,9 @@ public final class TransportOrder implements Displayable, Serializable {
     private Payment payment;
     private Review review;
 
-    public TransportOrder() {
-        this.routeStops = new ArrayList<>();
-    }
+    public TransportOrder() {}
 
     public TransportOrder(Customer customer) {
-        this.routeStops = new ArrayList<>();
         this.customer = customer;
     }
 
@@ -38,22 +35,47 @@ public final class TransportOrder implements Displayable, Serializable {
     }
 
     public void setReview(Review review) {
-        this.review = review;
+        if(review != null) {
+            this.review = review;
+        } else {
+            LOGGER.warn("You can't set null value to review!");
+        }
     }
 
     public void addRouteStart(Location location) {
-        location.setLocationType(LocationType.ROUTE_START);
-        routeStops.add(location);
+        if(location != null){
+            if(routeStops == null){
+                routeStops = new ArrayList<>();
+            }
+            location.setLocationType(LocationType.ROUTE_START);
+            routeStops.add(location);
+        } else {
+            LOGGER.warn("Location cannot be null");
+        }
     }
 
     public void addRouteEnd(Location location) {
-        location.setLocationType(LocationType.ROUTE_END);
-        routeStops.add(location);
+        if(location != null){
+            if(routeStops == null){
+                routeStops = new ArrayList<>();
+            }
+            location.setLocationType(LocationType.ROUTE_END);
+            routeStops.add(location);
+        } else {
+            LOGGER.warn("Location cannot be null");
+        }
     }
 
     public void addRouteStop(Location location) {
-        location.setLocationType(LocationType.INTERMEDIATE_STOP);
-        routeStops.add(location);
+        if(location != null){
+            if(routeStops == null){
+                routeStops = new ArrayList<>();
+            }
+            location.setLocationType(LocationType.INTERMEDIATE_STOP);
+            routeStops.add(location);
+        } else {
+            LOGGER.warn("Location cannot be null");
+        }
     }
 
     public Customer getCustomer() {
