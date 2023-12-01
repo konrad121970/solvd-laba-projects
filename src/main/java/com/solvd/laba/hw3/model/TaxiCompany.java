@@ -36,7 +36,6 @@ public class TaxiCompany implements Displayable, Serializable {
 
     public TaxiCompany(String name) {
         this.name = name;
-        this.driverTransportOrdersMap = new HashMap<>();
     }
 
     public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<Taxi> vehicles) throws DuplicateRegistrationPlateException {
@@ -228,31 +227,33 @@ public class TaxiCompany implements Displayable, Serializable {
     }
 
     public void addTransportOrders(List<TransportOrder> transportOrders, List<Driver> drivers) {
-        if (transportOrders != null) {
-            if (this.transportOrders == null) {
-                this.transportOrders = new ArrayList<>();
-            }
-            transportOrders.forEach(transportOrder -> {
-                if (transportOrder != null) {
-                    this.transportOrders.add(transportOrder);
-                    this.earnedMoney += transportOrder.getPayment().getAmount();
-
-                    Driver driver = drivers.get(transportOrders.indexOf(transportOrder));
-
-                    if (!driverTransportOrdersMap.containsKey(driver)) {
-                        driverTransportOrdersMap.put(driver, new ArrayList<>()); // create new key
-                    }
-                    driverTransportOrdersMap.get(driver).add(transportOrder); // Add Transport order to driver key
-                } else {
-                    LOGGER.warn("TransportOrder in the list cannot be null");
-                }
-            });
-
-        } else {
+        if (transportOrders == null) {
             LOGGER.warn("TransportOrders list cannot be null");
+            return;
         }
-    }
 
+        if (this.transportOrders == null) {
+            this.transportOrders = new ArrayList<>();
+        }
+
+        if (driverTransportOrdersMap == null) {
+            driverTransportOrdersMap = new HashMap<>();
+        }
+
+        transportOrders.forEach(transportOrder -> {
+            if (transportOrder == null) {
+                LOGGER.warn("TransportOrder in the list cannot be null");
+                return;
+            }
+
+            this.transportOrders.add(transportOrder);
+            this.earnedMoney += transportOrder.getPayment().getAmount();
+
+            Driver driver = drivers.get(transportOrders.indexOf(transportOrder));
+
+            driverTransportOrdersMap.computeIfAbsent(driver, k -> new ArrayList<>()).add(transportOrder);
+        });
+    }
     // PREDICATE
     public void isRegistrationPlateDuplicatePresent(Vehicle vehicle) throws DuplicateRegistrationPlateException {
         if (vehicles.stream().anyMatch(v -> v.getRegistrationPlate().equals(vehicle.getRegistrationPlate()))) {
