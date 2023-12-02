@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -23,10 +24,10 @@ public class TaxiCompany implements Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
     private final String name;
     private double earnedMoney;
-    private Map<Driver, List<TransportOrder>> driverTransportOrdersMap;
     private List<TransportOrder> transportOrders;
-    private List<Customer> customers;
+    private Map<Driver, List<TransportOrder>> driverTransportOrdersMap;
     private List<Driver> drivers;
+    private List<Customer> customers;
     private List<Taxi> vehicles;
     private Set<Accountant> accountants;
 
@@ -111,13 +112,17 @@ public class TaxiCompany implements Displayable, Serializable {
         } else LOGGER.warn("TaxiVehicle cannot be null");
     }
 
-    public void addVehicles(List<Taxi> vehicles) throws DuplicateRegistrationPlateException {
+    public void addVehicles(List<Taxi> vehicles)  {
         if (vehicles != null) {
             if (this.vehicles == null) {
                 this.vehicles = new ArrayList<>();
             }
             vehicles.forEach(vehicle -> {
-                isRegistrationPlateDuplicatePresent(vehicle);
+                try {
+                    isRegistrationPlateDuplicatePresent(vehicle);
+                } catch (DuplicateRegistrationPlateException e) {
+                    LOGGER.warn("Vehicle with the same license plate already exists!");
+                }
                 this.vehicles.add(vehicle);
             });
         } else LOGGER.warn("Vehicles list cannot be null");
@@ -134,7 +139,7 @@ public class TaxiCompany implements Displayable, Serializable {
 
     public void deleteVehicles(List<Vehicle> vehicles) {
         if (vehicles != null) {
-            vehicles.removeAll(vehicles)
+            vehicles.removeAll(vehicles);
         }
     }
 
@@ -216,6 +221,15 @@ public class TaxiCompany implements Displayable, Serializable {
             if (transportOrders == null) {
                 transportOrders = new ArrayList<>();
             }
+
+            if (driverTransportOrdersMap == null) {
+                driverTransportOrdersMap = new HashMap<>();
+            }
+
+            if(!customers.contains(transportOrder.getCustomer())){
+                customers.add(transportOrder.getCustomer());
+            }
+
             transportOrders.add(transportOrder);
             this.earnedMoney += transportOrder.getPayment().getAmount();
 
@@ -246,6 +260,10 @@ public class TaxiCompany implements Displayable, Serializable {
                 return;
             }
 
+            if(!customers.contains(transportOrder.getCustomer())){
+                customers.add(transportOrder.getCustomer());
+            }
+
             this.transportOrders.add(transportOrder);
             this.earnedMoney += transportOrder.getPayment().getAmount();
 
@@ -266,7 +284,7 @@ public class TaxiCompany implements Displayable, Serializable {
         AtomicInteger counter = new AtomicInteger(1);
         vehicles.forEach(vehicle -> {
             LOGGER.info(counter.getAndIncrement() + ". " + vehicle.getMake() + " "
-                        + vehicle.getModel() + " " + vehicle.getRegistrationPlate())
+                        + vehicle.getModel() + " " + vehicle.getRegistrationPlate());
         });
     }
 
@@ -274,7 +292,7 @@ public class TaxiCompany implements Displayable, Serializable {
         LOGGER.info("List of company Customers:");
         AtomicInteger counter = new AtomicInteger(1);
         customers.forEach(customer -> {
-            LOGGER.info(customer.getFirstName() + " " + customer.getLastName() + " " + customer.getSpentMoney())
+            LOGGER.info(customer.getFirstName() + " " + customer.getLastName() + " " + customer.getSpentMoney());
         });
     }
 
@@ -310,7 +328,9 @@ public class TaxiCompany implements Displayable, Serializable {
 
     public void printAccountants() {
         LOGGER.info("List of company accountants:");
-        accountants.forEach(accountant -> accountant.get);
+        accountants.forEach(accountant -> {
+            LOGGER.info(accountant.getFirstName() + " " + accountant.getLastName());
+        });
     }
 
     public void printEmployees() {
@@ -345,35 +365,38 @@ public class TaxiCompany implements Displayable, Serializable {
             if (file.exists()) {
                 List<String> lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
 
-                Customer customer = null;
+                final Customer[] customer = {null};
 
                 lines.forEach(line ->{
                     if (line.startsWith("Name: ")) {
-                        if (customer != null) {
-                            customers.add(customer);
+                        String[] nameParts = line.replace("Name: ", "").split(" ");
+                        try {
+                            customer[0] = new Customer(nameParts[0], nameParts[1], "");
+                        } catch (InvalidPersonDataException e) {
+                            throw new RuntimeException(e);
                         }
 
-                        String[] nameParts = line.replace("Name: ", "").split(" ");
-                        customer = new Customer(nameParts[0], nameParts[1], "");
                     } else if (line.startsWith("Phone Number: ")) {
-                        if (customer != null) {
+
+                        if (customer[0] != null) {
                             String number = line.replace("Phone Number: ", "");
-                            customer.setPhoneNumber(number);
+                            customer[0].setPhoneNumber(number);
                         }
                     } else if (line.startsWith("Spent Money: ")) {
-                        if (customer != null) {
-                            customer.setSpentMoney(Double.parseDouble(line.replace("Spent Money: ", "")));
+
+                        if (customer[0] != null) {
+                            customer[0].setSpentMoney(Double.parseDouble(line.replace("Spent Money: ", "")));
                         }
                     }
                 });
 
-                if (customer != null) {
-                    customers.add(customer);
+                if (customer[0] != null) {
+                    customers.add(customer[0]);
                 }
             }
         } catch (IOException e) {
             LOGGER.error("Error loading customer information from file: " + e.getMessage());
-        } catch (InvalidPersonDataException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             LOGGER.error("Error creating customer object: " + e.getMessage());
         }
         return customers;
