@@ -22,13 +22,15 @@ public class TransportOrderMenu {
         transportOrder.addRouteStart(LocationMenu.addStartLocation(scanner));
         transportOrder.addRouteEnd(LocationMenu.addEndLocation(scanner));
 
-        CustomerMenu.addCustomer(scanner, taxiCompany);
+        CustomerMenu.addCustomer(scanner, transportOrder);
 
+
+        //TODO: DEBUG
         Driver driver = null;
         try {
             driver = EmployeeMenu.selectDriver(scanner, taxiCompany);
         } catch (Exception e) {
-            LOGGER.info("Invalid driver choice.");
+            throw new RuntimeException();
         }
 
         LOGGER.info("Ride Date (yyyy-MM-dd): ");
@@ -50,6 +52,7 @@ public class TransportOrderMenu {
         ReviewMenu.addReview(scanner, transportOrder);
 
         taxiCompany.addTransportOrder(transportOrder, driver);
+        driver.endRide();
         scanner.nextLine();
         LOGGER.info("New Transport Order added!.");
 
