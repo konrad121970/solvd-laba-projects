@@ -82,6 +82,12 @@ public final class TransportOrder implements Displayable, Serializable {
         return customer;
     }
 
+    public void setCustomer(Customer customer) {
+        if(customer != null) {
+            this.customer = customer;
+        }
+    }
+
     public Payment getPayment() {
         return payment;
     }

@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class CustomerMenu {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass());
 
-    public static void addCustomer(Scanner scanner, TaxiCompany taxiCompany) {
+    public static void addCustomer(Scanner scanner, TransportOrder transportOrder) {
 
         LOGGER.info("Customer Name: ");
         String customerName = scanner.nextLine();
@@ -26,7 +26,7 @@ public class CustomerMenu {
 
         try {
             customer = new Customer(StringUtils.capitalize(customerName).trim(), StringUtils.capitalize(customerLastName).trim(), customerPhoneNumber);
-            taxiCompany.addCustomer(customer);
+            transportOrder.setCustomer(customer);
         } catch (InvalidPersonDataException e) {
             throw new RuntimeException(e);
         }

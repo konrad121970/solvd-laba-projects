@@ -97,11 +97,7 @@ public class TaxiCompanyMain {
             LOGGER.error(e.getMessage());
         }
 
-        try {
-            taxiCompany.addVehicles(Arrays.asList(taxi1, taxi2));
-        } catch (DuplicateRegistrationPlateException e) {
-            LOGGER.error("Failed to add vehicles to list!");
-        }
+        taxiCompany.addVehicles(Arrays.asList(taxi1, taxi2));
 
         try {
             taxi1.scheduleMaintenance(LocalDate.of(2024, 11, 8)); // Setting wrong maintenance date
