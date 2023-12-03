@@ -110,8 +110,8 @@ public class TaxiCompany implements Displayable, Serializable {
         }
     }
 
-    public Map<Driver, List<TransportOrder>> getDriverTransportOrdersMap() {
-        return driverTransportOrdersMap;
+    public Optional<Map<Driver, List<TransportOrder>>> getDriverTransportOrdersMap() {
+        return Optional.ofNullable(driverTransportOrdersMap);
     }
 
     public double getEarnedMoney() {

@@ -69,17 +69,20 @@ public final class Location implements Displayable, Serializable {
 
     @Override
     public String toString() {
-        return "Location [city = '" + city + "', streetName = '" + streetName + "']";
+        return "Location{" +
+                "city='" + city + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", locationType=" + locationType +
+                '}';
     }
 
-    // TODO:
     @Override
     public void display() {
-        LOGGER.info("Location [city = '" + city + "', streetName = '" + streetName + "']");
+        LOGGER.info(String.format("Location: %s, Street: %s", city, streetName));
     }
 
     @Override
     public void showDetails() {
-        LOGGER.info("Location [city = '" + city + "', streetName = '" + streetName + "']");
+        LOGGER.info(String.format("Location: %s, Street: %s, Type: %s", city, streetName, locationType));
     }
 }

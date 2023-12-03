@@ -27,10 +27,12 @@ public class EmployeeMenu {
         if (drivers.isPresent()) {
             List<Driver> availableDrivers = drivers.get()
                     .stream().filter(d -> d.getDriverStatus() == DriverStatusType.AVAILABLE)
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList()); // collect() - terminal operation
 
+
+            // IntStream function
             IntStream.range(0, availableDrivers.size()).forEach(i -> {
-                LOGGER.info(i + ". " + availableDrivers.get(i));
+                LOGGER.info(i + ". " + availableDrivers.get(i).getFirstName() + " " + availableDrivers.get(i).getLastName());
             });
 
             int driverChoice = scanner.nextInt();

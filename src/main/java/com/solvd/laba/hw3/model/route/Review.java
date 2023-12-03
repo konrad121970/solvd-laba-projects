@@ -77,8 +77,6 @@ public class Review implements Reviewable, Displayable, Serializable {
         return "Star rating: " + this.ratingType + "out of 5. Content of review:\n" + this.content;
     }
 
-
-    // TODO:
     @Override
     public void display() {
         LOGGER.info("Star rating:" + this.ratingType);

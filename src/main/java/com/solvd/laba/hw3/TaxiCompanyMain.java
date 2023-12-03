@@ -150,7 +150,7 @@ public class TaxiCompanyMain {
         tr1.addRouteEnd(loc2);
         LOGGER.info(customers.get(0));
 
-        driversList.get(0).driveFromTo(loc1.getStreetName(), loc2.getStreetName(), 10.00);
+        driversList.get(0).move(loc1.getStreetName(), loc2.getStreetName(), 10.00);
         tr1.getCustomer().pay(driversList.get(0).getVehicle().calculatePrice(10.00), CurrencyType.USD);
         tr1.setPayment(new CashPayment(LocalDate.of(2023, 11, 3), driversList.get(0).getVehicle().calculatePrice(10.00), CurrencyType.USD));
         tr1.setReview(new Review(RatingType.AVERAGE, "It was an amazing ride!\n"));
@@ -159,8 +159,8 @@ public class TaxiCompanyMain {
 
         driversList.get(0).endRide();
 
-        changePosition(driversList.get(0), "Start", "End"); // Using interface as parameter
-        changePosition(customers.get(0), "Start", "End");
+        changePosition(driversList.get(0), "Start", "End", 10.0); // Using interface as parameter
+        changePosition(customers.get(0), "Start", "End", 10.0);
         taxiCompany.addTransportOrder(tr1, driversList.get(0));
 
         taxiCompany.printDrivers(driver -> driver.getFirstName() + " " + driver.getLastName());
@@ -232,7 +232,7 @@ public class TaxiCompanyMain {
         }
     }
 
-    public static void changePosition(Transportable transportable, String startLocation, String destination) {
-        transportable.move(startLocation, destination);
+    public static void changePosition(Transportable transportable, String startLocation, String destination, Double distance) {
+        transportable.move(startLocation, destination, distance);
     }
 }

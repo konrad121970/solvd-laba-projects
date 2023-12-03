@@ -3,12 +3,15 @@ package com.solvd.laba.hw3.model.payment;
 import com.solvd.laba.hw3.common.enums.CurrencyType;
 import com.solvd.laba.hw3.common.interfaces.Displayable;
 import com.solvd.laba.hw3.common.interfaces.Payable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public abstract class Payment implements Payable, Displayable, Serializable {
+    private static final Logger LOGGER = LogManager.getLogger(Payment.class);
     private LocalDate date;
     private Double amount;
     private boolean isPaid;
@@ -84,14 +87,18 @@ public abstract class Payment implements Payable, Displayable, Serializable {
         return this.isPaid;
     }
 
-    //TODO:
     @Override
     public void display() {
-
+        LOGGER.info("Payment Information:");
+        LOGGER.info("Date: " + date);
+        LOGGER.info("Amount: " + amount + " " + currency);
     }
 
     @Override
     public void showDetails() {
-
+        LOGGER.info("Payment Information:");
+        LOGGER.info("Date: " + date);
+        LOGGER.info("Amount: " + amount + " " + currency);
+        LOGGER.info("Payment Status: " + (isPaid ? "Paid" : "Pending"));
     }
 }

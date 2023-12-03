@@ -3,7 +3,6 @@ package com.solvd.laba.hw3.menu.company;
 import com.solvd.laba.hw3.common.enums.TaxiStandardType;
 import com.solvd.laba.hw3.common.exceptions.DuplicateRegistrationPlateException;
 import com.solvd.laba.hw3.common.exceptions.InvalidNumberOfSeatsException;
-import com.solvd.laba.hw3.common.exceptions.InvalidStarRatingException;
 import com.solvd.laba.hw3.menu.input.InputReader;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
@@ -60,8 +59,9 @@ public class TaxiCompanyMenu {
             TaxiStandardType selectedStandard = null;
             try {
                 selectedStandard = TaxiStandardType.getByOption(standardNumber);
-            } catch (InvalidStarRatingException e) {
-                LOGGER.info("Invalid rating option. Defaulting to EXCELLENT.");
+            } catch (IllegalArgumentException e) {
+                LOGGER.info("Invalid standard option. Defaulting to STANDARD.");
+                selectedStandard = TaxiStandardType.STANDARD;
             }
 
             newTaxi.setTaxiStandard(selectedStandard);

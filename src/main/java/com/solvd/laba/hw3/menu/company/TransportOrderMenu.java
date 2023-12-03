@@ -23,9 +23,7 @@ public class TransportOrderMenu {
         transportOrder.addRouteEnd(LocationMenu.addEndLocation(scanner));
 
         CustomerMenu.addCustomer(scanner, transportOrder);
-
-
-        //TODO: DEBUG
+        
         Driver driver = null;
         try {
             driver = EmployeeMenu.selectDriver(scanner, taxiCompany);
@@ -40,7 +38,7 @@ public class TransportOrderMenu {
         Double distance = InputReader.readDoubleData(scanner);
 
 
-        driver.driveFromTo((transportOrder.getRouteStops().stream().findFirst().get().getStreetName()), // Find first element
+        driver.move((transportOrder.getRouteStops().stream().findFirst().get().getStreetName()), // Find first element
                 transportOrder.getRouteStops().stream().reduce((first, second) -> second).get().getStreetName(), // Find last element
                 distance);
 
