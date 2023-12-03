@@ -61,7 +61,7 @@ public class EmployeeMenu {
 
             List<Taxi> vehiclesList = taxiCompany.getVehicles().get();
 
-            if (vehicleChoice >= 0 && vehicleChoice < vehiclesList.size()) {
+            if (vehicleChoice >= 0 && vehicleChoice < vehiclesList.size() + 1) {
                 Taxi selectedVehicle = vehiclesList.get(vehicleChoice - 1);
 
                 LOGGER.info("Enter driver salary: ");
@@ -71,6 +71,8 @@ public class EmployeeMenu {
                 driver.setSalary(salary);
                 taxiCompany.addDriver(driver);
                 LOGGER.info("New driver assigned to the company.");
+            } else {
+                LOGGER.info("Invalid vehicle choice.");
             }
         }
     }

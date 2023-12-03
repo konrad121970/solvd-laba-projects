@@ -86,19 +86,6 @@ public abstract class Vehicle implements Maintainable, Displayable, Serializable
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Vehicle vehicle = (Vehicle) o;
-        return numberOfSeats == vehicle.numberOfSeats && Objects.equals(make, vehicle.make) && Objects.equals(model, vehicle.model) && Objects.equals(registrationPlate, vehicle.registrationPlate) && Objects.equals(nextMaintenance, vehicle.nextMaintenance) && Objects.equals(lastMaintenance, vehicle.lastMaintenance);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(make, model, registrationPlate, numberOfSeats, nextMaintenance, lastMaintenance);
-    }
-
-    @Override
     public void scheduleMaintenance(LocalDate date) {
         LocalDate now = LocalDate.now();
         if (date.isBefore(now)) {
@@ -113,8 +100,33 @@ public abstract class Vehicle implements Maintainable, Displayable, Serializable
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return numberOfSeats == vehicle.numberOfSeats && Objects.equals(make, vehicle.make) && Objects.equals(model, vehicle.model) && Objects.equals(registrationPlate, vehicle.registrationPlate) && Objects.equals(nextMaintenance, vehicle.nextMaintenance) && Objects.equals(lastMaintenance, vehicle.lastMaintenance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(make, model, registrationPlate, numberOfSeats, nextMaintenance, lastMaintenance);
+    }
+
+    @Override
     public void display() {
         LOGGER.info("Vehicle [make=" + this.make + ", model=" + this.model + "]");
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", registrationPlate='" + registrationPlate + '\'' +
+                ", numberOfSeats=" + numberOfSeats +
+                ", nextMaintenance=" + nextMaintenance +
+                ", lastMaintenance=" + lastMaintenance +
+                '}';
     }
 
     @Override
@@ -129,17 +141,7 @@ public abstract class Vehicle implements Maintainable, Displayable, Serializable
                 '}');
     }
 
-    @Override
-    public String toString() {
-        return "Vehicle{" +
-                "make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", registrationPlate='" + registrationPlate + '\'' +
-                ", numberOfSeats=" + numberOfSeats +
-                ", nextMaintenance=" + nextMaintenance +
-                ", lastMaintenance=" + lastMaintenance +
-                '}';
-    }
+
 }
 
 

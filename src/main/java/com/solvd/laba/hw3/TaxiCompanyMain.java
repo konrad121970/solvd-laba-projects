@@ -17,6 +17,8 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
+import com.solvd.laba.hw3.utils.CustomersFileReaderUtil;
+import com.solvd.laba.hw3.utils.CustomersFileWriterUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -167,9 +169,9 @@ public class TaxiCompanyMain {
 
         System.out.println("\n\n\n\n\n\n\n\n\n");
 
-        taxiCompany.writeCustomersToFile();
+        CustomersFileWriterUtil.writeCustomersToFile(taxiCompany);
 
-        List<Customer> newList = TaxiCompany.loadCustomersFromFile();
+        List<Customer> newList = CustomersFileReaderUtil.loadCustomersFromFile(taxiCompany);
 
         // CONSUMER
         newList.forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));

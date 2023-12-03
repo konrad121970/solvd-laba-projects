@@ -10,6 +10,7 @@ import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,47 +57,43 @@ public class TaxiCompany implements Displayable, Serializable {
         }
     }
 
-    public static List<Customer> loadCustomersFromFile() {
+    public static List<Customer> loadCustomersFromFile(String fileName) {
         List<Customer> customers = new ArrayList<>();
 
         try {
-            File file = new File("src/main/resources/customers_list");
+            File file = new File(fileName);
             if (file.exists()) {
-                List<String> lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
+                try (LineIterator iterator = FileUtils.lineIterator(file, StandardCharsets.UTF_8.toString())) {
+                    Customer customer = null;
 
-                final Customer[] customer = {null};
+                    while (iterator.hasNext()) {
+                        String line = iterator.nextLine();
 
-                lines.forEach(line -> {
-                    if (line.startsWith("Name: ")) {
-                        String[] nameParts = line.replace("Name: ", "").split(" ");
-                        try {
-                            customer[0] = new Customer(nameParts[0], nameParts[1], "");
-                        } catch (InvalidPersonDataException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                    } else if (line.startsWith("Phone Number: ")) {
-
-                        if (customer[0] != null) {
-                            String number = line.replace("Phone Number: ", "");
-                            customer[0].setPhoneNumber(number);
-                        }
-                    } else if (line.startsWith("Spent Money: ")) {
-
-                        if (customer[0] != null) {
-                            customer[0].setSpentMoney(Double.parseDouble(line.replace("Spent Money: ", "")));
+                        if (line.startsWith("Name: ")) {
+                            String[] nameParts = line.replace("Name: ", "").split(" ");
+                            try {
+                                customer = new Customer(nameParts[0], nameParts[1], "");
+                            } catch (InvalidPersonDataException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else if (line.startsWith("Phone Number: ")) {
+                            if (customer != null) {
+                                String number = line.replace("Phone Number: ", "");
+                                customer.setPhoneNumber(number);
+                            }
+                        } else if (line.startsWith("Spent Money: ")) {
+                            if (customer != null) {
+                                customer.setSpentMoney(Double.parseDouble(line.replace("Spent Money: ", "")));
+                                customers.add(customer);
+                            }
                         }
                     }
-                });
-
-                if (customer[0] != null) {
-                    customers.add(customer[0]);
                 }
             }
         } catch (IOException e) {
-            LOGGER.error("Error loading customer information from file: " + e.getMessage());
+            System.err.println("Error loading customer information from file: " + e.getMessage());
         } catch (NumberFormatException e) {
-            LOGGER.error("Error creating customer object: " + e.getMessage());
+            System.err.println("Error creating customer object: " + e.getMessage());
         }
         return customers;
     }
@@ -382,25 +379,6 @@ public class TaxiCompany implements Displayable, Serializable {
         printDrivers();
     }
 
-    public void writeCustomersToFile() {
-        try {
-            StringBuilder data = new StringBuilder();
-
-            data.append("Consumer Information\n");
-
-            customers.forEach(customer -> {
-                data.append("Name: ").append(customer.getFirstName()).append(" ").append(customer.getLastName()).append("\n");
-                data.append("Phone Number: ").append(customer.getPhoneNumber()).append("\n");
-                data.append("Spent Money: ").append(customer.getSpentMoney()).append("\n");
-                data.append("---------------\n");
-            });
-
-            FileUtils.writeStringToFile(new File("src/main/resources/customers_list"), data.toString(), StandardCharsets.UTF_8, true);
-        } catch (IOException e) {
-            LOGGER.error("Error saving customer " + this.toString() + " information to file: " + e.getMessage());
-        }
-    }
-
     @Override
     public int hashCode() {
         return super.hashCode();
@@ -415,29 +393,76 @@ public class TaxiCompany implements Displayable, Serializable {
     public String toString() {
         return "TaxiCompany{" +
                 "name='" + name + '\'' +
+                ", earnedMoney=" + earnedMoney +
                 ", transportOrders=" + transportOrders +
-                ", customers=" + customers +
+                ", driverTransportOrdersMap=" + driverTransportOrdersMap +
                 ", drivers=" + drivers +
-                ", accountants=" + accountants +
+                ", customers=" + customers +
                 ", vehicles=" + vehicles +
+                ", accountants=" + accountants +
                 '}';
     }
 
     @Override
     public void display() {
-        LOGGER.info("Company name: " + this.name);
+        LOGGER.info("Taxi Company Information:");
+        LOGGER.info("Name: " + name);
+        LOGGER.info("Earned Money: " + earnedMoney);
+
+        if (vehicles != null && !vehicles.isEmpty()) {
+            LOGGER.info("Number of Vehicles: " + vehicles.size());
+        }
+
+        if (drivers != null && !drivers.isEmpty()) {
+            LOGGER.info("Number of Drivers: " + drivers.size());
+        }
+
+        if (accountants != null && !accountants.isEmpty()) {
+            LOGGER.info("Number of Accountants: " + accountants.size());
+        }
+
+        if (transportOrders != null && !transportOrders.isEmpty()) {
+            LOGGER.info("Number of Transport Orders: " + transportOrders.size());
+        }
     }
 
     @Override
     public void showDetails() {
-        LOGGER.info("TaxiCompany{" +
-                "name='" + name + '\'' +
-                ", transportOrders=" + transportOrders +
-                ", customers=" + customers +
-                ", drivers=" + drivers +
-                ", accountants=" + accountants +
-                ", vehicles=" + vehicles +
-                '}');
+        display();
+
+        if (vehicles != null && !vehicles.isEmpty()) {
+            LOGGER.info("Vehicles:");
+            vehicles.forEach(vehicle -> LOGGER.info("- " + vehicle));
+        }
+
+        if (drivers != null && !drivers.isEmpty()) {
+            LOGGER.info("Drivers:");
+            drivers.forEach(driver -> LOGGER.info("- " + driver));
+        }
+
+        if (accountants != null && !accountants.isEmpty()) {
+            LOGGER.info("Accountants:");
+            accountants.forEach(accountant -> LOGGER.info("- " + accountant));
+        }
+
+        if (customers != null && !customers.isEmpty()) {
+            LOGGER.info("Customers:");
+            customers.forEach(customer -> LOGGER.info("- " + customer));
+        }
+
+        if (transportOrders != null && !transportOrders.isEmpty()) {
+            LOGGER.info("Transport Orders:");
+            transportOrders.forEach(transportOrder -> LOGGER.info("- " + transportOrder));
+        }
+
+        if (driverTransportOrdersMap != null && !driverTransportOrdersMap.isEmpty()) {
+            LOGGER.info("Driver Transport Orders:");
+            driverTransportOrdersMap.forEach((driver, transportOrders) -> {
+                LOGGER.info("Driver: " + driver.getFirstName() + " " + driver.getLastName());
+                LOGGER.info("Transport Orders:");
+                transportOrders.forEach(order -> LOGGER.info("- " + order));
+            });
+        }
     }
 
 

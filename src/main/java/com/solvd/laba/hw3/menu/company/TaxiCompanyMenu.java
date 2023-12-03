@@ -26,7 +26,7 @@ public class TaxiCompanyMenu {
         if (employeeTypeChoice == 1) {
             EmployeeMenu.addDriver(scanner, taxiCompany);
         } else if (employeeTypeChoice == 2) {
-
+            EmployeeMenu.addAccountant(scanner, taxiCompany);
         } else {
             LOGGER.info("Invalid employee type choice.");
         }
