@@ -188,6 +188,7 @@ public class TaxiCompanyMain {
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
@@ -213,7 +214,7 @@ public class TaxiCompanyMain {
                         break;
 
                     case 6:
-                        taxiCompany = taxiCompany.loadState("src/main/resources/taxiCompany.ser");
+                        taxiCompany = TaxiCompany.loadState("src/main/resources/taxiCompany.ser");
                         LOGGER.info("Taxi Company data succesfully loaded!");
                         break;
 
