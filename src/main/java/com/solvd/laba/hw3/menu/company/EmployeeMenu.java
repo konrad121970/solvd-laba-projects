@@ -10,7 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class EmployeeMenu {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass());
@@ -18,21 +22,29 @@ public class EmployeeMenu {
     public static Driver selectDriver(Scanner scanner, TaxiCompany taxiCompany) throws Exception {
         LOGGER.info("Select a driver from the list:");
 
-        for (int i = 0; i < taxiCompany.getDrivers().size(); i++) {
-            if (taxiCompany.getDrivers().get(i).getDriverStatus() == DriverStatusType.AVAILABLE) {
-                LOGGER.info(i + ". " + taxiCompany.getDrivers().get(i).getFirstName());
-            }
-        }
-        int driverChoice = scanner.nextInt();
+        Optional<List<Driver>> drivers = taxiCompany.getDrivers();
 
-        if (driverChoice >= 0 && driverChoice < taxiCompany.getDrivers().size()) {
-            return taxiCompany.getDrivers().get(driverChoice);
+        if (drivers.isPresent()) {
+            List<Driver> availableDrivers = drivers.get()
+                    .stream().filter(d -> d.getDriverStatus() == DriverStatusType.AVAILABLE)
+                    .collect(Collectors.toList());
+
+            IntStream.range(0, availableDrivers.size()).forEach(i -> {
+                LOGGER.info(i + ". " + availableDrivers.get(i));
+            });
+
+            int driverChoice = scanner.nextInt();
+
+            if (driverChoice >= 0 && driverChoice < availableDrivers.size()) {
+                return availableDrivers.get(driverChoice);
+            } else {
+                LOGGER.info("Invalid driver choice.");
+                throw new Exception();
+            }
         } else {
-            LOGGER.info("Invalid driver choice.");
-            throw new Exception();
+            throw new Exception("No available drivers");
         }
     }
-
 
     public static void addDriver(Scanner scanner, TaxiCompany taxiCompany) {
 
@@ -43,16 +55,21 @@ public class EmployeeMenu {
         taxiCompany.printVehicles();
         int vehicleChoice = scanner.nextInt();
 
-        if (vehicleChoice >= 0 && vehicleChoice < taxiCompany.getVehicles().size()) {
-            Taxi selectedVehicle = taxiCompany.getVehicles().get(vehicleChoice - 1);
+        if (taxiCompany.getVehicles().isPresent()) {
 
-            LOGGER.info("Enter driver salary: ");
-            Integer salary = InputReader.readSalary(scanner);
+            List<Taxi> vehiclesList = taxiCompany.getVehicles().get();
 
-            driver.setVehicle(selectedVehicle);
-            driver.setSalary(salary);
-            taxiCompany.addDriver(driver);
-            LOGGER.info("New driver assigned to the company.");
+            if (vehicleChoice >= 0 && vehicleChoice < vehiclesList.size()) {
+                Taxi selectedVehicle = vehiclesList.get(vehicleChoice - 1);
+
+                LOGGER.info("Enter driver salary: ");
+                Integer salary = InputReader.readSalary(scanner);
+
+                driver.setVehicle(selectedVehicle);
+                driver.setSalary(salary);
+                taxiCompany.addDriver(driver);
+                LOGGER.info("New driver assigned to the company.");
+            }
         }
     }
 

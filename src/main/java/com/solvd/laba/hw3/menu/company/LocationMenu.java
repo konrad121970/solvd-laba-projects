@@ -12,33 +12,65 @@ public class LocationMenu {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass());
 
     public static Location addStartLocation(Scanner scanner) {
-        LOGGER.info("City: ");
-        scanner.nextLine();
-        String city = scanner.nextLine();
-        LOGGER.info("Pickup Location: ");
-        String pickupLocation = scanner.nextLine();
+
+        String city, pickupLocation;
+        do {
+            LOGGER.info("City: ");
+            city = scanner.nextLine();
+
+            LOGGER.info("Pickup Location: ");
+            pickupLocation = scanner.nextLine();
+
+            if (!isValidLocation(city, pickupLocation)) {
+                LOGGER.info("Invalid input. It cannot be empty. Please try again.");
+            }
+
+        } while (!isValidLocation(city, pickupLocation));
 
         return new Location(city, pickupLocation, LocationType.ROUTE_START);
     }
 
     public static Location addEndLocation(Scanner scanner) {
-        LOGGER.info("City: ");
-        scanner.nextLine();
-        String city = scanner.nextLine();
-        LOGGER.info("Dropoff Location: ");
-        String pickupLocation = scanner.nextLine();
+        String city, dropoffLocation;
 
-        return new Location(city, pickupLocation, LocationType.ROUTE_END);
+        do {
+            LOGGER.info("City: ");
+            city = scanner.nextLine();
+
+            LOGGER.info("Dropoff Location: ");
+            dropoffLocation = scanner.nextLine();
+
+            if (!isValidLocation(city, dropoffLocation)) {
+                LOGGER.info("Invalid input. It cannot be empty. Please try again.");
+            }
+
+        } while (!isValidLocation(city, dropoffLocation));
+
+        return new Location(city, dropoffLocation, LocationType.ROUTE_END);
     }
 
-    public static Location addStopLocation(Scanner scanner) {
-        LOGGER.info("City: ");
-        scanner.nextLine();
-        String city = scanner.nextLine();
-        LOGGER.info("Stop Location: ");
-        String pickupLocation = scanner.nextLine();
+    public static Location addRouteStop(Scanner scanner) {
+        String city, dropoffLocation;
 
-        return new Location(city, pickupLocation, LocationType.INTERMEDIATE_STOP);
+        do {
+            LOGGER.info("City: ");
+            city = scanner.nextLine();
+
+            LOGGER.info("Dropoff Location: ");
+            dropoffLocation = scanner.nextLine();
+
+            if (!isValidLocation(city, dropoffLocation)) {
+                LOGGER.info("Invalid input. It cannot be empty. Please try again.");
+            }
+
+        } while (!isValidLocation(city, dropoffLocation));
+
+        return new Location(city, dropoffLocation, LocationType.INTERMEDIATE_STOP);
     }
+
+    private static boolean isValidLocation(String city, String location) {
+        return !city.isEmpty() && !location.isEmpty();
+    }
+
 
 }
