@@ -52,19 +52,6 @@ public final class Driver extends Employee implements Transportable {
         driverStatus = DriverStatusType.ON_BREAK;
     }
 
-    public void driveFromTo(String startLocation, String endLocation, Double distanceInKm) {
-        LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + ".");
-        driverStatus = DriverStatusType.UNAVAILABLE;
-        drivenDistance += distanceInKm;
-    }
-
-    public void driveFromTo(String startLocation, String endLocation, String dateTime, Double distanceInKm) {
-        LOGGER.info("I am en route to " + endLocation + "!. I started my journey from " + startLocation + " at " + dateTime + ".");
-        driverStatus = DriverStatusType.UNAVAILABLE;
-        drivenDistance += distanceInKm;
-    }
-
-
     public Taxi getVehicle() {
         return taxi;
     }
@@ -72,7 +59,6 @@ public final class Driver extends Employee implements Transportable {
     public void setVehicle(Taxi vehicle) {
         this.taxi = vehicle;
     }
-
 
     @Override
     public int hashCode() {
@@ -120,8 +106,10 @@ public final class Driver extends Employee implements Transportable {
     }
 
     @Override
-    public void move(String source, String destination) {
-        LOGGER.info(this.firstName + ": I am en route to " + source + "!. I started my journey from " + destination + ".");
+    public void move(String source, String destination, Double distanceInKm) {
+        LOGGER.info("I am en route to " + destination + "!. I started my journey from " + source + ".");
+        driverStatus = DriverStatusType.UNAVAILABLE;
+        drivenDistance += distanceInKm;
     }
 
     @Override

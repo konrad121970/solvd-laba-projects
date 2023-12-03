@@ -80,7 +80,7 @@ public final class Customer extends Person implements Transportable, Serializabl
     }
 
     @Override
-    public void move(String source, String destination) {
+    public void move(String source, String destination, Double distanceInKm) {
         LOGGER.debug("I am taking a ride in a Taxi from " + source + " to " + destination + "!");
     }
 
