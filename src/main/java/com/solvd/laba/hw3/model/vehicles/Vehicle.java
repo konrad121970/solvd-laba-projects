@@ -123,9 +123,6 @@ public abstract class Vehicle implements Maintainable, Displayable, Serializable
                 "make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", registrationPlate='" + registrationPlate + '\'' +
-                ", numberOfSeats=" + numberOfSeats +
-                ", nextMaintenance=" + nextMaintenance +
-                ", lastMaintenance=" + lastMaintenance +
                 '}';
     }
 

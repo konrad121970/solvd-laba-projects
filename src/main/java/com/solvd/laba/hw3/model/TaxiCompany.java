@@ -1,7 +1,6 @@
 package com.solvd.laba.hw3.model;
 
 import com.solvd.laba.hw3.common.exceptions.DuplicateRegistrationPlateException;
-import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.common.interfaces.Displayable;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
@@ -9,13 +8,10 @@ import com.solvd.laba.hw3.model.people.employees.Driver;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.model.vehicles.Vehicle;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.LineIterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -55,47 +51,6 @@ public class TaxiCompany implements Displayable, Serializable {
             LOGGER.error("Error loading state: " + e.getMessage());
             return null;
         }
-    }
-
-    public static List<Customer> loadCustomersFromFile(String fileName) {
-        List<Customer> customers = new ArrayList<>();
-
-        try {
-            File file = new File(fileName);
-            if (file.exists()) {
-                try (LineIterator iterator = FileUtils.lineIterator(file, StandardCharsets.UTF_8.toString())) {
-                    Customer customer = null;
-
-                    while (iterator.hasNext()) {
-                        String line = iterator.nextLine();
-
-                        if (line.startsWith("Name: ")) {
-                            String[] nameParts = line.replace("Name: ", "").split(" ");
-                            try {
-                                customer = new Customer(nameParts[0], nameParts[1], "");
-                            } catch (InvalidPersonDataException e) {
-                                throw new RuntimeException(e);
-                            }
-                        } else if (line.startsWith("Phone Number: ")) {
-                            if (customer != null) {
-                                String number = line.replace("Phone Number: ", "");
-                                customer.setPhoneNumber(number);
-                            }
-                        } else if (line.startsWith("Spent Money: ")) {
-                            if (customer != null) {
-                                customer.setSpentMoney(Double.parseDouble(line.replace("Spent Money: ", "")));
-                                customers.add(customer);
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error loading customer information from file: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.err.println("Error creating customer object: " + e.getMessage());
-        }
-        return customers;
     }
 
     public void saveState(String fileName) {
@@ -333,7 +288,6 @@ public class TaxiCompany implements Displayable, Serializable {
 
     public void printCustomers() {
         LOGGER.info("List of company Customers:");
-        AtomicInteger counter = new AtomicInteger(1);
         customers.forEach(customer -> {
             LOGGER.info(customer.getFirstName() + " " + customer.getLastName() + " " + customer.getSpentMoney());
         });
@@ -341,7 +295,6 @@ public class TaxiCompany implements Displayable, Serializable {
 
     public void printDrivers() {
         LOGGER.info("List of company Drivers:");
-        AtomicInteger counter = new AtomicInteger(1);
         drivers.forEach(driver -> {
             LOGGER.info(driver.getFirstName() + " " + driver.getLastName());
         });

@@ -13,6 +13,13 @@ public class CustomersFileWriterUtil {
     private static final Logger LOGGER = LogManager.getLogger(CustomersFileWriterUtil.class);
 
     public static void writeCustomersToFile(TaxiCompany taxiCompany) {
+        String filePath = "src/main/resources/customers_list";
+
+        try {
+            FileUtils.delete(FileUtils.getFile("src/main/resources/customers_list"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         if (taxiCompany.getCustomers().isPresent()) {
             try {
@@ -28,7 +35,7 @@ public class CustomersFileWriterUtil {
                     data.append("---------------\n");
                 });
 
-                FileUtils.writeStringToFile(new File("src/main/resources/customers_list"), data.toString(), StandardCharsets.UTF_8, true);
+                FileUtils.writeStringToFile(new File(filePath), data.toString(), StandardCharsets.UTF_8, true);
             } catch (IOException e) {
                 LOGGER.error("Error saving customer  information to file: " + e.getMessage());
             }

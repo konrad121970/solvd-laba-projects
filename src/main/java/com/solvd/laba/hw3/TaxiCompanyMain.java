@@ -19,11 +19,13 @@ import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
 import com.solvd.laba.hw3.utils.CustomersFileReaderUtil;
 import com.solvd.laba.hw3.utils.CustomersFileWriterUtil;
-import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -32,45 +34,49 @@ public class TaxiCompanyMain {
 
     public static void main(String[] args) {
         LOGGER.info("Main application has just been started!");
-        try {
-            FileUtils.delete(FileUtils.getFile("src/main/resources/customers_list"));
-        } catch (IOException e) {
-            LOGGER.info("Error in deleting customers file");
-        }
-        ArrayList<Taxi> taxiVehiclesList;
+
+        List<Taxi> taxiVehiclesList = null;
+        List<Driver> driversList = null;
+        Set<Accountant> accountants = null;
+        List<Customer> customers = null;
+
+        Taxi taxi1 = null;
+        Taxi taxi2 = null;
+
+        Driver newDriver1 = null;
+        Driver newDriver2 = null;
+
+        Accountant newAccountant1 = null;
+        Accountant newAccountant2 = null;
+
         try {
             taxiVehiclesList = new ArrayList<>(Arrays.asList(
                     new Taxi("Audi", "A4", "BHA 18XX", 4, 2.50, TaxiStandardType.LUXURY),
                     new Taxi("Volkswagen", "Kubelwagen", "BI 1234", 5, 3.00, TaxiStandardType.STANDARD)));
-        } catch (InvalidNumberOfSeatsException e) {
-            throw new RuntimeException(e);
-        }
 
-        ArrayList<Driver> driversList = null;
-        try {
             driversList = new ArrayList<>(Arrays.asList(
                     new Driver("Bartolomeo", "Diaz", 23, "123123123", taxiVehiclesList.get(0), 3500),
                     new Driver("Leon", "Kaputt", 67, "123123123", taxiVehiclesList.get(1), 4000)));
-        } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
-            LOGGER.error(e.getMessage());
-        }
 
-        HashSet<Accountant> accountants = null;
-        try {
             accountants = new HashSet<>(Arrays.asList(
                     new Accountant("Katharine", "Note", "123123123", 23, 2500),
                     new Accountant("Elias", "Bismark", "123123123", 19, 4000)));
-        } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
-            LOGGER.error(e.getMessage());
-        }
 
-        List<Customer> customers = null;
-        try {
             customers = new ArrayList<>(Arrays.asList(
                     new Customer("Andrzej", "Kowalski", "123123123"),
                     new Customer("Paolo", "Nowak", "111222333"),
                     new Customer("Herbert", "Shmidt", "333222111")));
-        } catch (InvalidPersonDataException e) {
+
+            taxi1 = new Taxi("Volkswagen", "Polo", "ALALA", 4, 2.5, TaxiStandardType.ECO_FRIENDLY);
+            taxi2 = new Taxi("Audi", "A7", "444", 4, 2.5, TaxiStandardType.LUXURY);
+
+            newDriver1 = new Driver("Andrzej", "Kowalski", 50, "123123123", taxi1, 4000);
+            newDriver2 = new Driver("Pawel", "Andrzejuk", 22, "123123123", taxi2, 4000);
+
+            newAccountant1 = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
+            newAccountant2 = new Accountant("Hubert", "Kowalski", "123123123", 20, 3000);
+
+        } catch (InvalidNumberOfSeatsException | InvalidPersonDataException | InvalidEmployeeDataException e) {
             LOGGER.error(e.getMessage());
         }
 
@@ -85,17 +91,6 @@ public class TaxiCompanyMain {
                     .setCustomers(customers)
                     .build();
         } catch (DuplicateRegistrationPlateException e) {
-            throw new RuntimeException();
-        }
-
-        // taxiCompany.deleteVehicle(taxiVehiclesList.get(0));
-
-        Taxi taxi1 = null;
-        Taxi taxi2 = null;
-        try {
-            taxi1 = new Taxi("Volkswagen", "Polo", "ALALA", 4, 2.5, TaxiStandardType.ECO_FRIENDLY);
-            taxi2 = new Taxi("Audi", "A7", "444", 4, 2.5, TaxiStandardType.LUXURY);
-        } catch (InvalidNumberOfSeatsException e) {
             LOGGER.error(e.getMessage());
         }
 
@@ -107,42 +102,9 @@ public class TaxiCompanyMain {
             LOGGER.error(ex.getMessage(), ex); // Exception for wrong next maintenance date
         }
 
-        Driver newDriver1 = null;
-        Driver newDriver2 = null;
-        try {
-            newDriver1 = new Driver("Andrzej", "Kowalski", 50, "123123123", taxi1, 4000);
-            newDriver2 = new Driver("Pawel", "Andrzejuk", 22, "123123123", taxi2, 4000);
-        } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
-            LOGGER.error(e.getMessage());
-        }
-
         taxiCompany.addDrivers(Arrays.asList(newDriver1, newDriver2));
-
-        Accountant newAccountant1 = null;
-        Accountant newAccountant2 = null;
-        try {
-            newAccountant1 = new Accountant("Robert", "Roberto", "123123123", 40, 3500);
-            newAccountant2 = new Accountant("Hubert", "Kowalski", "123123123", 20, 3000);
-        } catch (InvalidPersonDataException | InvalidEmployeeDataException e) {
-            LOGGER.error(e.getMessage());
-        }
-
         taxiCompany.addAccountants(new HashSet<>(Arrays.asList(newAccountant1, newAccountant2)));
         // VehicleUtils.performMaintenance(taxiVehicle1);
-
-/*        LOGGER.info("Size of accountants Set: " + accountants.size());
-        LOGGER.info("****************** ITERATE SET - ITERATOR ******************");
-        // Iterate Set using iterator allows for dynamic removing of elements during iteration
-        Iterator<Accountant> iterator1 = accountants.iterator(); //
-        while (iterator1.hasNext()) {
-            Employee accountant = iterator1.next();
-            LOGGER.info(accountant);
-        }
-        LOGGER.info("****************** ITERATE SET - FOREACH ******************");
-        // Iterate Set using foreach
-        for (Employee employee : accountants) {
-            LOGGER.info(employee);
-        }*/
 
         Location loc1 = new Location("New York", "Blue St");
         Location loc2 = new Location("New York", "Yellow St");
@@ -167,12 +129,51 @@ public class TaxiCompanyMain {
 
         taxiCompany.printDrivers(driver -> driver.getFirstName() + " " + driver.getLastName());
 
-        System.out.println("\n\n\n\n\n\n\n\n\n");
+        System.out.println("#####################\n\n");
+
+        Class<?> reflectTaxiCompany = TaxiCompany.class;
+
+        LOGGER.info("Taxi Company fields retrieved using reflection");
+        Field[] fields = reflectTaxiCompany.getDeclaredFields();
+        Constructor<?>[] constructors = reflectTaxiCompany.getDeclaredConstructors();
+        Method[] methods = reflectTaxiCompany.getDeclaredMethods();
+
+        Arrays.stream(fields).forEach(field -> {
+            LOGGER.info("Name: " + field.getName() + " " + "Type: " + field.getType() + " " + "Modifiers: " + field.getModifiers());
+        });
+
+        LOGGER.info("\n\nTaxi Company constructors retrieved using reflection");
+        Arrays.stream(constructors)
+                .map(constructor -> "Name: " + constructor.getName() + ", Parameters: " + constructor.getParameterCount() + ", Modifiers: " + constructor.getModifiers())
+                .forEach(LOGGER::info);
+
+        LOGGER.info("\n\nTaxi Company methods retrieved using reflection");
+        Arrays.stream(methods)
+                .map(method -> "Name: " + method.getName() + ", Parameters: " + method.getParameterCount() + ", Modifiers: " + method.getModifiers())
+                .forEach(LOGGER::info);
+
+
+        // Create an object using reflection
+
+        Constructor<?> constructor = null;
+
+        TaxiCompany taxiCompany2;
+        try {
+            constructor = reflectTaxiCompany.getConstructor(String.class);
+            taxiCompany2 = (TaxiCompany) constructor.newInstance("MyTaxiCompany");
+            Method method = reflectTaxiCompany.getDeclaredMethod("display");
+            method.invoke(taxiCompany);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+
+        LOGGER.info("Name of TaxiCompany created using reflection: " + taxiCompany2.getName());
+
+        System.out.println("\n\n#####################\n\n");
 
         CustomersFileWriterUtil.writeCustomersToFile(taxiCompany);
-
         List<Customer> newList = CustomersFileReaderUtil.loadCustomersFromFile(taxiCompany);
-
         // CONSUMER
         newList.forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));
 
