@@ -18,6 +18,8 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
+import com.solvd.laba.hw3.threading.ConnectionPool;
+import com.solvd.laba.hw3.threading.ConnectionRunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -175,10 +177,9 @@ public class TaxiCompanyMain {
         newAccountant1.generateFinancialReportByMonth(taxiCompany.getTransportOrders().orElse(Collections.emptyList()),
                 LocalDate.of(2023, 11, 11));
 
-        //CustomersFileWriterUtil.writeCustomersToFile(taxiCompany);
-        //List<Customer> newList = CustomersFileReaderUtil.loadCustomersFromFile(taxiCompany);
-        // CONSUMER
-        //newList.forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));
+        // Working with threads
+        // Connection pool with size = 5
+
 
         try (Scanner scanner = new Scanner(System.in)) {
 
@@ -191,7 +192,8 @@ public class TaxiCompanyMain {
                 LOGGER.info("5. Generate financial report for chosen month");
                 LOGGER.info("6. Save TaxiCompany data");
                 LOGGER.info("7. Load TaxiCompany data");
-                LOGGER.info("8. Exit");
+                LOGGER.info("8. Run Threads");
+                LOGGER.info("9. Exit");
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -230,6 +232,10 @@ public class TaxiCompanyMain {
                         break;
 
                     case 8:
+                        runThreads();
+                        return;
+
+                    case 9:
                         LOGGER.info("Exiting...");
                         return;
 
@@ -246,4 +252,12 @@ public class TaxiCompanyMain {
     public static void changePosition(Transportable transportable, String startLocation, String destination, Double distance) {
         transportable.move(startLocation, destination, distance);
     }
+
+    public static void runThreads() {
+        for (int i = 0; i < 7; i++) {
+            Thread thread = new Thread(new ConnectionRunner(ConnectionPool.getInstance(5)));
+            thread.start();
+        }
+    }
+
 }
