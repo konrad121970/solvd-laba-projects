@@ -32,12 +32,12 @@ public final class Accountant extends Employee {
         return accountantsCount;
     }
 
-    public void generateFinancialReport(List<TransportOrder> transportOrderList, LocalDate date) {
+    public void generateFinancialReportByMonth(List<TransportOrder> transportOrderList, LocalDate date) {
         LOGGER.info("Financial report generated for month " + date.getMonth().toString());
 
         AtomicInteger numberOfOrders = new AtomicInteger();
         AtomicDouble moneyEarned = new AtomicDouble();
-        
+
         transportOrderList
                 .stream()
                 .filter(tr -> tr.getPayment().getDate().getMonth() == date.getMonth())
@@ -50,7 +50,7 @@ public final class Accountant extends Employee {
         LOGGER.info("Money earned for the month " + date.getMonth().toString() + ": " + moneyEarned.get() + CurrencyType.USD.getSymbol());
         numberOfGeneratedRaports++;
     }
-
+    
     @Override
     protected int giveBonus() {
         if (age > 30 && salary > 10000) {

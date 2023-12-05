@@ -27,17 +27,21 @@ public class AccountantMenu {
 
             LocalDate selectedDate = LocalDate.now().withMonth(month);
 
-            Set<Accountant> accountants = taxiCompany.getAccountants().get();
-
-            List<Accountant> accountantList = new ArrayList<>(accountants);
-
-            Accountant selectedAccountant = chooseAccountant(scanner, accountantList);
-            if (selectedAccountant != null) {
-                selectedAccountant.generateFinancialReport(taxiCompany.getTransportOrders().orElse(Collections.emptyList()), selectedDate);
-            }
+            generateReport(scanner, taxiCompany, selectedDate);
 
         } catch (Exception ex) {
             LOGGER.error("Error generating the financial report: " + ex.getMessage(), ex);
+        }
+    }
+
+    private static void generateReport(Scanner scanner, TaxiCompany taxiCompany, LocalDate selectedDate) {
+        Set<Accountant> accountants = taxiCompany.getAccountants().get();
+
+        List<Accountant> accountantList = new ArrayList<>(accountants);
+
+        Accountant selectedAccountant = chooseAccountant(scanner, accountantList);
+        if (selectedAccountant != null) {
+            selectedAccountant.generateFinancialReportByMonth(taxiCompany.getTransportOrders().orElse(Collections.emptyList()), selectedDate);
         }
     }
 
