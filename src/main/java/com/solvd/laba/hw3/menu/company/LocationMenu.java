@@ -10,10 +10,12 @@ import java.util.Scanner;
 
 public class LocationMenu {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass());
+    private static String city;
+    private static String pickupLocation;
+    private static String dropoffLocation;
 
-    public static Location addStartLocation(Scanner scanner) {
+    public static com.solvd.laba.hw3.model.route.Location addStartLocation(Scanner scanner) {
 
-        String city, pickupLocation;
         do {
             LOGGER.info("City: ");
             city = scanner.nextLine();
@@ -30,8 +32,7 @@ public class LocationMenu {
         return new Location(city, pickupLocation, LocationType.ROUTE_START);
     }
 
-    public static Location addEndLocation(Scanner scanner) {
-        String city, dropoffLocation;
+    public static com.solvd.laba.hw3.model.route.Location addEndLocation(Scanner scanner) {
 
         do {
             LOGGER.info("City: ");
@@ -50,7 +51,6 @@ public class LocationMenu {
     }
 
     public static Location addRouteStop(Scanner scanner) {
-        String city, dropoffLocation;
 
         do {
             LOGGER.info("City: ");

@@ -25,12 +25,12 @@ public class PaymentMenu {
         int currencyOption = scanner.nextInt();
         scanner.nextLine(); // Consuming the newline character
 
-        CurrencyType selectedCurrency;
+        CurrencyType selectedCurrencyType;
         try {
-            selectedCurrency = CurrencyType.getByOption(currencyOption);
+            selectedCurrencyType = CurrencyType.getByOption(currencyOption);
         } catch (IllegalArgumentException e) {
             LOGGER.info("Invalid currency option. Defaulting to USD.");
-            selectedCurrency = CurrencyType.USD;
+            selectedCurrencyType = CurrencyType.USD;
         }
 
         LOGGER.info("Payment amount: ");
@@ -46,18 +46,18 @@ public class PaymentMenu {
 
         switch (paymentMethodOption) {
             case 1:
-                transportOrder.setPayment(new CashPayment(orderDate, paymentAmount, selectedCurrency));
+                transportOrder.setPayment(new CashPayment(orderDate, paymentAmount, selectedCurrencyType));
                 break;
 
             case 2:
                 LOGGER.info("Credit card number: ");
                 String creditCardNumber = scanner.nextLine();
-                transportOrder.setPayment(new CardPayment(orderDate, paymentAmount, selectedCurrency, creditCardNumber));
+                transportOrder.setPayment(new CardPayment(orderDate, paymentAmount, selectedCurrencyType, creditCardNumber));
                 break;
 
             default:
                 LOGGER.info("Invalid payment method option. Defaulting to Cash.");
-                transportOrder.setPayment(new CashPayment(orderDate, paymentAmount, selectedCurrency));
+                transportOrder.setPayment(new CashPayment(orderDate, paymentAmount, selectedCurrencyType));
                 break;
         }
     }

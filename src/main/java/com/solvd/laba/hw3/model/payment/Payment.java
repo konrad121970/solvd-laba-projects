@@ -15,20 +15,20 @@ public abstract class Payment implements Payable, Displayable, Serializable {
     private LocalDate date;
     private Double amount;
     private boolean isPaid;
-    private CurrencyType currency;
+    private CurrencyType currencyType;
 
-    public Payment(LocalDate date, Double amount, CurrencyType currency) {
+    public Payment(LocalDate date, Double amount, CurrencyType currencyType) {
         this.date = date;
         this.amount = amount;
-        this.currency = currency;
+        this.currencyType = currencyType;
     }
 
     public CurrencyType getCurrency() {
-        return currency;
+        return currencyType;
     }
 
-    public void setCurrency(CurrencyType currency) {
-        this.currency = currency;
+    public void setCurrency(CurrencyType currencyType) {
+        this.currencyType = currencyType;
     }
 
     public boolean isPaid() {
@@ -91,14 +91,14 @@ public abstract class Payment implements Payable, Displayable, Serializable {
     public void display() {
         LOGGER.info("Payment Information:");
         LOGGER.info("Date: " + date);
-        LOGGER.info("Amount: " + amount + " " + currency);
+        LOGGER.info("Amount: " + amount + " " + currencyType);
     }
 
     @Override
     public void showDetails() {
         LOGGER.info("Payment Information:");
         LOGGER.info("Date: " + date);
-        LOGGER.info("Amount: " + amount + " " + currency);
+        LOGGER.info("Amount: " + amount + " " + currencyType);
         LOGGER.info("Payment Status: " + (isPaid ? "Paid" : "Pending"));
     }
 }

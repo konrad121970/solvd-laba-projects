@@ -13,7 +13,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class EmployeeMenu {
@@ -24,18 +23,10 @@ public class EmployeeMenu {
 
         Optional<List<Driver>> drivers = taxiCompany.getDrivers();
 
-        if(drivers.isPresent()){
-            List<Driver> availableDrivers = taxiCompany.filterDrivers(d -> d.getDriverStatus() == DriverStatusType.AVAILABLE);
-        }
-
-
         if (drivers.isPresent()) {
-            List<Driver> availableDrivers = drivers.get()
-                    .stream().filter(d -> d.getDriverStatus() == DriverStatusType.AVAILABLE)
-                    .collect(Collectors.toList()); // collect() - terminal operation
+            List<Driver> availableDrivers = taxiCompany
+                    .filterDrivers(d -> d.getDriverStatus() == DriverStatusType.AVAILABLE);
 
-
-            // IntStream function
             IntStream.range(0, availableDrivers.size()).forEach(i -> {
                 LOGGER.info(i + ". " + availableDrivers.get(i).getFirstName() + " " + availableDrivers.get(i).getLastName());
             });
@@ -52,6 +43,7 @@ public class EmployeeMenu {
             throw new Exception("No available drivers");
         }
     }
+
 
     public static void addDriver(Scanner scanner, TaxiCompany taxiCompany) {
 

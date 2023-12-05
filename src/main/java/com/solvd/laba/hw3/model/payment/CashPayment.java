@@ -9,8 +9,8 @@ import java.time.LocalDate;
 public final class CashPayment extends Payment {
     private static final Logger LOGGER = LogManager.getLogger(CashPayment.class);
 
-    public CashPayment(LocalDate date, Double amount, CurrencyType currency) {
-        super(date, amount, currency);
+    public CashPayment(LocalDate date, Double amount, CurrencyType currencyType) {
+        super(date, amount, currencyType);
     }
 
     @Override

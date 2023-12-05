@@ -16,17 +16,18 @@ import java.util.Objects;
 public final class TransportOrder implements Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(TransportOrder.class);
     private Customer customer;
-    private List<Location> routeStops;
+    private List<com.solvd.laba.hw3.model.route.Location> routeStops;
     private Payment payment;
     private Review review;
 
-    public TransportOrder() {}
+    public TransportOrder() {
+    }
 
     public TransportOrder(Customer customer) {
         this.customer = customer;
     }
 
-    public List<Location> getRouteStops() {
+    public List<com.solvd.laba.hw3.model.route.Location> getRouteStops() {
         return routeStops;
     }
 
@@ -35,16 +36,16 @@ public final class TransportOrder implements Displayable, Serializable {
     }
 
     public void setReview(Review review) {
-        if(review != null) {
+        if (review != null) {
             this.review = review;
         } else {
             LOGGER.warn("You can't set null value to review!");
         }
     }
 
-    public void addRouteStart(Location location) {
-        if(location != null){
-            if(routeStops == null){
+    public void addRouteStart(com.solvd.laba.hw3.model.route.Location location) {
+        if (location != null) {
+            if (routeStops == null) {
                 routeStops = new ArrayList<>();
             }
             location.setLocationType(LocationType.ROUTE_START);
@@ -54,9 +55,9 @@ public final class TransportOrder implements Displayable, Serializable {
         }
     }
 
-    public void addRouteEnd(Location location) {
-        if(location != null){
-            if(routeStops == null){
+    public void addRouteEnd(com.solvd.laba.hw3.model.route.Location location) {
+        if (location != null) {
+            if (routeStops == null) {
                 routeStops = new ArrayList<>();
             }
             location.setLocationType(LocationType.ROUTE_END);
@@ -66,9 +67,9 @@ public final class TransportOrder implements Displayable, Serializable {
         }
     }
 
-    public void addRouteStop(Location location) {
-        if(location != null){
-            if(routeStops == null){
+    public void addRouteStop(com.solvd.laba.hw3.model.route.Location location) {
+        if (location != null) {
+            if (routeStops == null) {
                 routeStops = new ArrayList<>();
             }
             location.setLocationType(LocationType.INTERMEDIATE_STOP);
@@ -83,7 +84,7 @@ public final class TransportOrder implements Displayable, Serializable {
     }
 
     public void setCustomer(Customer customer) {
-        if(customer != null) {
+        if (customer != null) {
             this.customer = customer;
         }
     }

@@ -6,6 +6,7 @@ import com.solvd.laba.hw3.common.enums.RatingType;
 import com.solvd.laba.hw3.common.enums.TaxiStandardType;
 import com.solvd.laba.hw3.common.exceptions.*;
 import com.solvd.laba.hw3.common.interfaces.Transportable;
+import com.solvd.laba.hw3.menu.company.AccountantMenu;
 import com.solvd.laba.hw3.menu.company.TaxiCompanyMenu;
 import com.solvd.laba.hw3.menu.company.TransportOrderMenu;
 import com.solvd.laba.hw3.model.TaxiCompany;
@@ -17,8 +18,6 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
-import com.solvd.laba.hw3.utils.CustomersFileReaderUtil;
-import com.solvd.laba.hw3.utils.CustomersFileWriterUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -172,10 +171,14 @@ public class TaxiCompanyMain {
 
         System.out.println("\n\n#####################\n\n");
 
-        CustomersFileWriterUtil.writeCustomersToFile(taxiCompany);
-        List<Customer> newList = CustomersFileReaderUtil.loadCustomersFromFile(taxiCompany);
+
+        newAccountant1.generateFinancialReport(taxiCompany.getTransportOrders().orElse(Collections.emptyList()),
+                LocalDate.of(2023, 11, 11));
+
+        //CustomersFileWriterUtil.writeCustomersToFile(taxiCompany);
+        //List<Customer> newList = CustomersFileReaderUtil.loadCustomersFromFile(taxiCompany);
         // CONSUMER
-        newList.forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));
+        //newList.forEach(e -> System.out.println(e.getFirstName() + e.getLastName()));
 
         try (Scanner scanner = new Scanner(System.in)) {
 
@@ -185,9 +188,10 @@ public class TaxiCompanyMain {
                 LOGGER.info("2. Add new Employee");
                 LOGGER.info("3. Create a new Transport Order");
                 LOGGER.info("4. Show all drivers with their transport orders");
-                LOGGER.info("5. Save TaxiCompany data");
-                LOGGER.info("6. Load TaxiCompany data");
-                LOGGER.info("7. Exit");
+                LOGGER.info("5. Generate financial report for chosen month");
+                LOGGER.info("6. Save TaxiCompany data");
+                LOGGER.info("7. Load TaxiCompany data");
+                LOGGER.info("8. Exit");
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -211,17 +215,21 @@ public class TaxiCompanyMain {
                         break;
 
                     case 5:
+                        AccountantMenu.generateFinancialReportByMonth(scanner, taxiCompany);
+                        break;
+
+                    case 6:
                         if (taxiCompany != null) {
                             taxiCompany.saveState("src/main/resources/taxiCompany.ser");
                         }
                         break;
 
-                    case 6:
+                    case 7:
                         taxiCompany = TaxiCompany.loadState("src/main/resources/taxiCompany.ser");
                         LOGGER.info("Taxi Company data succesfully loaded!");
                         break;
 
-                    case 7:
+                    case 8:
                         LOGGER.info("Exiting...");
                         return;
 

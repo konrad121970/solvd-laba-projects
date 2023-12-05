@@ -1,15 +1,23 @@
 package com.solvd.laba.hw3.model.people.employees;
 
+import com.google.common.util.concurrent.AtomicDouble;
+import com.solvd.laba.hw3.common.enums.CurrencyType;
 import com.solvd.laba.hw3.common.exceptions.InvalidEmployeeDataException;
 import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.model.people.Employee;
+import com.solvd.laba.hw3.model.route.TransportOrder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Accountant extends Employee {
 
     private static final Logger LOGGER = LogManager.getLogger(Accountant.class);
     private static int accountantsCount;
+    private int numberOfGeneratedRaports;
 
     public Accountant() {
     }
@@ -22,6 +30,25 @@ public final class Accountant extends Employee {
 
     public static int getAccountantsCount() {
         return accountantsCount;
+    }
+
+    public void generateFinancialReport(List<TransportOrder> transportOrderList, LocalDate date) {
+        LOGGER.info("Financial report generated for month " + date.getMonth().toString());
+
+        AtomicInteger numberOfOrders = new AtomicInteger();
+        AtomicDouble moneyEarned = new AtomicDouble();
+        
+        transportOrderList
+                .stream()
+                .filter(tr -> tr.getPayment().getDate().getMonth() == date.getMonth())
+                .forEach(tr -> {
+                    numberOfOrders.getAndIncrement();
+                    moneyEarned.addAndGet(tr.getPayment().getAmount());
+                });
+
+        LOGGER.info("Number of orders for the month " + date.getMonth().toString() + ": " + numberOfOrders.get());
+        LOGGER.info("Money earned for the month " + date.getMonth().toString() + ": " + moneyEarned.get() + CurrencyType.USD.getSymbol());
+        numberOfGeneratedRaports++;
     }
 
     @Override

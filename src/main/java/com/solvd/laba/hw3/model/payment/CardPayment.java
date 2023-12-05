@@ -11,12 +11,12 @@ public final class CardPayment extends Payment {
     private static final Logger LOGGER = LogManager.getLogger(CardPayment.class);
     private String cardNumber;
 
-    public CardPayment(LocalDate date, Double amount, CurrencyType currency) {
-        super(date, amount, currency);
+    public CardPayment(LocalDate date, Double amount, CurrencyType currencyType) {
+        super(date, amount, currencyType);
     }
 
-    public CardPayment(LocalDate date, Double amount, CurrencyType currency, String cardNumber) {
-        super(date, amount, currency);
+    public CardPayment(LocalDate date, Double amount, CurrencyType currencyType, String cardNumber) {
+        super(date, amount, currencyType);
         this.cardNumber = cardNumber;
     }
 

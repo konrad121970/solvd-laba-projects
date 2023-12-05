@@ -14,14 +14,14 @@ public final class Driver extends Employee implements Transportable {
     private static int driversCount;
     private double drivenDistance;
     private Taxi taxi;
-    private DriverStatusType driverStatus;
+    private DriverStatusType driverStatusType;
 
     public Driver() {
     }
 
     public Driver(String firstName, String lastName, Integer age, String phoneNumber, Taxi taxi, Integer salary) throws InvalidPersonDataException, InvalidEmployeeDataException {
         super(firstName, lastName, phoneNumber, age, salary);
-        driverStatus = DriverStatusType.AVAILABLE;
+        driverStatusType = DriverStatusType.AVAILABLE;
         if (taxi != null) {
             this.taxi = taxi;
             driversCount++;
@@ -41,15 +41,15 @@ public final class Driver extends Employee implements Transportable {
     }
 
     public DriverStatusType getDriverStatus() {
-        return driverStatus;
+        return driverStatusType;
     }
 
     public void endRide() {
-        driverStatus = DriverStatusType.AVAILABLE;
+        driverStatusType = DriverStatusType.AVAILABLE;
     }
 
     public void goOnBrake() {
-        driverStatus = DriverStatusType.ON_BREAK;
+        driverStatusType = DriverStatusType.ON_BREAK;
     }
 
     public Taxi getVehicle() {
@@ -108,7 +108,7 @@ public final class Driver extends Employee implements Transportable {
     @Override
     public void move(String source, String destination, Double distanceInKm) {
         LOGGER.info("I am en route to " + destination + "!. I started my journey from " + source + ".");
-        driverStatus = DriverStatusType.UNAVAILABLE;
+        driverStatusType = DriverStatusType.UNAVAILABLE;
         drivenDistance += distanceInKm;
     }
 

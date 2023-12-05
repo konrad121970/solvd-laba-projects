@@ -342,6 +342,14 @@ public class TaxiCompany implements Displayable, Serializable {
                 .collect(Collectors.toList());
     }
 
+    public List<Accountant> filterAccountants(EmployeeFilter<Accountant> employeeFilter) {
+        LOGGER.info("List of Filtered Accountants:");
+
+        return accountants.stream()
+                .filter(employeeFilter::filter)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();
