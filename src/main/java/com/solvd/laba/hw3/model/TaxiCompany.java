@@ -2,6 +2,7 @@ package com.solvd.laba.hw3.model;
 
 import com.solvd.laba.hw3.common.exceptions.DuplicateRegistrationPlateException;
 import com.solvd.laba.hw3.common.interfaces.Displayable;
+import com.solvd.laba.hw3.common.interfaces.EmployeeFilter;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
 import com.solvd.laba.hw3.model.people.employees.Driver;
@@ -330,6 +331,14 @@ public class TaxiCompany implements Displayable, Serializable {
     public void printEmployees() {
         printAccountants();
         printDrivers();
+    }
+
+    public void printFilteredDrivers(EmployeeFilter<Driver> employeeFilter) {
+        LOGGER.info("List of Filtered Drivers:");
+
+        drivers.stream()
+                .filter(employeeFilter::filter)
+                .forEach(driver -> LOGGER.info(driver.getFirstName() + " " + driver.getLastName()));
     }
 
     @Override
