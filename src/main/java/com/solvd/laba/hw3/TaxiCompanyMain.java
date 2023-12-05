@@ -172,7 +172,7 @@ public class TaxiCompanyMain {
         System.out.println("\n\n#####################\n\n");
 
 
-        newAccountant1.generateFinancialReport(taxiCompany.getTransportOrders().orElse(Collections.emptyList()),
+        newAccountant1.generateFinancialReportByMonth(taxiCompany.getTransportOrders().orElse(Collections.emptyList()),
                 LocalDate.of(2023, 11, 11));
 
         //CustomersFileWriterUtil.writeCustomersToFile(taxiCompany);
