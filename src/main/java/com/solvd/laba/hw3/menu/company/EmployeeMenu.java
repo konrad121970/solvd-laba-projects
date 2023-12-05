@@ -24,6 +24,11 @@ public class EmployeeMenu {
 
         Optional<List<Driver>> drivers = taxiCompany.getDrivers();
 
+        if(drivers.isPresent()){
+            List<Driver> availableDrivers = taxiCompany.filterDrivers(d -> d.getDriverStatus() == DriverStatusType.AVAILABLE);
+        }
+
+
         if (drivers.isPresent()) {
             List<Driver> availableDrivers = drivers.get()
                     .stream().filter(d -> d.getDriverStatus() == DriverStatusType.AVAILABLE)

@@ -16,6 +16,7 @@ import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class TaxiCompany implements Displayable, Serializable {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompany.class);
@@ -333,12 +334,12 @@ public class TaxiCompany implements Displayable, Serializable {
         printDrivers();
     }
 
-    public void printFilteredDrivers(EmployeeFilter<Driver> employeeFilter) {
+    public List<Driver> filterDrivers(EmployeeFilter<Driver> employeeFilter) {
         LOGGER.info("List of Filtered Drivers:");
 
-        drivers.stream()
+        return drivers.stream()
                 .filter(employeeFilter::filter)
-                .forEach(driver -> LOGGER.info(driver.getFirstName() + " " + driver.getLastName()));
+                .collect(Collectors.toList());
     }
 
     @Override
