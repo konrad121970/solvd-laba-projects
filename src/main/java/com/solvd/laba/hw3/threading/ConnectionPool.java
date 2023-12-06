@@ -1,6 +1,8 @@
 package com.solvd.laba.hw3.threading;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPool {
@@ -26,8 +28,24 @@ public class ConnectionPool {
         return pool.take();
     }
 
+    public CompletionStage<Connection> getConnectionAsync() {
+        CompletableFuture<Connection> future = new CompletableFuture<>();
+        try {
+            Connection connection = pool.take();
+            future.complete(connection);
+            System.out.println("Thread " + Thread.currentThread().getId() +
+                    " obtained connection");
+        } catch (InterruptedException e) {
+            future.completeExceptionally(e);
+        }
+        return future;
+    }
+
+
     public void releaseConnection(Connection connection) {
         pool.offer(connection);
+        System.out.println("Thread " + Thread.currentThread().getId() +
+                " released connection");
     }
 
 }

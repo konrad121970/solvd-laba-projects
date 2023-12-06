@@ -18,6 +18,7 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
+import com.solvd.laba.hw3.threading.Connection;
 import com.solvd.laba.hw3.threading.ConnectionPool;
 import com.solvd.laba.hw3.threading.ConnectionRunner;
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +30,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
@@ -177,10 +182,6 @@ public class TaxiCompanyMain {
         newAccountant1.generateFinancialReportByMonth(taxiCompany.getTransportOrders().orElse(Collections.emptyList()),
                 LocalDate.of(2023, 11, 11));
 
-        // Working with threads
-        // Connection pool with size = 5
-
-
         try (Scanner scanner = new Scanner(System.in)) {
 
             while (true) {
@@ -232,7 +233,7 @@ public class TaxiCompanyMain {
                         break;
 
                     case 8:
-                        runThreads();
+                        runCompletableThreads();
                         return;
 
                     case 9:
@@ -258,6 +259,65 @@ public class TaxiCompanyMain {
             Thread thread = new Thread(new ConnectionRunner(ConnectionPool.getInstance(5)));
             thread.start();
         }
+    }
+
+    public static void runCompletableThreads() {
+
+        ConnectionPool connectionPool = ConnectionPool.getInstance(5);
+
+        ExecutorService threadPool = Executors.newFixedThreadPool(7);
+
+        // Submit 5 tasks to obtain connections
+        for (int i = 0; i < 7; i++) {
+            threadPool.submit(() -> {
+                try {
+                    Connection connection = connectionPool.getConnection();
+                    System.out.println("Thread " + Thread.currentThread().getId() +
+                            " obtained connection: " + connection);
+
+                    CompletableFuture<Void> workFuture = CompletableFuture
+                            .supplyAsync(() -> {
+                                connection.doWork1();
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                return connection;
+                            })
+                            .thenApply(conn -> {
+                                conn.doWork2DependendOnWork1();
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                return conn;
+                            })
+                            .thenAccept(conn -> {
+                                connectionPool.releaseConnection(conn);
+                               /* System.out.println("Thread " + Thread.currentThread().getId() +
+                                        " released connection: " + connection);*/
+                            })
+                            .exceptionally(ex -> {
+                                System.err.println("Error performing work: " + ex.getMessage());
+                                return null;
+                            });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+
+
+        try {
+            // Wait for all tasks to complete
+            threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

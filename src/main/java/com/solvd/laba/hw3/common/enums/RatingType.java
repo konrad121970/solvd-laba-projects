@@ -1,8 +1,6 @@
 package com.solvd.laba.hw3.common.enums;
 
 import com.solvd.laba.hw3.common.exceptions.InvalidStarRatingException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public enum RatingType {
 
@@ -11,7 +9,7 @@ public enum RatingType {
     AVERAGE("Average", "Thank you for your feedback. We'll strive to do better."),
     GOOD("Good", "Great to hear! We're glad you had a positive experience."),
     EXCELLENT("Excellent", "Wow! Thanks for the fantastic feedback!");
-    private static final Logger LOGGER = LogManager.getLogger(RatingType.class);
+
     private final String name;
     private final String message;
 

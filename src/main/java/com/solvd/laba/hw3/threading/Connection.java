@@ -1,7 +1,11 @@
 package com.solvd.laba.hw3.threading;
 
 public class Connection {
-    public void doSomething() {
-        System.out.println("Performing an operation on database using connection");
+    public void doWork1() {
+        System.out.println("Performing Work1");
+    }
+
+    public void doWork2DependendOnWork1() {
+        System.out.println("Performing Work2");
     }
 }
