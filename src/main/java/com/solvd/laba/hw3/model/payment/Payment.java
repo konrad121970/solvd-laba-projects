@@ -17,7 +17,7 @@ public abstract class Payment implements Payable, Displayable, Serializable {
     private boolean isPaid;
     private CurrencyType currencyType;
 
-    public Payment(LocalDate date, Double amount, CurrencyType currencyType) {
+    protected Payment(LocalDate date, Double amount, CurrencyType currencyType) {
         this.date = date;
         this.amount = amount;
         this.currencyType = currencyType;

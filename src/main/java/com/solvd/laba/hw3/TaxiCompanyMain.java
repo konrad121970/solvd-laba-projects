@@ -4,7 +4,10 @@ import com.solvd.laba.hw3.common.builders.TaxiCompanyBuilder;
 import com.solvd.laba.hw3.common.enums.CurrencyType;
 import com.solvd.laba.hw3.common.enums.RatingType;
 import com.solvd.laba.hw3.common.enums.TaxiStandardType;
-import com.solvd.laba.hw3.common.exceptions.*;
+import com.solvd.laba.hw3.common.exceptions.InvalidEmployeeDataException;
+import com.solvd.laba.hw3.common.exceptions.InvalidNextMaintenanceDateException;
+import com.solvd.laba.hw3.common.exceptions.InvalidNumberOfSeatsException;
+import com.solvd.laba.hw3.common.exceptions.InvalidPersonDataException;
 import com.solvd.laba.hw3.common.interfaces.Transportable;
 import com.solvd.laba.hw3.menu.company.AccountantMenu;
 import com.solvd.laba.hw3.menu.company.TaxiCompanyMenu;
@@ -27,6 +30,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
@@ -81,17 +87,13 @@ public class TaxiCompanyMain {
 
         /* USING BUILDER PATTERN */
         TaxiCompany taxiCompany = null;
-        try {
-            taxiCompany = new TaxiCompanyBuilder()
-                    .setName("Konrad Taxi")
-                    .setVehicles(taxiVehiclesList)
-                    .setDrivers(driversList)
-                    .setAccountants(accountants)
-                    .setCustomers(customers)
-                    .build();
-        } catch (DuplicateRegistrationPlateException e) {
-            LOGGER.error(e.getMessage());
-        }
+        taxiCompany = new TaxiCompanyBuilder()
+                .setName("Konrad Taxi")
+                .setVehicles(taxiVehiclesList)
+                .setDrivers(driversList)
+                .setAccountants(accountants)
+                .setCustomers(customers)
+                .build();
 
         taxiCompany.addVehicles(Arrays.asList(taxi1, taxi2));
 
@@ -174,6 +176,29 @@ public class TaxiCompanyMain {
 
         newAccountant1.generateFinancialReportByMonth(taxiCompany.getTransportOrders().orElse(Collections.emptyList()),
                 LocalDate.of(2023, 11, 11));
+
+
+        // Consumer
+        taxiCompany.printAccountants(accountant -> LOGGER.info(accountant.getFirstName() + " " + accountant.getLastName()));
+        // Predicate
+        Predicate<Accountant> salaryAccountantFilter = accountant -> accountant.getSalary() > 2000;
+        taxiCompany.filterAccountants(salaryAccountantFilter);
+        // Function
+        Function<Driver, String> driverDetailsMapper = driver -> "Driver: " + driver.getFirstName()
+                + " " + driver.getLastName()
+                + " | License Plate: "
+                + driver.getVehicle().getRegistrationPlate();
+        taxiCompany.printDrivers(driverDetailsMapper);
+        // Supplier
+        Supplier<Customer> customerSupplier = () -> {
+            try {
+                return new Customer("John", "Doe", "123123123");
+            } catch (InvalidPersonDataException e) {
+                LOGGER.error(e.getMessage());
+                return null;
+            }
+        };
+        taxiCompany.createCustomer(customerSupplier);
 
         try (Scanner scanner = new Scanner(System.in)) {
 

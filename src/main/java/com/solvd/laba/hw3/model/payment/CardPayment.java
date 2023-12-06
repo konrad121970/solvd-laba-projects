@@ -59,6 +59,6 @@ public final class CardPayment extends Payment {
 
     @Override
     public void processPayment() {
-        LOGGER.info("Card Payment has been processed! CardNumber: " + this.cardNumber);
+        LOGGER.info("Card Payment has been processed! CardNumber: {}", this.cardNumber);
     }
 }

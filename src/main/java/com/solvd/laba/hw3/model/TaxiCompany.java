@@ -15,7 +15,10 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class TaxiCompany implements Displayable, Serializable {
@@ -302,14 +305,6 @@ public class TaxiCompany implements Displayable, Serializable {
         });
     }
 
-    // FUNCTION
-    public void printDrivers(Function<Driver, String> fullNameMapper) {
-
-        LOGGER.info("List of Driver Full Names:");
-        drivers.forEach(driver -> {
-            LOGGER.info(fullNameMapper.apply(driver));
-        });
-    }
 
     public void printDriverTransportOrders() {
         LOGGER.info("Driver Transport Orders:");
@@ -348,6 +343,36 @@ public class TaxiCompany implements Displayable, Serializable {
         return accountants.stream()
                 .filter(employeeFilter::filter)
                 .collect(Collectors.toList());
+    }
+
+    // Function
+    public void printDrivers(Function<Driver, String> fullNameMapper) {
+
+        LOGGER.info("List of Driver Full Names:");
+        drivers.forEach(driver -> {
+            LOGGER.info(fullNameMapper.apply(driver));
+        });
+    }
+
+    // Predicate
+    public List<Accountant> filterAccountants(Predicate<Accountant> accountantFilter) {
+        LOGGER.info("List of Filtered Accountants:");
+        return accountants.stream()
+                .filter(accountantFilter)
+                .collect(Collectors.toList());
+    }
+
+    // Consumer
+    public void printAccountants(Consumer<Accountant> accountantConsumer) {
+        LOGGER.info("List of company accountants:");
+        accountants.forEach(accountantConsumer);
+    }
+
+    // Supplier
+    public Customer createCustomer(Supplier<Customer> customerSupplier) {
+        Customer newCustomer = customerSupplier.get();
+        LOGGER.info("New customer created: " + newCustomer.getFirstName() + " " + newCustomer.getLastName());
+        return newCustomer;
     }
 
     @Override

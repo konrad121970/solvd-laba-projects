@@ -1,6 +1,5 @@
 package com.solvd.laba.hw3.common.builders;
 
-import com.solvd.laba.hw3.common.exceptions.DuplicateRegistrationPlateException;
 import com.solvd.laba.hw3.model.TaxiCompany;
 import com.solvd.laba.hw3.model.people.customer.Customer;
 import com.solvd.laba.hw3.model.people.employees.Accountant;
@@ -52,7 +51,7 @@ public class TaxiCompanyBuilder {
         return this;
     }
 
-    public TaxiCompany build() throws DuplicateRegistrationPlateException {
+    public TaxiCompany build() {
         TaxiCompany taxiCompany = new TaxiCompany(this.name);
         LOGGER.info("TaxiCompanyBuilder has been used to create taxiCompany class!");
 

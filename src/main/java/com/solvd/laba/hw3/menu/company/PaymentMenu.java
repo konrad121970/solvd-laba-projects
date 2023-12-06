@@ -15,6 +15,9 @@ import java.util.Scanner;
 public class PaymentMenu {
     private static final Logger LOGGER = LogManager.getLogger(MethodHandles.lookup().lookupClass());
 
+    private PaymentMenu() {
+    }
+
     public static void addPayment(Scanner scanner, LocalDate orderDate, TransportOrder transportOrder) {
         LOGGER.info("Choose a currency option:");
         LOGGER.info("1. USD (US Dollar)");

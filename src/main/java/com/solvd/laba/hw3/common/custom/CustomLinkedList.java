@@ -1,12 +1,8 @@
 package com.solvd.laba.hw3.common.custom;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.*;
 
 public class CustomLinkedList<T> implements List<T> {
-    private static final Logger LOGGER = LogManager.getLogger(CustomLinkedList.class);
     private Node<T> head;
     private int size;
 

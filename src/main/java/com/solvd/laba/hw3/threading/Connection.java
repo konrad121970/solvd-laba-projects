@@ -1,7 +1,11 @@
 package com.solvd.laba.hw3.threading;
 
 public class Connection {
-    public static int number = 0;
+    private static int number = 0;
+
+    public static int getNumber() {
+        return number;
+    }
 
     public static synchronized void incrementNumber() {
         System.out.println("Old Value: " + number);
@@ -9,6 +13,5 @@ public class Connection {
             number++;
         }
         System.out.println("New Value: " + number);
-
     }
 }
