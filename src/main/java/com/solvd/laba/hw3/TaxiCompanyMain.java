@@ -31,9 +31,9 @@ import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
@@ -193,8 +193,9 @@ public class TaxiCompanyMain {
                 LOGGER.info("5. Generate financial report for chosen month");
                 LOGGER.info("6. Save TaxiCompany data");
                 LOGGER.info("7. Load TaxiCompany data");
-                LOGGER.info("8. Run Threads");
-                LOGGER.info("9. Exit");
+                LOGGER.info("8. Run Completable Threads");
+                LOGGER.info("9. Run Threads");
+                LOGGER.info("10. Exit");
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -234,9 +235,13 @@ public class TaxiCompanyMain {
 
                     case 8:
                         runCompletableThreads();
-                        return;
+                        break;
 
                     case 9:
+                        runThreads();
+                        break;
+
+                    case 10:
                         LOGGER.info("Exiting...");
                         return;
 
@@ -303,20 +308,12 @@ public class TaxiCompanyMain {
                                 System.err.println("Error performing work: " + ex.getMessage());
                                 return null;
                             });
-                } catch (InterruptedException e) {
+                    workFuture.get();
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
             });
         }
-
-
-        try {
-            // Wait for all tasks to complete
-            threadPool.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
 
     }
 
