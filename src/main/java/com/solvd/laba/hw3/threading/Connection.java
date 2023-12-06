@@ -1,11 +1,14 @@
 package com.solvd.laba.hw3.threading;
 
 public class Connection {
-    public void doWork1() {
-        System.out.println("Performing Work1");
-    }
+    public static int number = 0;
 
-    public void doWork2DependendOnWork1() {
-        System.out.println("Performing Work2");
+    public static synchronized void incrementNumber() {
+        System.out.println("Old Value: " + number);
+        for (int i = 0; i < 10000; i++) {
+            number++;
+        }
+        System.out.println("New Value: " + number);
+
     }
 }
