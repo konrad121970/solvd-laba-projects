@@ -28,8 +28,6 @@ public class ConnectionPool {
 
     public void releaseConnection(Connection connection) {
         pool.offer(connection);
-        System.out.println("Thread " + Thread.currentThread().getId() +
-                " released connection");
     }
 
 }

@@ -14,9 +14,9 @@ public class ConnectionRunner implements Runnable {
             Connection connection = connectionPool.getConnection();
             System.out.println(Thread.currentThread().getName() + " got connection: " + connection + " " + connectionPool);
 
-            connection.doWork1();
+            connection.incrementNumber();
 
-            Thread.sleep(5000); // Delay to simulate work
+            //Thread.sleep(2000); // Delay to simulate work
 
             connectionPool.releaseConnection(connection);
             System.out.println(Thread.currentThread().getName() + " released connection: " + connection);

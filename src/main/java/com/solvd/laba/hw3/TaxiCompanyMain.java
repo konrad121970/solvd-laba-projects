@@ -18,9 +18,6 @@ import com.solvd.laba.hw3.model.route.Location;
 import com.solvd.laba.hw3.model.route.Review;
 import com.solvd.laba.hw3.model.route.TransportOrder;
 import com.solvd.laba.hw3.model.vehicles.Taxi;
-import com.solvd.laba.hw3.threading.Connection;
-import com.solvd.laba.hw3.threading.ConnectionPool;
-import com.solvd.laba.hw3.threading.ConnectionRunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,10 +27,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class TaxiCompanyMain {
     private static final Logger LOGGER = LogManager.getLogger(TaxiCompanyMain.class);
@@ -193,9 +186,7 @@ public class TaxiCompanyMain {
                 LOGGER.info("5. Generate financial report for chosen month");
                 LOGGER.info("6. Save TaxiCompany data");
                 LOGGER.info("7. Load TaxiCompany data");
-                LOGGER.info("8. Run Completable Threads");
-                LOGGER.info("9. Run Threads");
-                LOGGER.info("10. Exit");
+                LOGGER.info("8. Exit");
                 LOGGER.info("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -234,14 +225,6 @@ public class TaxiCompanyMain {
                         break;
 
                     case 8:
-                        runCompletableThreads();
-                        break;
-
-                    case 9:
-                        runThreads();
-                        break;
-
-                    case 10:
                         LOGGER.info("Exiting...");
                         return;
 
@@ -259,62 +242,5 @@ public class TaxiCompanyMain {
         transportable.move(startLocation, destination, distance);
     }
 
-    public static void runThreads() {
-        for (int i = 0; i < 7; i++) {
-            Thread thread = new Thread(new ConnectionRunner(ConnectionPool.getInstance(5)));
-            thread.start();
-        }
-    }
-
-    public static void runCompletableThreads() {
-
-        ConnectionPool connectionPool = ConnectionPool.getInstance(5);
-
-        ExecutorService threadPool = Executors.newFixedThreadPool(7);
-
-        // Submit 5 tasks to obtain connections
-        for (int i = 0; i < 7; i++) {
-            threadPool.submit(() -> {
-                try {
-                    Connection connection = connectionPool.getConnection();
-                    System.out.println("Thread " + Thread.currentThread().getId() +
-                            " obtained connection: " + connection);
-
-                    CompletableFuture<Void> workFuture = CompletableFuture
-                            .supplyAsync(() -> {
-                                connection.doWork1();
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                return connection;
-                            })
-                            .thenApply(conn -> {
-                                conn.doWork2DependendOnWork1();
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                return conn;
-                            })
-                            .thenAccept(conn -> {
-                                connectionPool.releaseConnection(conn);
-                               /* System.out.println("Thread " + Thread.currentThread().getId() +
-                                        " released connection: " + connection);*/
-                            })
-                            .exceptionally(ex -> {
-                                System.err.println("Error performing work: " + ex.getMessage());
-                                return null;
-                            });
-                    workFuture.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-
-    }
 
 }
