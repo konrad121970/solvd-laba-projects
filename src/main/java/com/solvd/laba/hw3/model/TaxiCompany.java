@@ -40,7 +40,7 @@ public class TaxiCompany implements Displayable, Serializable {
         this.name = name;
     }
 
-    public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<Taxi> vehicles) throws DuplicateRegistrationPlateException {
+    public TaxiCompany(String name, List<TransportOrder> transportOrders, List<Customer> customers, List<Driver> drivers, Set<Accountant> accountants, List<Taxi> vehicles) {
         this.name = name;
         addTransportOrders(transportOrders, drivers);
         addAccountants(accountants);
@@ -53,7 +53,7 @@ public class TaxiCompany implements Displayable, Serializable {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
             return (TaxiCompany) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            LOGGER.error("Error loading state: " + e.getMessage());
+            LOGGER.error("Error saving state: {}", e.getMessage());
             return null;
         }
     }
@@ -63,7 +63,7 @@ public class TaxiCompany implements Displayable, Serializable {
             oos.writeObject(this);
             LOGGER.info("State saved successfully.");
         } catch (IOException e) {
-            LOGGER.error("Error saving state: " + e.getMessage());
+            LOGGER.error("Error saving state: {}", e.getMessage());
         }
     }
 
@@ -132,15 +132,14 @@ public class TaxiCompany implements Displayable, Serializable {
     public void deleteVehicle(Vehicle vehicle) {
         if (vehicle != null) {
             vehicles.remove(vehicle);
-            //deleteEntry(vehicle);
         } else {
             LOGGER.warn("Vehicle cannot be null");
         }
     }
 
-    public void deleteVehicles(List<Vehicle> vehicles) {
+    public void deleteVehicles(List<Taxi> vehicles) {
         if (vehicles != null) {
-            vehicles.removeAll(vehicles);
+            this.vehicles.removeAll(vehicles);
         }
     }
 
@@ -428,35 +427,35 @@ public class TaxiCompany implements Displayable, Serializable {
 
         if (vehicles != null && !vehicles.isEmpty()) {
             LOGGER.info("Vehicles:");
-            vehicles.forEach(vehicle -> LOGGER.info("- " + vehicle));
+            vehicles.forEach(vehicle -> LOGGER.info("- {}", vehicle));
         }
 
         if (drivers != null && !drivers.isEmpty()) {
             LOGGER.info("Drivers:");
-            drivers.forEach(driver -> LOGGER.info("- " + driver));
+            drivers.forEach(driver -> LOGGER.info("- {}", driver));
         }
 
         if (accountants != null && !accountants.isEmpty()) {
             LOGGER.info("Accountants:");
-            accountants.forEach(accountant -> LOGGER.info("- " + accountant));
+            accountants.forEach(accountant -> LOGGER.info("- {}", accountant));
         }
 
         if (customers != null && !customers.isEmpty()) {
             LOGGER.info("Customers:");
-            customers.forEach(customer -> LOGGER.info("- " + customer));
+            customers.forEach(customer -> LOGGER.info("- {}", customer));
         }
 
         if (transportOrders != null && !transportOrders.isEmpty()) {
             LOGGER.info("Transport Orders:");
-            transportOrders.forEach(transportOrder -> LOGGER.info("- " + transportOrder));
+            transportOrders.forEach(transportOrder -> LOGGER.info("- {}", transportOrder));
         }
 
         if (driverTransportOrdersMap != null && !driverTransportOrdersMap.isEmpty()) {
             LOGGER.info("Driver Transport Orders:");
-            driverTransportOrdersMap.forEach((driver, transportOrders) -> {
-                LOGGER.info("Driver: " + driver.getFirstName() + " " + driver.getLastName());
+            driverTransportOrdersMap.forEach((driver, tOrders) -> {
+                LOGGER.info("Driver: {} {}", driver.getFirstName(), driver.getLastName());
                 LOGGER.info("Transport Orders:");
-                transportOrders.forEach(order -> LOGGER.info("- " + order));
+                tOrders.forEach(order -> LOGGER.info("- {}", order));
             });
         }
     }
