@@ -32,7 +32,7 @@ public class ConnectionPool {
     /**
      * Get connection using ICompletionStage
      *
-     * @returns CompletableFuture object
+     * @return CompletableFuture object
      */
     public CompletionStage<Connection> getConnectionAsync() {
         CompletableFuture<Connection> future = new CompletableFuture<>();
