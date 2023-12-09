@@ -1,5 +1,8 @@
 package com.solvd.laba.hw3.threading;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -7,10 +10,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPool {
     private static ConnectionPool instance;
-    private final BlockingQueue<Connection> pool;
+    private final Queue<Connection> pool;
+    private final int poolSize;
 
     private ConnectionPool(int poolSize) {
-        this.pool = new LinkedBlockingQueue<>(poolSize);
+        this.pool = new LinkedList<>(); // Linked List implements Queue
+        this.poolSize = poolSize;
 
         for (int i = 0; i < poolSize; i++) {
             pool.add(new Connection());
@@ -26,7 +31,12 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() throws InterruptedException {
-        return pool.take();
+        synchronized (pool){
+            while(pool.isEmpty()){
+                pool.wait();
+            }
+        }
+        return pool.poll();
     }
 
     /**
@@ -36,17 +46,16 @@ public class ConnectionPool {
      */
     public CompletionStage<Connection> getConnectionAsync() {
         CompletableFuture<Connection> future = new CompletableFuture<>();
-        try {
-            Connection connection = pool.take();
-            future.complete(connection);
-        } catch (InterruptedException e) {
-            future.completeExceptionally(e);
-        }
+        Connection connection = pool.poll();
+        future.complete(connection);
         return future;
     }
 
     public void releaseConnection(Connection connection) {
-        pool.offer(connection);
+        synchronized (pool){
+            pool.offer(connection);
+            pool.notify(); // Notify threads waiting on monitor
+        }
     }
 
 }
