@@ -27,7 +27,7 @@ public class ThreadingMain {
 
         for (int i = 0; i < 7; i++) {
             Thread thread = new Thread(new ConnectionRunner(ConnectionPool.getInstance(5)));
-            thread.start();
+            thread.run();
             threads.add(thread);
         }
 

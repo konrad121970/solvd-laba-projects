@@ -1,21 +1,16 @@
 package com.solvd.laba.hw3.threading;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class ConnectionPool {
-    private static ConnectionPool instance;
+    private static volatile ConnectionPool instance;
     private final Queue<Connection> pool;
-    private final int poolSize;
 
     private ConnectionPool(int poolSize) {
         this.pool = new LinkedList<>(); // Linked List implements Queue
-        this.poolSize = poolSize;
 
         for (int i = 0; i < poolSize; i++) {
             pool.add(new Connection());
@@ -31,8 +26,8 @@ public class ConnectionPool {
     }
 
     public Connection getConnection() throws InterruptedException {
-        synchronized (pool){
-            while(pool.isEmpty()){
+        synchronized (pool) {
+            while (pool.isEmpty()) {
                 pool.wait();
             }
         }
@@ -52,9 +47,9 @@ public class ConnectionPool {
     }
 
     public void releaseConnection(Connection connection) {
-        synchronized (pool){
+        synchronized (pool) {
             pool.offer(connection);
-            pool.notify(); // Notify threads waiting on monitor
+            pool.notifyAll(); // Notify threads waiting on monitor
         }
     }
 
